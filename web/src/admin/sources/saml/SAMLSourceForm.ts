@@ -14,6 +14,8 @@ import { propertyMappingsProvider, propertyMappingsSelector } from "./SAMLSource
 
 import { DEFAULT_CONFIG } from "#common/api/config";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
+
 import { type AkCryptoCertificateSearch } from "#admin/common/ak-crypto-certificate-search";
 import { iconHelperText, placeholderHelperText } from "#admin/helperText";
 import { policyEngineModes } from "#admin/policies/PolicyEngineModes";
@@ -79,16 +81,20 @@ export class SAMLSourceForm extends BaseSourceForm<SAMLSource> {
                 name="signedAssertion"
                 label=${msg("Verify Assertion Signature")}
                 ?checked=${this.instance?.signedAssertion ?? true}
-                help=${msg(
-                    "When enabled, authentik will look for a Signature inside of the Assertion element.",
+                help=${globalBrandingMessage(
+                    msg(
+                        "When enabled, authentik will look for a Signature inside of the Assertion element.",
+                    ),
                 )}
             ></ak-switch-input>
             <ak-switch-input
                 name="signedResponse"
                 label=${msg("Verify Response Signature")}
                 ?checked=${this.instance?.signedResponse ?? false}
-                help=${msg(
-                    "When enabled, authentik will look for a Signature inside of the Response element.",
+                help=${globalBrandingMessage(
+                    msg(
+                        "When enabled, authentik will look for a Signature inside of the Response element.",
+                    ),
                 )}
             ></ak-switch-input>`;
     }

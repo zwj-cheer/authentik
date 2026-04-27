@@ -18,6 +18,7 @@ entries:
         name: Default - User settings flow
       required: false
   - attrs:
+      branding_title: one person x
       flow_authentication:
         !Find [authentik_flows.flow, [slug, default-authentication-flow]]
       flow_invalidation:

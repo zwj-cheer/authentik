@@ -12,6 +12,7 @@ import { severityToLabel } from "#common/labels";
 
 import { ModelForm } from "#elements/forms/ModelForm";
 import { RadioOption } from "#elements/forms/Radio";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import {
     CoreApi,
@@ -125,8 +126,10 @@ export class RuleForm extends ModelForm<NotificationRule, string> {
                     selected-label="${msg("Selected Transports")}"
                 ></ak-dual-select-dynamic-selected>
                 <p class="pf-c-form__helper-text">
-                    ${msg(
-                        "Select which transports should be used to notify the user. If none are selected, the notification will only be shown in the authentik UI.",
+                    ${globalBrandingMessage(
+                        msg(
+                            "Select which transports should be used to notify the user. If none are selected, the notification will only be shown in the authentik UI.",
+                        ),
                     )}
                 </p>
             </ak-form-element-horizontal>

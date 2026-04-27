@@ -42,8 +42,6 @@ export class PolicyListPage extends TablePage<Policy> {
     public override pageIcon = "pf-icon pf-icon-infrastructure";
 
     public override searchPlaceholder = msg("Search for a policy by name or type...");
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override order = "name";
 
@@ -94,27 +92,19 @@ export class PolicyListPage extends TablePage<Policy> {
         ];
     }
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Policy / Policies")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Policy) => {
+    protected override rowDelete = {
+        objectLabel: msg("Policy / Policies"),
+        usedBy: (item: Policy) => {
                 return new PoliciesApi(DEFAULT_CONFIG).policiesAllUsedByList({
                     policyUuid: item.pk,
                 });
-            }}
-            .delete=${(item: Policy) => {
+            },
+        delete: (item: Policy) => {
                 return new PoliciesApi(DEFAULT_CONFIG).policiesAllDestroy({
                     policyUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override renderObjectCreate(): SlottedTemplateResult {
         return html`

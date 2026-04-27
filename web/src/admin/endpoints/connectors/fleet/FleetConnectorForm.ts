@@ -6,6 +6,7 @@ import "#elements/forms/FormGroup";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { ModelForm } from "#elements/forms/ModelForm";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import { EndpointsApi, FleetConnector, FleetConnectorRequest } from "@goauthentik/api";
 
@@ -74,8 +75,10 @@ export class FleetConnectorForm extends ModelForm<FleetConnector, string> {
                         name="mapUsers"
                         label=${msg("Map users")}
                         ?checked=${this.instance?.mapUsers ?? true}
-                        help=${msg(
-                            "When enabled, users detected by Fleet will be mapped in authentik, granting them access to the device.",
+                        help=${globalBrandingMessage(
+                            msg(
+                                "When enabled, users detected by Fleet will be mapped in authentik, granting them access to the device.",
+                            ),
                         )}
                     ></ak-switch-input>
                     <ak-switch-input

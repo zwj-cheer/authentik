@@ -34,8 +34,6 @@ export class RoleAssignedObjectPermissionTable extends Table<RoleAssignedObjectP
 
     @state()
     protected modelPermissions?: PaginatedPermissionList;
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     protected override searchEnabled = true;
@@ -83,15 +81,12 @@ export class RoleAssignedObjectPermissionTable extends Table<RoleAssignedObjectP
         });
     }
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Permission(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: RoleAssignedObjectPermission) => {
+    protected override rowDelete = {
+        objectLabel: msg("Permission(s)"),
+        metadata: (item: RoleAssignedObjectPermission) => {
                 return [{ key: msg("Permission"), value: item.name }];
-            }}
-            .delete=${(item: RoleAssignedObjectPermission) => {
+            },
+        delete: (item: RoleAssignedObjectPermission) => {
                 return new RbacApi(
                     DEFAULT_CONFIG,
                 ).rbacPermissionsAssignedByRolesUnassignPartialUpdate({
@@ -104,13 +99,8 @@ export class RoleAssignedObjectPermissionTable extends Table<RoleAssignedObjectP
                         }),
                     },
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete Object Permission")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: RoleAssignedObjectPermission): SlottedTemplateResult[] {
         const baseRow = [html` <a href="#/identity/roles/${item.rolePk}">${item.name}</a>`];

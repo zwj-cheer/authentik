@@ -47,7 +47,9 @@ export function renderTableColumn({
     table,
     id,
 }: TableColumnProps): TemplateResult {
+    const isRowActions = orderBy === null && ariaLabel === msg("Row Actions");
     const classes = {
+        "ak-c-table__column--actions": isRowActions,
         "presentational": !label,
         "pf-c-table__sort": !!orderBy,
         "pf-m-selected": table.order === orderBy || table.order === `-${orderBy}`,

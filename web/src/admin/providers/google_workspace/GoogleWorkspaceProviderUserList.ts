@@ -26,8 +26,6 @@ export class GoogleWorkspaceProviderUserList extends Table<GoogleWorkspaceProvid
     protected override searchEnabled = true;
 
     expandable = true;
-
-    checkbox = true;
     clearOnRefresh = true;
 
     renderToolbar(): TemplateResult {
@@ -50,22 +48,14 @@ export class GoogleWorkspaceProviderUserList extends Table<GoogleWorkspaceProvid
             ${super.renderToolbar()}`;
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Google Workspace User(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: GoogleWorkspaceProviderUser) => {
+    protected override rowDelete = {
+        objectLabel: msg("Google Workspace User(s)"),
+        delete: (item: GoogleWorkspaceProviderUser) => {
                 return new ProvidersApi(DEFAULT_CONFIG).providersGoogleWorkspaceUsersDestroy({
                     id: item.id,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     async apiEndpoint(): Promise<PaginatedResponse<GoogleWorkspaceProviderUser>> {
         return new ProvidersApi(DEFAULT_CONFIG).providersGoogleWorkspaceUsersList({

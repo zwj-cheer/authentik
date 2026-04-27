@@ -13,6 +13,7 @@ import { docLink } from "#common/global";
 
 import { AKElement } from "#elements/Base";
 import { IconTokenCopyButton } from "#elements/buttons/IconTokenCopyButton";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { setPageDetails } from "#components/ak-page-navbar";
@@ -156,8 +157,10 @@ export class OutpostViewPage extends AKElement {
         return html`
             ${(this.outpost?.config.authentik_host ?? "") === ""
                 ? html`<div slot="header" class="pf-c-banner pf-m-warning">
-                      ${msg(
-                          "Warning: authentik Domain is not configured, authentication will not work.",
+                      ${globalBrandingMessage(
+                          msg(
+                              "Warning: authentik Domain is not configured, authentication will not work.",
+                          ),
                       )}
                   </div>`
                 : null}
@@ -245,8 +248,10 @@ export class OutpostViewPage extends AKElement {
                         <div>${IconTokenCopyButton(this.outpost?.tokenIdentifier)}</div>
                     </div>
                     <h3>
-                        ${msg(
-                            "If your authentik Instance is using a self-signed certificate, set this value.",
+                        ${globalBrandingMessage(
+                            msg(
+                                "If your authentik Instance is using a self-signed certificate, set this value.",
+                            ),
                         )}
                     </h3>
                     <div class="pf-c-form__group">

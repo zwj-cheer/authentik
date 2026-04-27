@@ -9,6 +9,7 @@ import "#elements/forms/Radio";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { ModelForm } from "#elements/forms/ModelForm";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { WithCapabilitiesConfig } from "#elements/mixins/capabilities";
 
 import { AKLabel } from "#components/ak-label";
@@ -160,8 +161,10 @@ export class FlowForm extends WithCapabilitiesConfig(ModelForm<Flow, string>) {
                     </option>
                 </select>
                 <p class="pf-c-form__helper-text">
-                    ${msg(
-                        "Decides what this Flow is used for. For example, the Authentication flow is redirect to when an un-authenticated user visits authentik.",
+                    ${globalBrandingMessage(
+                        msg(
+                            "Decides what this Flow is used for. For example, the Authentication flow is redirect to when an un-authenticated user visits authentik.",
+                        ),
                     )}
                 </p>
             </ak-form-element-horizontal>

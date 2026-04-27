@@ -3,6 +3,7 @@ import "#flow/components/ak-flow-card";
 
 import { globalAK } from "#common/global";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { FlowUserDetails } from "#flow/FormStatic";
@@ -36,8 +37,10 @@ export class SessionEnd extends BaseStage<SessionEndChallenge, unknown> {
                 ${FlowUserDetails({ challenge: this.challenge })}
 
                 <p>
-                    ${msg(
-                        str`You've logged out of ${challenge.applicationName}. You can go back to the overview to launch another application, or log out of your authentik account.`,
+                    ${globalBrandingMessage(
+                        msg(
+                            str`You've logged out of ${challenge.applicationName}. You can go back to the overview to launch another application, or log out of your authentik account.`,
+                        ),
                     )}
                 </p>
                 <a href="${globalAK().api.base}" class="pf-c-button pf-m-primary">

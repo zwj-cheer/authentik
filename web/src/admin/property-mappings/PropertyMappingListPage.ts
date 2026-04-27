@@ -24,6 +24,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { IconEditButtonByTagName, modalInvoker } from "#elements/dialogs";
 import { IconPermissionButton } from "#elements/dialogs/components/IconPermissionButton";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { getURLParam, updateURLParams } from "#elements/router/RouteMatch";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
@@ -42,13 +43,11 @@ import { customElement, state } from "lit/decorators.js";
 export class PropertyMappingListPage extends TablePage<PropertyMapping> {
     protected override searchEnabled = true;
     public override pageTitle = msg("Property Mappings");
-    public override pageDescription = msg(
-        "Control how authentik exposes and interprets information.",
+    public override pageDescription = globalBrandingMessage(
+        msg("Control how authentik exposes and interprets information."),
     );
     public override pageIcon = "pf-icon pf-icon-blueprint";
     public override searchPlaceholder = msg("Search for a property mapping by name or type...");
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override order = "name";
@@ -69,27 +68,19 @@ export class PropertyMappingListPage extends TablePage<PropertyMapping> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Property Mapping(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: PropertyMapping) => {
+    protected override rowDelete = {
+        objectLabel: msg("Property Mapping(s)"),
+        usedBy: (item: PropertyMapping) => {
                 return new PropertymappingsApi(DEFAULT_CONFIG).propertymappingsAllUsedByList({
                     pmUuid: item.pk,
                 });
-            }}
-            .delete=${(item: PropertyMapping) => {
+            },
+        delete: (item: PropertyMapping) => {
                 return new PropertymappingsApi(DEFAULT_CONFIG).propertymappingsAllDestroy({
                     pmUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: PropertyMapping): SlottedTemplateResult[] {
         return [

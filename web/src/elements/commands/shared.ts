@@ -1,5 +1,6 @@
 import { AKCommandChangeEvent } from "#elements/commands/events";
 import { AKModal } from "#elements/dialogs/ak-modal";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { AboutModal } from "#admin/ak-about-modal";
@@ -151,15 +152,17 @@ export function createCommonCommands(): PaletteCommandDefinitionInit<unknown>[] 
             suffix: msg(str`New in ${import.meta.env.AK_VERSION}`, {
                 id: "command-palette.suffix.new-in",
             }),
-            group: msg("authentik"),
+            group: globalBrandingMessage(msg("authentik")),
         },
         {
-            label: msg("About authentik", {
-                id: "command-palette.about-authentik",
-            }),
+            label: globalBrandingMessage(
+                msg("About authentik", {
+                    id: "command-palette.about-authentik",
+                }),
+            ),
             action: AboutModal.open,
             prefix: msg("View", { id: "command-palette.prefix.view" }),
-            group: msg("authentik"),
+            group: globalBrandingMessage(msg("authentik")),
         },
     ];
 }

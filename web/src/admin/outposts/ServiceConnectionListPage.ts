@@ -4,7 +4,6 @@ import "#admin/outposts/ak-service-connection-wizard";
 import "#admin/rbac/ObjectPermissionModal";
 import "#components/ak-status-label";
 import "#elements/buttons/SpinnerButton/index";
-import "#elements/forms/DeleteBulkForm";
 import "#elements/forms/ModalForm";
 import "#elements/tasks/ScheduleList";
 import "#elements/tasks/TaskList";
@@ -15,6 +14,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 import { IconEditButtonByTagName } from "#elements/dialogs";
 import { IconPermissionButton } from "#elements/dialogs/components/IconPermissionButton";
 import { PFColor } from "#elements/Label";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -36,14 +36,15 @@ import { ifDefined } from "lit/directives/if-defined.js";
 @customElement("ak-outpost-service-connection-list")
 export class OutpostServiceConnectionListPage extends TablePage<ServiceConnection> {
     public pageTitle = msg("Outpost integrations");
-    public pageDescription = msg(
-        "Outpost integrations define how authentik connects to external platforms to manage and deploy Outposts.",
+    public pageDescription = globalBrandingMessage(
+        msg(
+            "Outpost integrations define how authentik connects to external platforms to manage and deploy Outposts.",
+        ),
     );
 
     public pageIcon = "pf-icon pf-icon-integration";
     protected override searchEnabled = true;
 
-    public override checkbox = true;
     public override expandable = true;
     public override clearOnRefresh = true;
     public override searchPlaceholder = msg(
@@ -81,6 +82,20 @@ export class OutpostServiceConnectionListPage extends TablePage<ServiceConnectio
 
     @property()
     order = "name";
+
+    protected override rowDelete = {
+        objectLabel: msg("Outpost integration(s)"),
+        usedBy: (item: ServiceConnection) => {
+            return new OutpostsApi(DEFAULT_CONFIG).outpostsServiceConnectionsAllUsedByList({
+                uuid: item.pk,
+            });
+        },
+        delete: (item: ServiceConnection) => {
+            return new OutpostsApi(DEFAULT_CONFIG).outpostsServiceConnectionsAllDestroy({
+                uuid: item.pk,
+            });
+        },
+    };
 
     row(item: ServiceConnection): SlottedTemplateResult[] {
         const itemState = this.state[item.pk];
@@ -135,28 +150,6 @@ export class OutpostServiceConnectionListPage extends TablePage<ServiceConnectio
                     </dd>
                 </div>
             </dl>`;
-    }
-
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Outpost integration(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: ServiceConnection) => {
-                return new OutpostsApi(DEFAULT_CONFIG).outpostsServiceConnectionsAllUsedByList({
-                    uuid: item.pk,
-                });
-            }}
-            .delete=${(item: ServiceConnection) => {
-                return new OutpostsApi(DEFAULT_CONFIG).outpostsServiceConnectionsAllDestroy({
-                    uuid: item.pk,
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
     }
 
     protected override renderObjectCreate(): SlottedTemplateResult {

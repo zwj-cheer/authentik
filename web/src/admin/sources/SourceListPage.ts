@@ -4,7 +4,6 @@ import "#admin/sources/ldap/LDAPSourceForm";
 import "#admin/sources/oauth/OAuthSourceForm";
 import "#admin/sources/plex/PlexSourceForm";
 import "#admin/sources/saml/SAMLSourceForm";
-import "#elements/forms/DeleteBulkForm";
 import "#elements/forms/ModalForm";
 import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 
@@ -12,6 +11,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { IconEditButtonByTagName, ModalInvokerButton } from "#elements/dialogs";
 import { PFColor } from "#elements/Label";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -27,14 +27,15 @@ import { customElement } from "lit/decorators.js";
 @customElement("ak-source-list")
 export class SourceListPage extends TablePage<Source> {
     public override pageTitle = msg("Federation and Social login");
-    public override pageDescription = msg(
-        "Sources of identities, which can either be synced into authentik's database, or can be used by users to authenticate and enroll themselves.",
+    public override pageDescription = globalBrandingMessage(
+        msg(
+            "Sources of identities, which can either be synced into authentik's database, or can be used by users to authenticate and enroll themselves.",
+        ),
     );
     public override pageIcon = "pf-icon pf-icon-middleware";
     protected override searchEnabled = true;
 
     public override searchPlaceholder = msg("Search for a source...");
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override order = "name";
@@ -50,30 +51,20 @@ export class SourceListPage extends TablePage<Source> {
         ["", null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled =
-            this.selectedElements.length < 1 ||
-            this.selectedElements.some((item) => item.component === "");
-        const nonBuiltInSources = this.selectedElements.filter((item) => item.component !== "");
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Source(s)")}
-            .objects=${nonBuiltInSources}
-            .usedBy=${(item: Source) => {
-                return new SourcesApi(DEFAULT_CONFIG).sourcesAllUsedByList({
-                    slug: item.slug,
-                });
-            }}
-            .delete=${(item: Source) => {
-                return new SourcesApi(DEFAULT_CONFIG).sourcesAllDestroy({
-                    slug: item.slug,
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+    protected override rowDelete = {
+        objectLabel: msg("Source(s)"),
+        hidden: (item: Source) => item.component === "",
+        usedBy: (item: Source) => {
+            return new SourcesApi(DEFAULT_CONFIG).sourcesAllUsedByList({
+                slug: item.slug,
+            });
+        },
+        delete: (item: Source) => {
+            return new SourcesApi(DEFAULT_CONFIG).sourcesAllDestroy({
+                slug: item.slug,
+            });
+        },
+    };
 
     protected override row(item: Source): SlottedTemplateResult[] {
         if (!item.component) {

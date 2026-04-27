@@ -27,7 +27,6 @@ import { customElement, property } from "lit/decorators.js";
 @customElement("ak-event-rule-list")
 export class RuleListPage extends TablePage<NotificationRule> {
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override searchPlaceholder = msg(
         "Search for a notification rule by name, severity or group...",
@@ -55,27 +54,19 @@ export class RuleListPage extends TablePage<NotificationRule> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Notification rule(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: NotificationRule) => {
+    protected override rowDelete = {
+        objectLabel: msg("Notification rule(s)"),
+        usedBy: (item: NotificationRule) => {
                 return new EventsApi(DEFAULT_CONFIG).eventsRulesUsedByList({
                     pbmUuid: item.pk,
                 });
-            }}
-            .delete=${(item: NotificationRule) => {
+            },
+        delete: (item: NotificationRule) => {
                 return new EventsApi(DEFAULT_CONFIG).eventsRulesDestroy({
                     pbmUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: NotificationRule): SlottedTemplateResult[] {
         const enabled = !!item.destinationGroupObj || item.destinationEventUser;

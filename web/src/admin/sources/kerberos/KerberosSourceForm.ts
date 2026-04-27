@@ -17,6 +17,7 @@ import { propertyMappingsProvider, propertyMappingsSelector } from "./KerberosSo
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { RadioOption } from "#elements/forms/Radio";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import { iconHelperText, placeholderHelperText } from "#admin/helperText";
 import { BaseSourceForm } from "#admin/sources/BaseSourceForm";
@@ -118,8 +119,10 @@ export class KerberosSourceForm extends BaseSourceForm<KerberosSource> {
                 name="passwordLoginUpdateInternalPassword"
                 ?checked=${this.instance?.passwordLoginUpdateInternalPassword ?? false}
                 label=${msg("Update internal password on login")}
-                help=${msg(
-                    "When the user logs in to authentik using this source password backend, update their credentials in authentik.",
+                help=${globalBrandingMessage(
+                    msg(
+                        "When the user logs in to authentik using this source password backend, update their credentials in authentik.",
+                    ),
                 )}
             ></ak-switch-input>
             <ak-switch-input
@@ -131,8 +134,10 @@ export class KerberosSourceForm extends BaseSourceForm<KerberosSource> {
                 name="syncUsersPassword"
                 ?checked=${this.instance?.syncUsersPassword ?? true}
                 label=${msg("User password writeback")}
-                help=${msg(
-                    "Enable this option to write password changes made in authentik back to Kerberos. Ignored if sync is disabled.",
+                help=${globalBrandingMessage(
+                    msg(
+                        "Enable this option to write password changes made in authentik back to Kerberos. Ignored if sync is disabled.",
+                    ),
                 )}
             ></ak-switch-input>
             <ak-form-group open label="${msg("Realm settings")}">

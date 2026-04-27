@@ -24,8 +24,6 @@ export class UserConsentList extends Table<UserConsent> {
             user: this.userId,
         });
     }
-
-    checkbox = true;
     clearOnRefresh = true;
     order = "-expires";
 
@@ -39,12 +37,9 @@ export class UserConsentList extends Table<UserConsent> {
         [msg("Permissions"), "permissions"],
     ];
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Consent(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: UserConsent) => {
+    protected override rowDelete = {
+        objectLabel: msg("Consent(s)"),
+        metadata: (item: UserConsent) => {
                 return [
                     { key: msg("Application"), value: item.application.name },
                     {
@@ -53,23 +48,18 @@ export class UserConsentList extends Table<UserConsent> {
                     },
                     { key: msg("Permissions"), value: item.permissions ?? "-" },
                 ];
-            }}
-            .usedBy=${(item: UserConsent) => {
+            },
+        usedBy: (item: UserConsent) => {
                 return new CoreApi(DEFAULT_CONFIG).coreUserConsentUsedByList({
                     id: item.pk,
                 });
-            }}
-            .delete=${(item: UserConsent) => {
+            },
+        delete: (item: UserConsent) => {
                 return new CoreApi(DEFAULT_CONFIG).coreUserConsentDestroy({
                     id: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: UserConsent): SlottedTemplateResult[] {
         return [

@@ -19,32 +19,22 @@ export class LDAPSourceUserList extends Table<UserLDAPSourceConnection> {
     source?: LDAPSource;
 
     protected override searchEnabled = true;
-
-    checkbox = true;
     clearOnRefresh = true;
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("LDAP User(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: UserLDAPSourceConnection) => {
+    protected override rowDelete = {
+        objectLabel: msg("LDAP User(s)"),
+        delete: (item: UserLDAPSourceConnection) => {
                 return new SourcesApi(DEFAULT_CONFIG).sourcesUserConnectionsLdapDestroy({
                     id: item.pk,
                 });
-            }}
-            .metadata=${(item: UserLDAPSourceConnection) => {
+            },
+        metadata: (item: UserLDAPSourceConnection) => {
                 return [
                     { key: msg("User"), value: item.userObj.username },
                     { key: msg("ID"), value: item.identifier },
                 ];
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     renderToolbar(): TemplateResult {
         return html`<ak-forms-modal cancelText=${msg("Close")} ?closeAfterSuccessfulSubmit=${false}>

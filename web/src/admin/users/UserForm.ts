@@ -10,6 +10,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { ModelForm } from "#elements/forms/ModelForm";
 import { RadioOption } from "#elements/forms/Radio";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { CoreApi, Group, RbacApi, Role, User, UserTypeEnum } from "@goauthentik/api";
@@ -216,8 +217,10 @@ export class UserForm extends ModelForm<User, number> {
                                         label: msg("Internal Service account"),
                                         value: UserTypeEnum.InternalServiceAccount,
                                         disabled: true,
-                                        description: html`${msg(
-                                            "Managed by authentik and cannot be assigned manually.",
+                                        description: html`${globalBrandingMessage(
+                                            msg(
+                                                "Managed by authentik and cannot be assigned manually.",
+                                            ),
                                         )}`,
                                     },
                                 ]

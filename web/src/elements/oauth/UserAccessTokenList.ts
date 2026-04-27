@@ -31,8 +31,6 @@ export class UserOAuthAccessTokenList extends Table<TokenModel> {
             user: this.userId,
         });
     }
-
-    checkbox = true;
     order = "-expires";
 
     protected override rowLabel(item: TokenModel): string | null {
@@ -55,27 +53,19 @@ export class UserOAuthAccessTokenList extends Table<TokenModel> {
         </div>`;
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Access Tokens(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: ExpiringBaseGrantModel) => {
+    protected override rowDelete = {
+        objectLabel: msg("Access Tokens(s)"),
+        usedBy: (item: ExpiringBaseGrantModel) => {
                 return new Oauth2Api(DEFAULT_CONFIG).oauth2AccessTokensUsedByList({
                     id: item.pk,
                 });
-            }}
-            .delete=${(item: ExpiringBaseGrantModel) => {
+            },
+        delete: (item: ExpiringBaseGrantModel) => {
                 return new Oauth2Api(DEFAULT_CONFIG).oauth2AccessTokensDestroy({
                     id: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: TokenModel): SlottedTemplateResult[] {
         return [

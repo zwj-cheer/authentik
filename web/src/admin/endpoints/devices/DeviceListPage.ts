@@ -5,6 +5,7 @@ import "#admin/endpoints/devices/DeviceAddHowTo";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { modalInvoker } from "#elements/dialogs";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn, Timestamp } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -35,8 +36,6 @@ export class DeviceListPage extends TablePage<EndpointDevice> {
     public override pageTitle = msg("Devices");
     public override pageDescription = "";
     public override pageIcon = "fa fa-laptop";
-
-    public override checkbox = true;
 
     public override searchPlaceholder = msg("Search devices by name, OS, or group...");
 
@@ -105,8 +104,8 @@ export class DeviceListPage extends TablePage<EndpointDevice> {
                         class="pf-l-grid__item"
                         icon="fa fa-laptop"
                         label=${msg("Unreachable devices")}
-                        subtext=${msg(
-                            "Devices that authentik hasn't received information about in 24h.",
+                        subtext=${globalBrandingMessage(
+                            msg("Devices that authentik hasn't received information about in 24h."),
                         )}
                     >
                         ${this.summary?.unreachableCount ?? "-"}
@@ -144,30 +143,22 @@ export class DeviceListPage extends TablePage<EndpointDevice> {
         ];
     }
 
-    renderToolbarSelected() {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Endpoint Device(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: EndpointDevice) => {
+    protected override rowDelete = {
+        objectLabel: msg("Endpoint Device(s)"),
+        metadata: (item: EndpointDevice) => {
                 return [{ key: msg("Name"), value: item.name }];
-            }}
-            .usedBy=${(item: EndpointDevice) => {
+            },
+        usedBy: (item: EndpointDevice) => {
                 return new EndpointsApi(DEFAULT_CONFIG).endpointsDevicesUsedByList({
                     deviceUuid: item.deviceUuid!,
                 });
-            }}
-            .delete=${(item: EndpointDevice) => {
+            },
+        delete: (item: EndpointDevice) => {
                 return new EndpointsApi(DEFAULT_CONFIG).endpointsDevicesDestroy({
                     deviceUuid: item.deviceUuid!,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 }
 
 declare global {

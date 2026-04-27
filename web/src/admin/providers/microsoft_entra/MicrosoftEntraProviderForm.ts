@@ -13,6 +13,8 @@ import "#elements/forms/SearchSelect/index";
 
 import { DEFAULT_CONFIG } from "#common/api/config";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
+
 import { BaseProviderForm } from "#admin/providers/BaseProviderForm";
 import {
     propertyMappingsProvider,
@@ -118,7 +120,9 @@ export class MicrosoftEntraProviderFormPage extends BaseProviderForm<MicrosoftEn
                             },
                         ]}
                         .value=${this.instance?.userDeleteAction}
-                        help=${msg("Determines what authentik will do when a User is deleted.")}
+                        help=${globalBrandingMessage(
+                            msg("Determines what authentik will do when a User is deleted."),
+                        )}
                     >
                     </ak-radio-input>
                     <ak-radio-input
@@ -141,7 +145,9 @@ export class MicrosoftEntraProviderFormPage extends BaseProviderForm<MicrosoftEn
                             },
                         ]}
                         .value=${this.instance?.groupDeleteAction}
-                        help=${msg("Determines what authentik will do when a Group is deleted.")}
+                        help=${globalBrandingMessage(
+                            msg("Determines what authentik will do when a Group is deleted."),
+                        )}
                     >
                     </ak-radio-input>
                     <ak-switch-input

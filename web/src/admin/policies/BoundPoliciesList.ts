@@ -56,8 +56,6 @@ export class BoundPoliciesList<T extends PolicyBinding = PolicyBinding> extends 
 
     @property({ type: Array })
     public typeNotices: PolicyBindingNotice[] = [];
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override order = "order";
@@ -141,14 +139,9 @@ export class BoundPoliciesList<T extends PolicyBinding = PolicyBinding> extends 
         return null;
     }
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-spinner-button .callAction=${this.refreshListener} class="pf-m-secondary">
-                ${msg("Refresh")}</ak-spinner-button
-            ><ak-forms-delete-bulk
-                object-label=${msg("Policy binding(s)")}
-                .objects=${this.selectedElements}
-                .metadata=${(item: PolicyBinding) => {
+    protected override rowDelete = {
+        objectLabel: msg("Policy binding(s)"),
+        metadata: (item: PolicyBinding) => {
                     return [
                         { key: msg("Order"), value: item.order.toString() },
                         {
@@ -156,23 +149,18 @@ export class BoundPoliciesList<T extends PolicyBinding = PolicyBinding> extends 
                             value: this.getPolicyUserGroupRowLabel(item),
                         },
                     ];
-                }}
-                .usedBy=${(item: PolicyBinding) => {
+                },
+        usedBy: (item: PolicyBinding) => {
                     return new PoliciesApi(DEFAULT_CONFIG).policiesBindingsUsedByList({
                         policyBindingUuid: item.pk,
                     });
-                }}
-                .delete=${(item: PolicyBinding) => {
+                },
+        delete: (item: PolicyBinding) => {
                     return new PoliciesApi(DEFAULT_CONFIG).policiesBindingsDestroy({
                         policyBindingUuid: item.pk,
                     });
-                }}
-            >
-                <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                    ${msg("Delete")}
-                </button>
-            </ak-forms-delete-bulk>`;
-    }
+                },
+    };
 
     protected renderNewPolicyButton(): SlottedTemplateResult {
         return html`<button

@@ -18,6 +18,7 @@ import "#admin/applications/components/ak-provider-search-input";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { ModelForm } from "#elements/forms/ModelForm";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { WithCapabilitiesConfig } from "#elements/mixins/capabilities";
 import { navigate } from "#elements/router/RouterOutlet";
 import { ifPresent } from "#elements/utils/attributes";
@@ -187,8 +188,10 @@ export class ApplicationForm extends WithCapabilitiesConfig(ModelForm<Applicatio
                         label=${msg("Launch URL")}
                         placeholder=${msg("https://...")}
                         value=${ifDefined(this.instance?.metaLaunchUrl)}
-                        help=${msg(
-                            "If left empty, authentik will try to extract the launch URL based on the selected provider.",
+                        help=${globalBrandingMessage(
+                            msg(
+                                "If left empty, authentik will try to extract the launch URL based on the selected provider.",
+                            ),
                         )}
                         input-hint="code"
                     ></ak-text-input>

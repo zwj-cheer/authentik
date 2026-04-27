@@ -18,8 +18,6 @@ import { customElement, property } from "lit/decorators.js";
 export class UserDeviceTable extends Table<Device> {
     @property({ type: Number })
     userId?: number;
-
-    checkbox = true;
     clearOnRefresh = true;
 
     async apiEndpoint(): Promise<PaginatedResponse<Device>> {
@@ -63,20 +61,12 @@ export class UserDeviceTable extends Table<Device> {
         }
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Device(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: Device) => {
+    protected override rowDelete = {
+        objectLabel: msg("Device(s)"),
+        delete: (item: Device) => {
                 return this.deleteWrapper(item);
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     renderToolbar(): TemplateResult {
         return html` <ak-spinner-button

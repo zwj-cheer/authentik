@@ -13,6 +13,8 @@ import "#elements/forms/SearchSelect/index";
 
 import { DEFAULT_CONFIG } from "#common/api/config";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
+
 import { BaseProviderForm } from "#admin/providers/BaseProviderForm";
 import {
     propertyMappingsProvider,
@@ -91,8 +93,10 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                             required
                         />
                         <p class="pf-c-form__helper-text">
-                            ${msg(
-                                "Email address of the user the actions of authentik will be delegated to.",
+                            ${globalBrandingMessage(
+                                msg(
+                                    "Email address of the user the actions of authentik will be delegated to.",
+                                ),
                             )}
                         </p>
                     </ak-form-element-horizontal>
@@ -127,8 +131,10 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                             {
                                 label: msg("Suspend"),
                                 value: OutgoingSyncDeleteAction.Suspend,
-                                description: html`${msg(
-                                    "User is suspended, and connection to user in authentik is removed.",
+                                description: html`${globalBrandingMessage(
+                                    msg(
+                                        "User is suspended, and connection to user in authentik is removed.",
+                                    ),
                                 )}`,
                             },
                             {
@@ -140,7 +146,9 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                             },
                         ]}
                         .value=${this.instance?.userDeleteAction}
-                        help=${msg("Determines what authentik will do when a User is deleted.")}
+                        help=${globalBrandingMessage(
+                            msg("Determines what authentik will do when a User is deleted."),
+                        )}
                     >
                     </ak-radio-input>
                     <ak-radio-input
@@ -163,7 +171,9 @@ export class GoogleWorkspaceProviderFormPage extends BaseProviderForm<GoogleWork
                             },
                         ]}
                         .value=${this.instance?.groupDeleteAction}
-                        help=${msg("Determines what authentik will do when a Group is deleted.")}
+                        help=${globalBrandingMessage(
+                            msg("Determines what authentik will do when a Group is deleted."),
+                        )}
                     >
                     </ak-radio-input>
                     <ak-switch-input

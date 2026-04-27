@@ -31,8 +31,6 @@ export class PromptListPage extends TablePage<Prompt> {
     public override pageTitle = msg("Prompts");
     public override pageDescription = msg("Single Prompts that can be used for Prompt Stages.");
     public override pageIcon = "pf-icon pf-icon-plugged";
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override order = "name";
@@ -52,27 +50,19 @@ export class PromptListPage extends TablePage<Prompt> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Prompt(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Prompt) => {
+    protected override rowDelete = {
+        objectLabel: msg("Prompt(s)"),
+        usedBy: (item: Prompt) => {
                 return new StagesApi(DEFAULT_CONFIG).stagesPromptPromptsUsedByList({
                     promptUuid: item.pk,
                 });
-            }}
-            .delete=${(item: Prompt) => {
+            },
+        delete: (item: Prompt) => {
                 return new StagesApi(DEFAULT_CONFIG).stagesPromptPromptsDestroy({
                     promptUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: Prompt): SlottedTemplateResult[] {
         return [

@@ -14,6 +14,7 @@ import { akFooterLinkInput, IFooterLinkInput } from "./AdminSettingsFooterLinks.
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { Form } from "#elements/forms/Form";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { AdminApi, FooterLink, Settings, SettingsRequest } from "@goauthentik/api";
@@ -82,8 +83,10 @@ export class AdminSettingsForm extends Form<SettingsRequest> {
                 required
                 .bighelp=${html`
                     <p class="pf-c-form__helper-text">
-                        ${msg(
-                            "Configure how authentik should show avatars for users. The following values can be set:",
+                        ${globalBrandingMessage(
+                            msg(
+                                "Configure how authentik should show avatars for users. The following values can be set:",
+                            ),
                         )}
                     </p>
                     <ul class="pf-c-list">
@@ -129,8 +132,10 @@ export class AdminSettingsForm extends Form<SettingsRequest> {
                         </li>
                     </ul>
                     <p class="pf-c-form__helper-text">
-                        ${msg(
-                            "Multiple values can be set, comma-separated, and authentik will fallback to the next mode when no avatar could be found.",
+                        ${globalBrandingMessage(
+                            msg(
+                                "Multiple values can be set, comma-separated, and authentik will fallback to the next mode when no avatar could be found.",
+                            ),
                         )}
                         ${msg(
                             html`For example, setting this to <code>gravatar,initials</code> will
@@ -275,8 +280,10 @@ export class AdminSettingsForm extends Form<SettingsRequest> {
             ></ak-number-input>
             <ak-form-group
                 label=${msg("Flags")}
-                description=${msg(
-                    "Flags allow you to enable new functionality and behaviour in authentik early.",
+                description=${globalBrandingMessage(
+                    msg(
+                        "Flags allow you to enable new functionality and behaviour in authentik early.",
+                    ),
                 )}
             >
                 <div class="pf-c-form">

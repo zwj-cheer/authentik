@@ -1,5 +1,6 @@
 import "#elements/buttons/SpinnerButton/index";
 import "#elements/entities/UsedByTable";
+import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 
 import { EVENT_REFRESH } from "#common/constants";
 import { parseAPIResponseError, pluckErrorDetail } from "#common/errors/network";
@@ -8,12 +9,59 @@ import { MessageLevel } from "#common/messages";
 import { ModalButton } from "#elements/buttons/ModalButton";
 import { BulkDeleteMetadata } from "#elements/entities/UsedByTable";
 import { showMessage } from "#elements/messages/MessageContainer";
+import { SlottedTemplateResult } from "#elements/types";
 
 import { UsedBy } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
 import { html, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
+
+export interface DeleteBulkButtonOptions<T> {
+    item: T;
+    objectLabel: string;
+    itemLabel?: string | null;
+    submitLabel?: string | null;
+    actionSubtext?: string | null;
+    action?: string | null;
+    buttonLabel?: string | null;
+    notice?: SlottedTemplateResult | null;
+    usedBy?: (item: T) => Promise<UsedBy[]>;
+    delete: (item: T) => Promise<unknown> | unknown;
+    metadata?: (item: T) => BulkDeleteMetadata[];
+}
+
+export function DeleteBulkButton<T>(options: DeleteBulkButtonOptions<T>): TemplateResult {
+    const { item, objectLabel, itemLabel } = options;
+    const buttonLabel = options.buttonLabel ?? msg("Delete");
+    const ariaLabel = itemLabel
+        ? `${buttonLabel} "${itemLabel}" ${objectLabel}`
+        : `${buttonLabel} ${objectLabel}`;
+
+    return html`<ak-forms-delete-bulk
+        object-label=${objectLabel}
+        .submitLabel=${options.submitLabel ?? null}
+        .actionSubtext=${options.actionSubtext ?? null}
+        .action=${options.action ?? msg("deleted")}
+        .buttonLabel=${buttonLabel}
+        .objects=${[item]}
+        .usedBy=${options.usedBy}
+        .delete=${options.delete}
+        .metadata=${options.metadata}
+    >
+        ${options.notice ? html`<div slot="notice">${options.notice}</div>` : null}
+        <button
+            slot="trigger"
+            type="button"
+            class="pf-c-button pf-m-plain ak-c-table__delete-button"
+            aria-label=${ariaLabel}
+        >
+            <pf-tooltip position="top" content=${buttonLabel}>
+                <i aria-hidden="true" class="fas fa-trash"></i>
+            </pf-tooltip>
+        </button>
+    </ak-forms-delete-bulk>`;
+}
 
 @customElement("ak-forms-delete-bulk")
 export class DeleteBulkForm<T> extends ModalButton {
@@ -58,7 +106,7 @@ export class DeleteBulkForm<T> extends ModalButton {
     public usedBy?: (item: T) => Promise<UsedBy[]>;
 
     @property({ attribute: false })
-    public delete!: (item: T) => Promise<unknown>;
+    public delete!: (item: T) => Promise<unknown> | unknown;
 
     protected async confirm(): Promise<void> {
         return Promise.all(this.objects.map((item) => this.delete(item)))

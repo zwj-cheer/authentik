@@ -12,6 +12,7 @@ import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { IconEditButton, ModalInvokerButton } from "#elements/dialogs";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -27,11 +28,12 @@ import { customElement } from "lit/decorators.js";
 @customElement("ak-lifecycle-rule-list")
 export class LifecycleRuleListPage extends TablePage<LifecycleRule> {
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override searchPlaceholder = msg("Search for a lifecycle rule by name or target...");
     public override pageTitle = msg("Object Lifecycle Rules");
-    public override pageDescription = msg("Schedule periodic reviews for objects in authentik.");
+    public override pageDescription = globalBrandingMessage(
+        msg("Schedule periodic reviews for objects in authentik."),
+    );
     public override pageIcon = "pf-icon pf-icon-history";
 
     public override order = "name";
@@ -56,26 +58,18 @@ export class LifecycleRuleListPage extends TablePage<LifecycleRule> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html` <ak-forms-delete-bulk
-            object-label=${msg("Lifecycle rule(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: LifecycleRule) => {
+    protected override rowDelete = {
+        objectLabel: msg("Lifecycle rule(s)"),
+        delete: (item: LifecycleRule) => {
                 if (item.id)
                     return new LifecycleApi(DEFAULT_CONFIG).lifecycleRulesDestroy({
                         id: item.id,
                     });
-            }}
-            .metadata=${(item: LifecycleRule) => [
+            },
+        metadata: (item: LifecycleRule) => [
                 { key: msg("Target"), value: item.targetVerbose },
-            ]}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            ],
+    };
 
     protected override row(item: LifecycleRule): SlottedTemplateResult[] {
         return [

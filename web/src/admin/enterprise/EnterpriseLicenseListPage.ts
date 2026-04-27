@@ -56,8 +56,6 @@ export class EnterpriseLicenseListPage extends TablePage<License> {
             }
         `,
     ];
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     protected override searchEnabled = true;
@@ -112,33 +110,25 @@ export class EnterpriseLicenseListPage extends TablePage<License> {
         `);
     }
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("License(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: License) => {
+    protected override rowDelete = {
+        objectLabel: msg("License(s)"),
+        metadata: (item: License) => {
                 return [
                     { key: msg("Name"), value: item.name },
                     { key: msg("Expiry"), value: item.expiry?.toLocaleString() },
                 ];
-            }}
-            .usedBy=${(item: License) => {
+            },
+        usedBy: (item: License) => {
                 return new EnterpriseApi(DEFAULT_CONFIG).enterpriseLicenseUsedByList({
                     licenseUuid: item.licenseUuid,
                 });
-            }}
-            .delete=${(item: License) => {
+            },
+        delete: (item: License) => {
                 return new EnterpriseApi(DEFAULT_CONFIG).enterpriseLicenseDestroy({
                     licenseUuid: item.licenseUuid,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override renderSectionBefore(): SlottedTemplateResult {
         const {

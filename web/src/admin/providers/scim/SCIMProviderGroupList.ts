@@ -27,7 +27,6 @@ export class SCIMProviderGroupList extends Table<SCIMProviderGroup> {
     protected override searchEnabled = true;
 
     expandable = true;
-    checkbox = true;
     clearOnRefresh = true;
 
     renderToolbar(): TemplateResult {
@@ -48,22 +47,14 @@ export class SCIMProviderGroupList extends Table<SCIMProviderGroup> {
             ${super.renderToolbar()}`;
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("SCIM Group(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: SCIMProviderGroup) => {
+    protected override rowDelete = {
+        objectLabel: msg("SCIM Group(s)"),
+        delete: (item: SCIMProviderGroup) => {
                 return new ProvidersApi(DEFAULT_CONFIG).providersScimGroupsDestroy({
                     id: item.id,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     async apiEndpoint(): Promise<PaginatedResponse<SCIMProviderGroup>> {
         return new ProvidersApi(DEFAULT_CONFIG).providersScimGroupsList({

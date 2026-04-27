@@ -28,7 +28,6 @@ export class UserTokenList extends Table<Token> {
     protected override searchEnabled = true;
 
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     @property({ type: String })
@@ -139,22 +138,14 @@ export class UserTokenList extends Table<Token> {
         </dl>`;
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Token(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: Token) => [{ key: msg("Identifier"), value: item.identifier }]}
-            .delete=${(item: Token) =>
+    protected override rowDelete = {
+        objectLabel: msg("Token(s)"),
+        metadata: (item: Token) => [{ key: msg("Identifier"), value: item.identifier }],
+        delete: (item: Token) =>
                 new CoreApi(DEFAULT_CONFIG).coreTokensDestroy({
                     identifier: item.identifier,
-                })}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+                }),
+    };
 
     row(item: Token): SlottedTemplateResult[] {
         return [

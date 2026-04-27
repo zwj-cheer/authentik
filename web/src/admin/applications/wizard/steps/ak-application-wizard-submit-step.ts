@@ -3,6 +3,7 @@ import { EVENT_REFRESH } from "#common/constants";
 import { parseAPIResponseError } from "#common/errors/network";
 
 import { showAPIErrorMessage } from "#elements/messages/MessageContainer";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 import { CustomEmitterElement } from "#elements/utils/eventEmitter";
 
@@ -451,7 +452,7 @@ export class ApplicationWizardSubmitStep extends CustomEmitterElement(Applicatio
             .with(["reviewing", [P.any, ...P.array()]], () =>
                 this.renderInfo(
                     "error",
-                    msg("authentik was unable to complete this process."),
+                    globalBrandingMessage(msg("authentik was unable to complete this process.")),
                     ["fa-times-circle", "pf-m-danger"],
                     this.renderError(),
                 ),

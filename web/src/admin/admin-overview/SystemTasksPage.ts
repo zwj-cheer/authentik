@@ -8,6 +8,7 @@ import "#admin/rbac/ObjectPermissionModal";
 import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 
 import { AKElement } from "#elements/Base";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import { setPageDetails } from "#components/ak-page-navbar";
 
@@ -70,7 +71,9 @@ export class SystemTasksPage extends AKElement {
         setPageDetails({
             icon: "pf-icon pf-icon-automation",
             header: msg("System Tasks"),
-            description: msg("Long-running operations which authentik executes in the background."),
+            description: globalBrandingMessage(
+                msg("Long-running operations which authentik executes in the background."),
+            ),
         });
     }
 }

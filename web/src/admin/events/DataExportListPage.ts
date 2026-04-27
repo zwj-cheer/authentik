@@ -30,8 +30,6 @@ export class DataExportListPage extends TablePage<DataExport> {
     public pageTitle = msg("Data Exports");
     public pageDescription = msg("Manage past data exports.");
     public pageIcon = "pf-icon pf-icon-export";
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override expandable = true;
 
@@ -54,29 +52,21 @@ export class DataExportListPage extends TablePage<DataExport> {
         [msg("Actions"), null, msg("Row actions")],
     ];
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Data export(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: DataExport) => {
+    protected override rowDelete = {
+        objectLabel: msg("Data export(s)"),
+        metadata: (item: DataExport) => {
                 return [
                     { key: msg("Data type"), value: item.contentType.verboseNamePlural },
                     { key: msg("Requested by"), value: item.requestedBy.username },
                     { key: msg("Creation date"), value: Timestamp(item.requestedOn) },
                 ];
-            }}
-            .delete=${(item: DataExport) => {
+            },
+        delete: (item: DataExport) => {
                 return new ReportsApi(DEFAULT_CONFIG).reportsExportsDestroy({
                     id: item.id,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: DataExport): SlottedTemplateResult[] {
         return [

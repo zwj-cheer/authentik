@@ -22,6 +22,7 @@ import { oauth2SourcesProvider, oauth2SourcesSelector } from "./OAuth2Sources.js
 import { ascii_letters, digits, randomString } from "#common/utils";
 
 import { RadioOption } from "#elements/forms/Radio";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { ifPresent } from "#elements/utils/attributes";
 
 import { AKLabel } from "#components/ak-label";
@@ -405,7 +406,9 @@ export function renderForm({
                         )}
                     </p>
                     <p class="pf-c-form__helper-text">
-                        ${msg("authentik only supports RSA-OAEP-256 for encryption.")}
+                        ${globalBrandingMessage(
+                            msg("authentik only supports RSA-OAEP-256 for encryption."),
+                        )}
                     </p>
                 </ak-form-element-horizontal>
 

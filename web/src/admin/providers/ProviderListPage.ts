@@ -11,7 +11,6 @@ import "#admin/providers/scim/SCIMProviderForm";
 import "#admin/providers/ssf/SSFProviderFormPage";
 import "#admin/providers/wsfed/WSFederationProviderForm";
 import "#elements/buttons/SpinnerButton/index";
-import "#elements/forms/DeleteBulkForm";
 import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 
 import { DEFAULT_CONFIG } from "#common/api/config";
@@ -41,8 +40,21 @@ export class ProviderListPage extends TablePage<Provider> {
 
     public pageIcon = "pf-icon pf-icon-integration";
 
-    override checkbox = true;
     override clearOnRefresh = true;
+
+    protected override rowDelete = {
+        objectLabel: msg("Provider(s)"),
+        usedBy: (item: Provider) => {
+            return new ProvidersApi(DEFAULT_CONFIG).providersAllUsedByList({
+                id: item.pk,
+            });
+        },
+        delete: (item: Provider) => {
+            return new ProvidersApi(DEFAULT_CONFIG).providersAllDestroy({
+                id: item.pk,
+            });
+        },
+    };
 
     @property()
     public order = "name";
@@ -62,29 +74,6 @@ export class ProviderListPage extends TablePage<Provider> {
         [msg("Type")],
         [msg("Actions"), null, msg("Row Actions")],
     ];
-
-    override renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Provider(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Provider) => {
-                return new ProvidersApi(DEFAULT_CONFIG).providersAllUsedByList({
-                    id: item.pk,
-                });
-            }}
-            .delete=${(item: Provider) => {
-                return new ProvidersApi(DEFAULT_CONFIG).providersAllDestroy({
-                    id: item.pk,
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
 
     #rowApp(item: Provider): TemplateResult {
         if (item.assignedApplicationName) {

@@ -47,22 +47,14 @@ export class MicrosoftEntraProviderGroupList extends Table<MicrosoftEntraProvide
             ${super.renderToolbar()}`;
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Microsoft Entra Group(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: MicrosoftEntraProviderGroup) => {
+    protected override rowDelete = {
+        objectLabel: msg("Microsoft Entra Group(s)"),
+        delete: (item: MicrosoftEntraProviderGroup) => {
                 return new ProvidersApi(DEFAULT_CONFIG).providersMicrosoftEntraGroupsDestroy({
                     id: item.id,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     async apiEndpoint(): Promise<PaginatedResponse<MicrosoftEntraProviderGroup>> {
         return new ProvidersApi(DEFAULT_CONFIG).providersMicrosoftEntraGroupsList({

@@ -24,8 +24,6 @@ import { ifDefined } from "lit/directives/if-defined.js";
 export class ApplicationEntitlementsPage extends Table<ApplicationEntitlement> {
     @property()
     app?: string;
-
-    checkbox = true;
     clearOnRefresh = true;
     expandable = true;
 
@@ -46,27 +44,19 @@ export class ApplicationEntitlementsPage extends Table<ApplicationEntitlement> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Application entitlement(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: ApplicationEntitlement) => {
+    protected override rowDelete = {
+        objectLabel: msg("Application entitlement(s)"),
+        usedBy: (item: ApplicationEntitlement) => {
                 return new CoreApi(DEFAULT_CONFIG).coreApplicationEntitlementsUsedByList({
                     pbmUuid: item.pbmUuid || "",
                 });
-            }}
-            .delete=${(item: ApplicationEntitlement) => {
+            },
+        delete: (item: ApplicationEntitlement) => {
                 return new CoreApi(DEFAULT_CONFIG).coreApplicationEntitlementsDestroy({
                     pbmUuid: item.pbmUuid || "",
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: ApplicationEntitlement): SlottedTemplateResult[] {
         return [

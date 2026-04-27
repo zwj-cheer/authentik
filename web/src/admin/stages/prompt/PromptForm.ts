@@ -7,6 +7,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 import { parseAPIResponseError } from "#common/errors/network";
 
 import { ModelForm } from "#elements/forms/ModelForm";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { AKFormErrors, ErrorProp } from "#components/ak-field-errors";
@@ -148,7 +149,7 @@ export class PromptForm extends ModelForm<Prompt, string> {
             [PromptTypeEnum.Separator, msg("Separator: Static Separator Line")],
             [PromptTypeEnum.Hidden, msg("Hidden: Hidden field, can be used to insert data into form.")],
             [PromptTypeEnum.Static, msg("Static: Static value, displayed as-is.")],
-            [PromptTypeEnum.AkLocale, msg("authentik: Locale: Displays a list of locales authentik supports.")],
+            [PromptTypeEnum.AkLocale, globalBrandingMessage(msg("authentik: Locale: Displays a list of locales authentik supports."))],
         ];
         const currentType = this.instance?.type;
         return html` ${map(

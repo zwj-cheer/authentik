@@ -26,8 +26,6 @@ export class MicrosoftEntraProviderUserList extends Table<MicrosoftEntraProvider
     expandable = true;
 
     protected override searchEnabled = true;
-
-    checkbox = true;
     clearOnRefresh = true;
 
     renderToolbar(): TemplateResult {
@@ -50,22 +48,14 @@ export class MicrosoftEntraProviderUserList extends Table<MicrosoftEntraProvider
             ${super.renderToolbar()}`;
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Microsoft Entra User(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: MicrosoftEntraProviderUser) => {
+    protected override rowDelete = {
+        objectLabel: msg("Microsoft Entra User(s)"),
+        delete: (item: MicrosoftEntraProviderUser) => {
                 return new ProvidersApi(DEFAULT_CONFIG).providersMicrosoftEntraUsersDestroy({
                     id: item.id,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     async apiEndpoint(): Promise<PaginatedResponse<MicrosoftEntraProviderUser>> {
         return new ProvidersApi(DEFAULT_CONFIG).providersMicrosoftEntraUsersList({

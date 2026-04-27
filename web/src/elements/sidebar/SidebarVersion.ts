@@ -2,6 +2,7 @@ import { globalAK } from "#common/global";
 import { DefaultBrand } from "#common/ui/config";
 
 import { AKElement } from "#elements/Base";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { WithLicenseSummary } from "#elements/mixins/license";
 import { WithVersion } from "#elements/mixins/version";
 
@@ -52,7 +53,7 @@ export class SidebarVersion extends WithLicenseSummary(WithVersion(AKElement)) {
         }
 
         return html`
-            <footer aria-label=${msg("authentik information")}>
+            <footer aria-label=${globalBrandingMessage(msg("authentik information"))}>
                 <button
                     part="trigger"
                     aria-label=${msg("Open about dialog")}

@@ -38,8 +38,6 @@ export class InvitationListPage extends TablePage<Invitation> {
         "Create Invitation Links to enroll Users, and optionally force specific attributes of their account.",
     );
     public override pageIcon = "pf-icon pf-icon-migration";
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override expandable = true;
     public override searchPlaceholder = msg("Search for an invitation by name...");
@@ -83,27 +81,19 @@ export class InvitationListPage extends TablePage<Invitation> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Invitation(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Invitation) => {
+    protected override rowDelete = {
+        objectLabel: msg("Invitation(s)"),
+        usedBy: (item: Invitation) => {
                 return new StagesApi(DEFAULT_CONFIG).stagesInvitationInvitationsUsedByList({
                     inviteUuid: item.pk,
                 });
-            }}
-            .delete=${(item: Invitation) => {
+            },
+        delete: (item: Invitation) => {
                 return new StagesApi(DEFAULT_CONFIG).stagesInvitationInvitationsDestroy({
                     inviteUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: Invitation): SlottedTemplateResult[] {
         return [

@@ -12,6 +12,8 @@ import "#elements/utils/TimeDeltaHelp";
 
 import { propertyMappingsProvider, propertyMappingsSelector } from "./ProxyProviderFormHelpers.js";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
+
 import {
     oauth2ProviderSelector,
     oauth2ProvidersProvider,
@@ -168,8 +170,10 @@ function renderForwardDomainSettings(
             value="${provider.externalHost ?? window.location.origin}"
             required
             .errorMessages=${errors.externalHost}
-            help=${msg(
-                "The external URL you'll authenticate at. The authentik core server should be reachable under this URL.",
+            help=${globalBrandingMessage(
+                msg(
+                    "The external URL you'll authenticate at. The authentik core server should be reachable under this URL.",
+                ),
             )}
         ></ak-text-input>
 
@@ -299,8 +303,10 @@ ${provider.skipPathRegex}</textarea
                     name="interceptHeaderAuth"
                     label=${msg("Intercept header authentication")}
                     ?checked=${provider.interceptHeaderAuth ?? true}
-                    help=${msg(
-                        "When enabled, authentik will intercept the Authorization header to authenticate the request.",
+                    help=${globalBrandingMessage(
+                        msg(
+                            "When enabled, authentik will intercept the Authorization header to authenticate the request.",
+                        ),
                     )}
                 >
                 </ak-switch-input>
@@ -309,8 +315,10 @@ ${provider.skipPathRegex}</textarea
                     name="basicAuthEnabled"
                     label=${msg("Send HTTP-Basic Authentication")}
                     ?checked=${provider.basicAuthEnabled ?? false}
-                    help=${msg(
-                        "Send a custom HTTP-Basic Authentication header based on values from authentik.",
+                    help=${globalBrandingMessage(
+                        msg(
+                            "Send a custom HTTP-Basic Authentication header based on values from authentik.",
+                        ),
                     )}
                     @change=${onSetShowHttpBasic}
                 >

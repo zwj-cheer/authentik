@@ -21,8 +21,6 @@ export class RoleAssignedGlobalPermissionsTable extends Table<Permission> {
     public roleUuid: string | null = null;
 
     protected override searchEnabled = true;
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override order = "content_type__app_label,content_type__model";
@@ -61,12 +59,9 @@ export class RoleAssignedGlobalPermissionsTable extends Table<Permission> {
         `;
     }
 
-    protected renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Permission(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: Permission) => {
+    protected override rowDelete = {
+        objectLabel: msg("Permission(s)"),
+        delete: (item: Permission) => {
                 return new RbacApi(
                     DEFAULT_CONFIG,
                 ).rbacPermissionsAssignedByRolesUnassignPartialUpdate({
@@ -75,13 +70,8 @@ export class RoleAssignedGlobalPermissionsTable extends Table<Permission> {
                         permissions: [`${item.appLabel}.${item.codename}`],
                     },
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: Permission): SlottedTemplateResult[] {
         return [

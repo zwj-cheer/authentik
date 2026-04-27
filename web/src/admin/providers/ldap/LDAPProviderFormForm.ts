@@ -24,6 +24,7 @@ import {
     uidStartNumberHelp,
 } from "./LDAPOptionsAndHelp.js";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { ifPresent } from "#elements/utils/attributes";
 
 import { CurrentBrand, FlowDesignationEnum, LDAPProvider, ValidationError } from "@goauthentik/api";
@@ -71,7 +72,9 @@ export function renderForm({ provider, errors = {}, brand }: LDAPProviderFormPro
             name="searchMode"
             .options=${searchModeOptions}
             .value=${provider.searchMode}
-            help=${msg("Configure how the outpost queries the core authentik server's users.")}
+            help=${globalBrandingMessage(
+                msg("Configure how the outpost queries the core authentik server's users."),
+            )}
         >
         </ak-radio-input>
 

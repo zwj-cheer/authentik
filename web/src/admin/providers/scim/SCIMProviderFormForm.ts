@@ -21,6 +21,8 @@ import {
 
 import { DEFAULT_CONFIG } from "#common/api/config";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
+
 import {
     CompatibilityModeEnum,
     OAuthSource,
@@ -207,8 +209,8 @@ export function renderForm({ provider, errors, update }: SCIMProviderFormProps) 
                             description: html`${msg("Altered behavior for usage with Cisco Webex.")}`,
                         },
                     ]}
-                    help=${msg(
-                        "Alter authentik's behavior for vendor-specific SCIM implementations.",
+                    help=${globalBrandingMessage(
+                        msg("Alter authentik's behavior for vendor-specific SCIM implementations."),
                     )}
                 ></ak-radio-input>
                 <ak-text-input

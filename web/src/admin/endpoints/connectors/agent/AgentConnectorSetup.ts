@@ -7,6 +7,7 @@ import { EVENT_REFRESH } from "#common/constants";
 
 import { AKElement } from "#elements/Base";
 import type SearchSelect from "#elements/forms/SearchSelect/SearchSelect";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import {
     AgentConnector,
@@ -76,8 +77,10 @@ export class AgentConnectorSetup extends AKElement {
                 </div>
                 <div class="pf-l-grid__item pf-m-12-col">
                     <p>
-                        ${msg(
-                            "Next, download the configuration to deploy the authentik Agent via MDM",
+                        ${globalBrandingMessage(
+                            msg(
+                                "Next, download the configuration to deploy the authentik Agent via MDM",
+                            ),
                         )}
                     </p>
                 </div>

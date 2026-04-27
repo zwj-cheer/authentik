@@ -9,6 +9,7 @@ import "#elements/forms/HorizontalFormElement";
 
 import { omitKeys, trimMany } from "#common/objects";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { isSlug } from "#elements/router/utils";
 
 import { type NavigableButton, type WizardButton } from "#components/ak-wizard/shared";
@@ -173,8 +174,10 @@ export class ApplicationWizardApplicationStep extends ApplicationWizardStep {
                             ?invalid=${this.errors.has("metaLaunchUrl")}
                             .errorMessages=${errors.metaLaunchUrl ??
                             this.errorMessages("metaLaunchUrl")}
-                            help=${msg(
-                                "If left empty, authentik will try to extract the launch URL based on the selected provider.",
+                            help=${globalBrandingMessage(
+                                msg(
+                                    "If left empty, authentik will try to extract the launch URL based on the selected provider.",
+                                ),
                             )}
                             input-hint="code"
                         ></ak-text-input>

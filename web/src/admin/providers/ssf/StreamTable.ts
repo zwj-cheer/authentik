@@ -43,17 +43,14 @@ export class SSFProviderStreamList extends Table<SSFStream> {
         });
     }
 
-    protected override renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Stream(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: SSFStream) => {
+    protected override rowDelete = {
+        objectLabel: msg("Stream(s)"),
+        delete: (item: SSFStream) => {
                 return new SsfApi(DEFAULT_CONFIG).ssfStreamsDestroy({
                     uuid: item.pk,
                 });
-            }}
-            .metadata=${(item: SSFStream) => {
+            },
+        metadata: (item: SSFStream) => {
                 return [
                     { key: msg("Audience"), value: item.aud },
                     {
@@ -62,13 +59,8 @@ export class SSFProviderStreamList extends Table<SSFStream> {
                     },
                     { key: msg("Endpoint"), value: item.endpointUrl ?? "-" },
                 ];
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override rowLabel(item: SSFStream): string | null {
         return item.aud?.join(", ") ?? null;

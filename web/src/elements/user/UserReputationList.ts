@@ -31,8 +31,6 @@ export class UserReputationList extends Table<Reputation> {
             identifierIn: identifiers,
         });
     }
-
-    checkbox = true;
     clearOnRefresh = true;
     order = "identifier";
 
@@ -47,27 +45,19 @@ export class UserReputationList extends Table<Reputation> {
         [msg("Updated"), "updated"],
     ];
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Reputation score(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Reputation) => {
+    protected override rowDelete = {
+        objectLabel: msg("Reputation score(s)"),
+        usedBy: (item: Reputation) => {
                 return new PoliciesApi(DEFAULT_CONFIG).policiesReputationScoresUsedByList({
                     reputationUuid: item.pk || "",
                 });
-            }}
-            .delete=${(item: Reputation) => {
+            },
+        delete: (item: Reputation) => {
                 return new PoliciesApi(DEFAULT_CONFIG).policiesReputationScoresDestroy({
                     reputationUuid: item.pk || "",
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: Reputation): SlottedTemplateResult[] {
         return [

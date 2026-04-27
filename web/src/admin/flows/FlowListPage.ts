@@ -38,8 +38,6 @@ export class FlowListPage extends TablePage<Flow> {
         "Flows describe a chain of Stages to authenticate, enroll or recover a user. Stages are chosen based on policies applied to them.",
     );
     public override pageIcon = "pf-icon pf-icon-process-automation";
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override order = "slug";
@@ -62,27 +60,19 @@ export class FlowListPage extends TablePage<Flow> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Flow(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Flow) => {
+    protected override rowDelete = {
+        objectLabel: msg("Flow(s)"),
+        usedBy: (item: Flow) => {
                 return new FlowsApi(DEFAULT_CONFIG).flowsInstancesUsedByList({
                     slug: item.slug,
                 });
-            }}
-            .delete=${(item: Flow) => {
+            },
+        delete: (item: Flow) => {
                 return new FlowsApi(DEFAULT_CONFIG).flowsInstancesDestroy({
                     slug: item.slug,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: Flow): SlottedTemplateResult[] {
         return [

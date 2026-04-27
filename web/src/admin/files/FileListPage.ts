@@ -1,6 +1,5 @@
 import "#admin/files/FileUploadForm";
 import "#elements/buttons/SpinnerButton/index";
-import "#elements/forms/DeleteBulkForm";
 import "#elements/forms/ModalForm";
 import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 import "#elements/EmptyState";
@@ -30,7 +29,6 @@ export type FileListOrderKey = "name" | "mimeType";
 
 @customElement("ak-files-list")
 export class FileListPage extends WithCapabilitiesConfig(TablePage<FileItem>) {
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     protected override searchEnabled = true;
@@ -61,38 +59,27 @@ export class FileListPage extends WithCapabilitiesConfig(TablePage<FileItem>) {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    renderToolbarSelected() {
-        if (!this.can(CapabilitiesEnum.CanSaveMedia)) {
-            return nothing;
-        }
-        const disabled = !this.selectedElements.length;
-        const count = this.selectedElements.length;
-        return html`<ak-forms-delete-bulk
-            object-label=${count === 1 ? msg("file") : msg("files")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: FileItem) => {
-                return [
-                    { key: msg("Name"), value: item.name },
-                    { key: msg("Type"), value: item.mimeType },
-                ];
-            }}
-            .usedBy=${(item: FileItem) => {
-                return new AdminApi(DEFAULT_CONFIG).adminFileUsedByList({
-                    name: item.name,
-                });
-            }}
-            .delete=${(item: FileItem) => {
-                return new AdminApi(DEFAULT_CONFIG).adminFileDestroy({
-                    name: item.name,
-                    usage: UsageEnum.Media,
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+    protected override rowDelete = {
+        objectLabel: msg("file"),
+        hidden: () => !this.can(CapabilitiesEnum.CanSaveMedia),
+        metadata: (item: FileItem) => {
+            return [
+                { key: msg("Name"), value: item.name },
+                { key: msg("Type"), value: item.mimeType },
+            ];
+        },
+        usedBy: (item: FileItem) => {
+            return new AdminApi(DEFAULT_CONFIG).adminFileUsedByList({
+                name: item.name,
+            });
+        },
+        delete: (item: FileItem) => {
+            return new AdminApi(DEFAULT_CONFIG).adminFileDestroy({
+                name: item.name,
+                usage: UsageEnum.Media,
+            });
+        },
+    };
 
     row(item: FileItem): SlottedTemplateResult[] {
         return [

@@ -173,7 +173,6 @@ export class RelatedUserList extends WithBrandConfig(WithCapabilitiesConfig(Tabl
     public override label = msg("Users");
 
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     protected override searchEnabled = true;
@@ -223,49 +222,43 @@ export class RelatedUserList extends WithBrandConfig(WithCapabilitiesConfig(Tabl
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        const targetLabel = this.targetGroup?.name || this.targetRole?.name;
-
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("User(s)")}
-            submit-label=${msg("Remove User(s)")}
-            action=${msg("removed")}
-            action-subtext=${targetLabel
+    protected override rowDelete = {
+        objectLabel: msg("User(s)"),
+        submitLabel: msg("Remove User(s)"),
+        action: msg("removed"),
+        actionSubtext: () => {
+            const targetLabel = this.targetGroup?.name || this.targetRole?.name;
+            return targetLabel
                 ? msg(str`Are you sure you want to remove the selected users from ${targetLabel}?`)
-                : msg("Are you sure you want to remove the selected users?")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: User) => {
-                return [
-                    { key: msg("Username"), value: item.username },
-                    { key: msg("ID"), value: item.pk.toString() },
-                    { key: msg("UID"), value: item.uid },
-                ];
-            }}
-            .delete=${(item: User) => {
-                if (this.targetGroup) {
-                    return new CoreApi(DEFAULT_CONFIG).coreGroupsRemoveUserCreate({
-                        groupUuid: this.targetGroup.pk,
-                        userAccountRequest: {
-                            pk: item.pk,
-                        },
-                    });
-                }
-                if (this.targetRole) {
-                    return new RbacApi(DEFAULT_CONFIG).rbacRolesRemoveUserCreate({
-                        uuid: this.targetRole.pk,
-                        userAccountSerializerForRoleRequest: {
-                            pk: item.pk,
-                        },
-                    });
-                }
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Remove")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+                : msg("Are you sure you want to remove the selected users?");
+        },
+        buttonLabel: msg("Remove"),
+        metadata: (item: User) => {
+            return [
+                { key: msg("Username"), value: item.username },
+                { key: msg("ID"), value: item.pk.toString() },
+                { key: msg("UID"), value: item.uid },
+            ];
+        },
+        delete: (item: User) => {
+            if (this.targetGroup) {
+                return new CoreApi(DEFAULT_CONFIG).coreGroupsRemoveUserCreate({
+                    groupUuid: this.targetGroup.pk,
+                    userAccountRequest: {
+                        pk: item.pk,
+                    },
+                });
+            }
+            if (this.targetRole) {
+                return new RbacApi(DEFAULT_CONFIG).rbacRolesRemoveUserCreate({
+                    uuid: this.targetRole.pk,
+                    userAccountSerializerForRoleRequest: {
+                        pk: item.pk,
+                    },
+                });
+            }
+        },
+    };
 
     protected override row(item: User): SlottedTemplateResult[] {
         const showImpersonate = this.canImpersonate && item.pk !== this.currentUser?.pk;

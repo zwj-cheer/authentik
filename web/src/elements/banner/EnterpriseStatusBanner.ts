@@ -1,6 +1,7 @@
 import { globalAK } from "#common/global";
 
 import { AKElement } from "#elements/Base";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { WithLicenseSummary } from "#elements/mixins/license";
 
 import { LicenseFlagsEnum, LicenseSummaryStatusEnum } from "@goauthentik/api";
@@ -61,8 +62,10 @@ export class EnterpriseStatusBanner extends WithLicenseSummary(AKElement) {
                 );
                 break;
             case LicenseSummaryStatusEnum.ReadOnly:
-                message = msg(
-                    "Caution: This authentik instance has entered read-only mode due to expired/exceeded licenses.",
+                message = globalBrandingMessage(
+                    msg(
+                        "Caution: This authentik instance has entered read-only mode due to expired/exceeded licenses.",
+                    ),
                 );
                 break;
             default:
@@ -85,12 +88,14 @@ export class EnterpriseStatusBanner extends WithLicenseSummary(AKElement) {
         return html`
             ${this.licenseSummary?.licenseFlags.includes(LicenseFlagsEnum.Trial)
                 ? html`<div class="pf-c-banner pf-m-sticky pf-m-gold">
-                      ${msg("This authentik instance uses a Trial license.")}
+                      ${globalBrandingMessage(msg("This authentik instance uses a Trial license."))}
                   </div>`
                 : nothing}
             ${this.licenseSummary?.licenseFlags.includes(LicenseFlagsEnum.NonProduction)
                 ? html`<div class="pf-c-banner pf-m-sticky pf-m-gold">
-                      ${msg("This authentik instance uses a Non-production license.")}
+                      ${globalBrandingMessage(
+                          msg("This authentik instance uses a Non-production license."),
+                      )}
                   </div>`
                 : nothing}
         `;

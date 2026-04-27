@@ -30,7 +30,6 @@ export class EndpointListPage extends Table<Endpoint> {
     protected override emptyStateMessage = msg("Create an endpoint to get started.");
 
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override searchPlaceholder = msg("Search for an endpoint by name or host...");
@@ -53,33 +52,25 @@ export class EndpointListPage extends Table<Endpoint> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Endpoint(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: Endpoint) => {
+    protected override rowDelete = {
+        objectLabel: msg("Endpoint(s)"),
+        metadata: (item: Endpoint) => {
                 return [
                     { key: msg("Name"), value: item.name },
                     { key: msg("Host"), value: item.host },
                 ];
-            }}
-            .usedBy=${(item: Endpoint) => {
+            },
+        usedBy: (item: Endpoint) => {
                 return new RacApi(DEFAULT_CONFIG).racEndpointsUsedByList({
                     pbmUuid: item.pk,
                 });
-            }}
-            .delete=${(item: Endpoint) => {
+            },
+        delete: (item: Endpoint) => {
                 return new RacApi(DEFAULT_CONFIG).racEndpointsDestroy({
                     pbmUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: Endpoint): SlottedTemplateResult[] {
         return [

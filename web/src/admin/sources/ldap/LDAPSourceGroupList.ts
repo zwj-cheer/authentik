@@ -19,26 +19,16 @@ export class LDAPSourceGroupList extends Table<GroupLDAPSourceConnection> {
     source?: LDAPSource;
 
     protected override searchEnabled = true;
-
-    checkbox = true;
     clearOnRefresh = true;
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("LDAP Group(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: GroupLDAPSourceConnection) => {
+    protected override rowDelete = {
+        objectLabel: msg("LDAP Group(s)"),
+        delete: (item: GroupLDAPSourceConnection) => {
                 return new SourcesApi(DEFAULT_CONFIG).sourcesGroupConnectionsLdapDestroy({
                     id: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     renderToolbar(): TemplateResult {
         return html`<ak-forms-modal cancelText=${msg("Close")} ?closeAfterSuccessfulSubmit=${false}>

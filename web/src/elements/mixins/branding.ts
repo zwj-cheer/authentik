@@ -1,3 +1,4 @@
+import { globalAK } from "#common/global";
 import { DefaultBrand } from "#common/ui/config";
 
 import { createMixin } from "#elements/types";
@@ -17,6 +18,15 @@ export const BrandingContext = createContext<CurrentBrand>(Symbol("authentik-bra
 
 export type BrandingContext = Context<symbol, CurrentBrand>;
 
+export function replaceBrandingTitle(message: string, brandingTitle: string): string {
+    return message.split(DefaultBrand.brandingTitle).join(brandingTitle);
+}
+
+export function globalBrandingMessage(message: string): string {
+    const brandingTitle = globalAK().brand.brandingTitle ?? DefaultBrand.brandingTitle;
+    return replaceBrandingTitle(message, brandingTitle);
+}
+
 /**
  * A mixin that provides the current brand to the element.
  *
@@ -34,6 +44,8 @@ export interface BrandingMixin {
      * @see {@linkcode DefaultBrand.brandingTitle}
      */
     readonly brandingTitle: string;
+
+    brandingMessage(message: string): string;
 
     /**
      * The application logo.
@@ -85,6 +97,10 @@ export const WithBrandConfig = createMixin<BrandingMixin>(
 
             public get brandingTitle(): string {
                 return this.brand.brandingTitle ?? DefaultBrand.brandingTitle;
+            }
+
+            public brandingMessage(message: string): string {
+                return replaceBrandingTitle(message, this.brandingTitle);
             }
 
             public get brandingLogo(): string {

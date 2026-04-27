@@ -154,57 +154,55 @@ export class UserListPage extends WithBrandConfig(
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
+    protected override rowDelete = {
+        objectLabel: msg("User(s)"),
+        metadata: (item: User) => {
+            return [
+                { key: msg("Username"), value: item.username },
+                { key: msg("ID"), value: item.pk.toString() },
+                { key: msg("UID"), value: item.uid },
+            ];
+        },
+        usedBy: (item: User) => {
+            return this.#api.coreUsersUsedByList({
+                id: item.pk,
+            });
+        },
+        delete: (item: User) => {
+            return this.#api.coreUsersDestroy({
+                id: item.pk,
+            });
+        },
+        notice: (item: User) => {
+            const { currentUser, originalUser } = this;
+
+            if (item.pk !== currentUser?.pk && item.pk !== originalUser?.pk) {
+                return null;
+            }
+
+            return html`<div class="pf-c-form__alert">
+                <div class="pf-c-alert pf-m-inline pf-m-warning">
+                    <div class="pf-c-alert__icon">
+                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="pf-c-alert__title">
+                        ${msg(
+                            str`Warning: You're about to delete the user you're logged in as (${item.username}). Proceed at your own risk.`,
+                        )}
+                    </h4>
+                </div>
+            </div>`;
+        },
+    };
+
     protected override renderToolbarSelected(): TemplateResult {
         const disabled = this.selectedElements.length < 1;
-        const { currentUser, originalUser } = this;
 
-        const shouldShowWarning = this.selectedElements.find((el) => {
-            return el.pk === currentUser?.pk || el.pk === originalUser?.pk;
-        });
         return html`<ak-user-bulk-revoke-sessions .users=${this.selectedElements}>
-                <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-warning">
-                    ${msg("Revoke Sessions")}
-                </button>
-            </ak-user-bulk-revoke-sessions>
-            <ak-forms-delete-bulk
-                object-label=${msg("User(s)")}
-                .objects=${this.selectedElements}
-                .metadata=${(item: User) => {
-                    return [
-                        { key: msg("Username"), value: item.username },
-                        { key: msg("ID"), value: item.pk.toString() },
-                        { key: msg("UID"), value: item.uid },
-                    ];
-                }}
-                .usedBy=${(item: User) => {
-                    return this.#api.coreUsersUsedByList({
-                        id: item.pk,
-                    });
-                }}
-                .delete=${(item: User) => {
-                    return this.#api.coreUsersDestroy({
-                        id: item.pk,
-                    });
-                }}
-            >
-                ${shouldShowWarning
-                    ? html`<div slot="notice" class="pf-c-form__alert">
-                          <div class="pf-c-alert pf-m-inline pf-m-warning">
-                              <div class="pf-c-alert__icon">
-                                  <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                              </div>
-                              <h4 class="pf-c-alert__title">
-                                  ${msg(
-                                      str`Warning: You're about to delete the user you're logged in as (${shouldShowWarning.username}). Proceed at your own risk.`,
-                                  )}
-                              </h4>
-                          </div>
-                      </div>`
-                    : nothing}
-                <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                    ${msg("Delete")}
-                </button>
-            </ak-forms-delete-bulk>`;
+            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-warning">
+                ${msg("Revoke Sessions")}
+            </button>
+        </ak-user-bulk-revoke-sessions>`;
     }
 
     protected override renderToolbarAfter(): TemplateResult {

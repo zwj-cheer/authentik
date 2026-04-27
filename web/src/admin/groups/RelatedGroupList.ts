@@ -104,7 +104,6 @@ export class RelatedGroupAdd extends Form<{ groups: string[] }> {
 
 @customElement("ak-group-related-list")
 export class RelatedGroupList extends Table<Group> {
-    checkbox = true;
     clearOnRefresh = true;
     protected override searchEnabled = true;
 
@@ -128,31 +127,25 @@ export class RelatedGroupList extends Table<Group> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Group(s)")}
-            submit-label=${msg("Remove from Group(s)")}
-            action-subtext=${msg(
+    protected override rowDelete = {
+        objectLabel: msg("Group(s)"),
+        submitLabel: msg("Remove from Group(s)"),
+        action: msg("removed"),
+        actionSubtext: () =>
+            msg(
                 str`Are you sure you want to remove user ${this.targetUser?.username} from the following groups?`,
-            )}
-            button-label=${msg("Remove")}
-            .objects=${this.selectedElements}
-            .delete=${(item: Group) => {
-                if (!this.targetUser) return;
-                return new CoreApi(DEFAULT_CONFIG).coreGroupsRemoveUserCreate({
-                    groupUuid: item.pk,
-                    userAccountRequest: {
-                        pk: this.targetUser?.pk || 0,
-                    },
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Remove")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            ),
+        buttonLabel: msg("Remove"),
+        delete: (item: Group) => {
+            if (!this.targetUser) return;
+            return new CoreApi(DEFAULT_CONFIG).coreGroupsRemoveUserCreate({
+                groupUuid: item.pk,
+                userAccountRequest: {
+                    pk: this.targetUser?.pk || 0,
+                },
+            });
+        },
+    };
 
     row(item: Group): SlottedTemplateResult[] {
         return [

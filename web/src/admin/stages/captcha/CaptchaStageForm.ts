@@ -9,6 +9,7 @@ import "#elements/Alert";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { Level } from "#elements/Alert";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { BaseStageForm } from "#admin/stages/BaseStageForm";
@@ -150,10 +151,12 @@ export class CaptchaStageForm extends BaseStageForm<CaptchaStage> {
                 autocomplete="off"
                 input-hint="code"
                 placeholder=${msg("Paste your CAPTCHA public key...")}
-                help=${msg("The public key is used by authentik to render the CAPTCHA widget.", {
-                    id: "captcha.public-key.description",
-                    desc: "Description for CAPTCHA public key field.",
-                })}
+                help=${globalBrandingMessage(
+                    msg("The public key is used by authentik to render the CAPTCHA widget.", {
+                        id: "captcha.public-key.description",
+                        desc: "Description for CAPTCHA public key field.",
+                    }),
+                )}
             >
             </ak-text-input>
 
@@ -164,12 +167,14 @@ export class CaptchaStageForm extends BaseStageForm<CaptchaStage> {
                 ?required=${!this.instance}
                 ?revealed=${!this.instance}
                 placeholder=${msg("Paste your CAPTCHA secret key...")}
-                help=${msg(
-                    "The secret key allows communication between authentik and the CAPTCHA provider to validate user responses.",
-                    {
-                        id: "captcha.secret-key.description",
-                        desc: "Description for CAPTCHA secret key field.",
-                    },
+                help=${globalBrandingMessage(
+                    msg(
+                        "The secret key allows communication between authentik and the CAPTCHA provider to validate user responses.",
+                        {
+                            id: "captcha.secret-key.description",
+                            desc: "Description for CAPTCHA secret key field.",
+                        },
+                    ),
                 )}
             ></ak-secret-text-input>
         `;

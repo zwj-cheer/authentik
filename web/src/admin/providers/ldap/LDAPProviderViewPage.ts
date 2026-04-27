@@ -11,6 +11,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 import { EVENT_REFRESH } from "#common/constants";
 
 import { AKElement } from "#elements/Base";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { WithSession } from "#elements/mixins/session";
 import { SlottedTemplateResult } from "#elements/types";
 
@@ -218,7 +219,7 @@ export class LDAPProviderViewPage extends WithSession(AKElement) {
                                     class="pf-c-form-control"
                                     readonly
                                     type="text"
-                                    value=${msg("Your authentik password")}
+                                    value=${globalBrandingMessage(msg("Your authentik password"))}
                                 />
                             </div>
                             <div class="pf-c-form__group">

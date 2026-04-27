@@ -19,8 +19,6 @@ export class RoleAssignedObjectPermissionTable extends Table<ExtraRoleObjectPerm
     public roleUUID: string | null = null;
 
     protected override searchEnabled = true;
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     protected override async apiEndpoint(): Promise<PaginatedResponse<ExtraRoleObjectPermission>> {
@@ -45,18 +43,15 @@ export class RoleAssignedObjectPermissionTable extends Table<ExtraRoleObjectPerm
         [""],
     ];
 
-    protected override renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Permission(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: ExtraRoleObjectPermission) => {
+    protected override rowDelete = {
+        objectLabel: msg("Permission(s)"),
+        metadata: (item: ExtraRoleObjectPermission) => {
                 return [
                     { key: msg("Permission"), value: item.name },
                     { key: msg("Object"), value: item.objectDescription || item.objectPk },
                 ];
-            }}
-            .delete=${(item: ExtraRoleObjectPermission) => {
+            },
+        delete: (item: ExtraRoleObjectPermission) => {
                 return new RbacApi(
                     DEFAULT_CONFIG,
                 ).rbacPermissionsAssignedByRolesUnassignPartialUpdate({
@@ -67,13 +62,8 @@ export class RoleAssignedObjectPermissionTable extends Table<ExtraRoleObjectPerm
                         model: `${item.appLabel}.${item.model}` as ModelEnum,
                     },
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: ExtraRoleObjectPermission): SlottedTemplateResult[] {
         return [

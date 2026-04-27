@@ -31,8 +31,6 @@ export class DeviceAccessGroupsListPage extends TablePage<DeviceAccessGroup> {
     public override pageTitle = msg("Device access groups");
     public override pageDescription = msg("Create groups of devices to manage access.");
     public override searchPlaceholder = msg("Search device groups by name...");
-
-    public override checkbox = true;
     public override expandable = true;
 
     protected override async apiEndpoint(): Promise<PaginatedResponse<DeviceAccessGroup>> {
@@ -61,30 +59,22 @@ export class DeviceAccessGroupsListPage extends TablePage<DeviceAccessGroup> {
         return ModalInvokerButton(DeviceAccessGroupForm);
     }
 
-    renderToolbarSelected() {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Device Group(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: DeviceAccessGroup) => {
+    protected override rowDelete = {
+        objectLabel: msg("Device Group(s)"),
+        metadata: (item: DeviceAccessGroup) => {
                 return [{ key: msg("Name"), value: item.name }];
-            }}
-            .usedBy=${(item: DeviceAccessGroup) => {
+            },
+        usedBy: (item: DeviceAccessGroup) => {
                 return new EndpointsApi(DEFAULT_CONFIG).endpointsDeviceAccessGroupsUsedByList({
                     pbmUuid: item.pbmUuid,
                 });
-            }}
-            .delete=${(item: DeviceAccessGroup) => {
+            },
+        delete: (item: DeviceAccessGroup) => {
                 return new EndpointsApi(DEFAULT_CONFIG).endpointsDeviceAccessGroupsDestroy({
                     pbmUuid: item.pbmUuid,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 }
 
 declare global {

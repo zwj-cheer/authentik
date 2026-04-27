@@ -28,7 +28,6 @@ export class ReputationListPage extends TablePage<Reputation> {
     );
     public override pageIcon = "fa fa-ban";
     public override order = "identifier";
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override searchPlaceholder = msg("Search for a reputation by identifier or IP...");
 
@@ -50,27 +49,19 @@ export class ReputationListPage extends TablePage<Reputation> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Reputation")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Reputation) => {
+    protected override rowDelete = {
+        objectLabel: msg("Reputation"),
+        usedBy: (item: Reputation) => {
                 return new PoliciesApi(DEFAULT_CONFIG).policiesReputationScoresUsedByList({
                     reputationUuid: item.pk || "",
                 });
-            }}
-            .delete=${(item: Reputation) => {
+            },
+        delete: (item: Reputation) => {
                 return new PoliciesApi(DEFAULT_CONFIG).policiesReputationScoresDestroy({
                     reputationUuid: item.pk || "",
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: Reputation): SlottedTemplateResult[] {
         return [

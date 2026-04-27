@@ -29,8 +29,6 @@ export class StageListPage extends TablePage<Stage> {
     );
     public override pageIcon = "pf-icon pf-icon-plugged";
     protected override searchEnabled = true;
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override order = "name";
     public override searchPlaceholder = msg("Search for a stage name, type, or flow...");
@@ -46,27 +44,19 @@ export class StageListPage extends TablePage<Stage> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Stage(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Stage) => {
+    protected override rowDelete = {
+        objectLabel: msg("Stage(s)"),
+        usedBy: (item: Stage) => {
                 return new StagesApi(DEFAULT_CONFIG).stagesAllUsedByList({
                     stageUuid: item.pk,
                 });
-            }}
-            .delete=${(item: Stage) => {
+            },
+        delete: (item: Stage) => {
                 return new StagesApi(DEFAULT_CONFIG).stagesAllDestroy({
                     stageUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected renderStageActions(stage: Stage): SlottedTemplateResult {
         if (stage.component !== "ak-stage-authenticator-duo-form") {

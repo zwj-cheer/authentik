@@ -59,8 +59,45 @@
 }
 
 .ak-c-table__actions {
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
     justify-content: start;
+    white-space: nowrap;
+
+    > .ak-c-table__actions {
+        display: contents;
+    }
+
+    button.pf-c-button,
+    button.pf-m-tertiary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        margin-inline-start: 0;
+        min-block-size: 1.75rem;
+        min-inline-size: 1.5rem;
+        padding-inline: 0.25rem;
+        border-radius: var(--pf-global--BorderRadius--sm, 4px);
+        transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+    }
+
+    button.pf-c-button:hover,
+    button.pf-m-tertiary:hover {
+        background-color: var(--pf-global--BackgroundColor--200);
+    }
+
+    ak-forms-delete-bulk {
+        display: inline-flex;
+    }
+
+    .ak-c-table__delete-button:is(:hover, :focus-visible) {
+        color: var(--pf-global--danger-color--100);
+        background-color: color-mix(in srgb, var(--pf-global--danger-color--100) 10%, transparent);
+    }
 
     ::part(spinner-button) {
         padding-inline: var(--pf-global--spacer--md);
@@ -68,6 +105,21 @@
 
     .pf-c-button:not(:has(i)):not(:first-child) {
         margin-inline-start: var(--pf-global--spacer--sm);
+    }
+}
+
+.ak-c-table__column--actions,
+.ak-c-table__cell--actions {
+    text-align: center;
+    white-space: nowrap;
+    width: 1%;
+}
+
+.ak-c-table__cell--actions {
+    vertical-align: middle;
+
+    > .ak-c-table__actions {
+        justify-content: center;
     }
 }
 

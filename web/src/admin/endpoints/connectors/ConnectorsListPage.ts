@@ -8,6 +8,7 @@ import "#elements/forms/ModalForm";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { IconEditButtonByTagName, ModalInvokerButton } from "#elements/dialogs";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -25,8 +26,8 @@ export class ConnectorsListPage extends TablePage<Connector> {
     public override searchPlaceholder = msg("Search connectors by name or type...");
     public override pageIcon = "pf-icon pf-icon-data-source";
     public override pageTitle = msg("Connectors");
-    public override pageDescription = msg(
-        "Configure how devices connect with authentik and ingest external device data.",
+    public override pageDescription = globalBrandingMessage(
+        msg("Configure how devices connect with authentik and ingest external device data."),
     );
 
     protected override searchEnabled: boolean = true;
@@ -35,8 +36,6 @@ export class ConnectorsListPage extends TablePage<Connector> {
         [msg("Type")],
         [msg("Actions"), null, msg("Row Actions")],
     ];
-
-    public override checkbox = true;
 
     protected override async apiEndpoint(): Promise<PaginatedResponse<Connector>> {
         return new EndpointsApi(DEFAULT_CONFIG).endpointsConnectorsList(
@@ -58,30 +57,22 @@ export class ConnectorsListPage extends TablePage<Connector> {
         return ModalInvokerButton(AKEndpointConnectorWizard);
     }
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Connector(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: Connector) => {
+    protected override rowDelete = {
+        objectLabel: msg("Connector(s)"),
+        metadata: (item: Connector) => {
                 return [{ key: msg("Name"), value: item.name }];
-            }}
-            .usedBy=${(item: Connector) => {
+            },
+        usedBy: (item: Connector) => {
                 return new EndpointsApi(DEFAULT_CONFIG).endpointsConnectorsUsedByList({
                     connectorUuid: item.connectorUuid!,
                 });
-            }}
-            .delete=${(item: Connector) => {
+            },
+        delete: (item: Connector) => {
                 return new EndpointsApi(DEFAULT_CONFIG).endpointsConnectorsDestroy({
                     connectorUuid: item.connectorUuid!,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 }
 
 declare global {

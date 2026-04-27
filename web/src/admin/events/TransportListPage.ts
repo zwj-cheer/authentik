@@ -30,8 +30,6 @@ export class TransportListPage extends TablePage<NotificationTransport> {
         "Define how notifications are sent to users, like Email or Webhook.",
     );
     public pageIcon = "pf-icon pf-icon-export";
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override expandable = true;
     public override searchPlaceholder = msg(
@@ -52,27 +50,19 @@ export class TransportListPage extends TablePage<NotificationTransport> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Notification transport(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: NotificationTransport) => {
+    protected override rowDelete = {
+        objectLabel: msg("Notification transport(s)"),
+        usedBy: (item: NotificationTransport) => {
                 return new EventsApi(DEFAULT_CONFIG).eventsTransportsUsedByList({
                     uuid: item.pk,
                 });
-            }}
-            .delete=${(item: NotificationTransport) => {
+            },
+        delete: (item: NotificationTransport) => {
                 return new EventsApi(DEFAULT_CONFIG).eventsTransportsDestroy({
                     uuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: NotificationTransport): SlottedTemplateResult[] {
         return [

@@ -8,7 +8,7 @@ import { createUIThemeEffect } from "#common/theme";
 import { getCookie } from "#common/utils";
 
 import { Interface } from "#elements/Interface";
-import { WithBrandConfig } from "#elements/mixins/branding";
+import { globalBrandingMessage, WithBrandConfig } from "#elements/mixins/branding";
 import { ThemedImage } from "#elements/utils/images";
 
 import { msg } from "@lit/localize";
@@ -103,7 +103,7 @@ export class APIBrowser extends WithBrandConfig(Interface) {
                 <div slot="nav-logo">
                     ${ThemedImage({
                         src: this.brandingLogo,
-                        alt: msg("authentik Logo"),
+                        alt: globalBrandingMessage(msg("authentik Logo")),
                         className: "logo",
                         theme: this.activeTheme,
                         themedUrls: this.brandingLogoThemedUrls,

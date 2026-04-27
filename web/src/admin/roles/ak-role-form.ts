@@ -8,6 +8,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 import { PFSize } from "#common/enums";
 
 import { ModelForm } from "#elements/forms/ModelForm";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import { RbacApi, Role } from "@goauthentik/api";
 
@@ -54,7 +55,9 @@ export class RoleForm extends ModelForm<Role, string> {
             autocomplete="off"
             label=${msg("Role Name")}
             placeholder=${msg("Type a name for this role...")}
-            help=${msg("This name will be used to identify the role within authentik.")}
+            help=${globalBrandingMessage(
+                msg("This name will be used to identify the role within authentik."),
+            )}
             required
             name="name"
             value="${ifDefined(this.instance?.name)}"

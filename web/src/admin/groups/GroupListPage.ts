@@ -23,8 +23,6 @@ import { customElement, property } from "lit/decorators.js";
 @customElement("ak-group-list")
 export class GroupListPage extends TablePage<Group> {
     protected override searchEnabled = true;
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public searchPlaceholder = msg("Search for a group by name…");
@@ -53,27 +51,19 @@ export class GroupListPage extends TablePage<Group> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Group(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Group) => {
+    protected override rowDelete = {
+        objectLabel: msg("Group(s)"),
+        usedBy: (item: Group) => {
                 return new CoreApi(DEFAULT_CONFIG).coreGroupsUsedByList({
                     groupUuid: item.pk,
                 });
-            }}
-            .delete=${(item: Group) => {
+            },
+        delete: (item: Group) => {
                 return new CoreApi(DEFAULT_CONFIG).coreGroupsDestroy({
                     groupUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected row(item: Group): SlottedTemplateResult[] {
         return [

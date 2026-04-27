@@ -28,8 +28,6 @@ export class EnrollmentTokenListPage extends Table<EnrollmentToken> {
 
     protected override searchEnabled = true;
     protected emptyStateMessage = msg("No enrollment tokens found for this connector.");
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override searchPlaceholder = msg("Search for an enrollment token...");
@@ -54,34 +52,25 @@ export class EnrollmentTokenListPage extends Table<EnrollmentToken> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Enrollment Token(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: EnrollmentToken) => {
+    protected override rowDelete = {
+        objectLabel: msg("Enrollment Token(s)"),
+        metadata: (item: EnrollmentToken) => {
                 return [
                     { key: msg("Name"), value: item.name },
                     { key: msg("Group"), value: item.deviceGroupObj?.name },
                 ];
-            }}
-            .usedBy=${(item: EnrollmentToken) => {
+            },
+        usedBy: (item: EnrollmentToken) => {
                 return this.#api.endpointsAgentsEnrollmentTokensUsedByList({
                     tokenUuid: item.tokenUuid,
                 });
-            }}
-            .delete=${(item: EnrollmentToken) => {
+            },
+        delete: (item: EnrollmentToken) => {
                 return this.#api.endpointsAgentsEnrollmentTokensDestroy({
                     tokenUuid: item.tokenUuid,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: EnrollmentToken): SlottedTemplateResult[] {
         return [

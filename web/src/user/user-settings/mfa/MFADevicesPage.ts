@@ -30,8 +30,6 @@ export const stageToAuthenticatorName = (stage: UserSetting) =>
 export class MFADevicesPage extends Table<Device> {
     @property({ attribute: false })
     userSettings?: UserSetting[];
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override label = msg("MFA Devices");
@@ -126,20 +124,12 @@ export class MFADevicesPage extends Table<Device> {
         }
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Device(s)")}
-            .objects=${this.selectedElements}
-            .delete=${(item: Device) => {
+    protected override rowDelete = {
+        objectLabel: msg("Device(s)"),
+        delete: (item: Device) => {
                 return this.deleteWrapper(item);
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     row(item: Device): SlottedTemplateResult[] {
         return [

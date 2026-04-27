@@ -10,6 +10,7 @@ import { MessageLevel } from "#common/messages";
 import { ModalForm } from "#elements/forms/ModalForm";
 import { ModelForm } from "#elements/forms/ModelForm";
 import { showMessage } from "#elements/messages/MessageContainer";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import {
@@ -87,7 +88,9 @@ export class DuoDeviceImportForm extends ModelForm<AuthenticatorDuoStage, string
                 </ak-search-select>
 
                 <p class="pf-c-form__helper-text">
-                    ${msg("The user in authentik this device will be assigned to.")}
+                    ${globalBrandingMessage(
+                        msg("The user in authentik this device will be assigned to."),
+                    )}
                 </p>
             </ak-form-element-horizontal>
             <ak-text-input

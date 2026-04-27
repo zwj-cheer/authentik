@@ -3,6 +3,7 @@ import "#elements/EmptyState";
 import Styles from "./ak-flow-card.css";
 
 import { AKElement } from "#elements/Base";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { FormStaticChallenge } from "#flow/types";
@@ -47,7 +48,7 @@ export class FlowCard extends AKElement {
             </h1>`;
         } else if (this.challenge?.flowInfo?.title) {
             title = html`<h1 class="pf-c-title pf-m-3xl ak-m-clamped">
-                ${this.challenge.flowInfo.title}
+                ${globalBrandingMessage(this.challenge.flowInfo.title)}
             </h1>`;
         }
         const footer = this.findSlotted("footer") ? html`<slot name="footer"></slot>` : null;

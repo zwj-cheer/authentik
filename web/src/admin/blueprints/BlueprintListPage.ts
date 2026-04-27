@@ -16,6 +16,7 @@ import { docLink } from "#common/global";
 
 import { IconEditButton, modalInvoker, ModalInvokerButton } from "#elements/dialogs";
 import { IconPermissionButton } from "#elements/dialogs/components/IconPermissionButton";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn, Timestamp } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -68,11 +69,12 @@ export class BlueprintListPage extends TablePage<BlueprintInstance> {
     protected override searchEnabled = true;
 
     public pageTitle = msg("Blueprints");
-    public pageDescription = msg("Automate and template configuration within authentik.");
+    public pageDescription = globalBrandingMessage(
+        msg("Automate and template configuration within authentik."),
+    );
     public pageIcon = "pf-icon pf-icon-blueprint";
 
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override searchPlaceholder = msg("Search for a blueprint by name or path...");
 
@@ -92,30 +94,22 @@ export class BlueprintListPage extends TablePage<BlueprintInstance> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Blueprint(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: BlueprintInstance) => {
+    protected override rowDelete = {
+        objectLabel: msg("Blueprint(s)"),
+        metadata: (item: BlueprintInstance) => {
                 return [{ key: msg("Name"), value: item.name }];
-            }}
-            .usedBy=${(item: BlueprintInstance) => {
+            },
+        usedBy: (item: BlueprintInstance) => {
                 return new ManagedApi(DEFAULT_CONFIG).managedBlueprintsUsedByList({
                     instanceUuid: item.pk,
                 });
-            }}
-            .delete=${(item: BlueprintInstance) => {
+            },
+        delete: (item: BlueprintInstance) => {
                 return new ManagedApi(DEFAULT_CONFIG).managedBlueprintsDestroy({
                     instanceUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override renderExpanded(item: BlueprintInstance): SlottedTemplateResult {
         const [appLabel, modelName] = ModelEnum.AuthentikBlueprintsBlueprintinstance.split(".");

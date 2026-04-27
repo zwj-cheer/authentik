@@ -22,6 +22,7 @@ import {
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { RadioOption } from "#elements/forms/Radio";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import {
     FlowDesignationEnum,
@@ -112,8 +113,10 @@ function renderHasSlsUrl(
             name="slsBinding"
             .options=${serviceProviderBindingOptions}
             .value=${provider?.slsBinding ?? SAMLBindingsEnum.Redirect}
-            help=${msg(
-                "Determines how authentik sends the logout response back to the Service Provider.",
+            help=${globalBrandingMessage(
+                msg(
+                    "Determines how authentik sends the logout response back to the Service Provider.",
+                ),
             )}
             @change=${setSlsBinding}
         >
@@ -441,8 +444,10 @@ export function renderForm({
                     name="spBinding"
                     .options=${serviceProviderBindingOptions}
                     .value=${provider.spBinding ?? SAMLBindingsEnum.Post}
-                    help=${msg(
-                        "Determines how authentik sends the response back to the Service Provider.",
+                    help=${globalBrandingMessage(
+                        msg(
+                            "Determines how authentik sends the response back to the Service Provider.",
+                        ),
                     )}
                 ></ak-radio-input>
                 <ak-form-element-horizontal

@@ -13,6 +13,7 @@ import { intentToLabel } from "#common/labels";
 import { IconTokenCopyButton } from "#elements/buttons/IconTokenCopyButton";
 import { IconEditButton, ModalInvokerButton } from "#elements/dialogs";
 import { IconPermissionButton } from "#elements/dialogs/components/IconPermissionButton";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn, Timestamp } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -29,8 +30,10 @@ import { customElement } from "lit/decorators.js";
 export class TokenListPage extends TablePage<Token> {
     protected override searchEnabled = true;
     public override pageTitle = msg("Tokens");
-    public override pageDescription = msg(
-        "Tokens are used throughout authentik for Email validation stages, Recovery keys and API access.",
+    public override pageDescription = globalBrandingMessage(
+        msg(
+            "Tokens are used throughout authentik for Email validation stages, Recovery keys and API access.",
+        ),
     );
     public override pageIcon = "pf-icon pf-icon-security";
     public override searchPlaceholder = msg("Search for a token identifier, user, or intent...");
@@ -38,8 +41,6 @@ export class TokenListPage extends TablePage<Token> {
     protected override rowLabel(item: Token): string | null {
         return item.identifier;
     }
-
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override order = "expires";
 
@@ -56,30 +57,22 @@ export class TokenListPage extends TablePage<Token> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Token(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: Token) => {
+    protected override rowDelete = {
+        objectLabel: msg("Token(s)"),
+        metadata: (item: Token) => {
                 return [{ key: msg("Identifier"), value: item.identifier }];
-            }}
-            .usedBy=${(item: Token) => {
+            },
+        usedBy: (item: Token) => {
                 return new CoreApi(DEFAULT_CONFIG).coreTokensUsedByList({
                     identifier: item.identifier,
                 });
-            }}
-            .delete=${(item: Token) => {
+            },
+        delete: (item: Token) => {
                 return new CoreApi(DEFAULT_CONFIG).coreTokensDestroy({
                     identifier: item.identifier,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override renderObjectCreate(): SlottedTemplateResult {
         return ModalInvokerButton(TokenForm);
@@ -89,7 +82,9 @@ export class TokenListPage extends TablePage<Token> {
         return [
             html`<div>${item.identifier}</div>
                 ${item.managed
-                    ? html`<small>${msg("Token is managed by authentik.")}</small>`
+                    ? html`<small
+                          >${globalBrandingMessage(msg("Token is managed by authentik."))}</small
+                      >`
                     : nothing}`,
             html`<a href="#/identity/users/${item.userObj?.pk}">${item.userObj?.username}</a>`,
             html`<ak-status-label type="warning" ?good=${item.expiring}></ak-status-label>`,

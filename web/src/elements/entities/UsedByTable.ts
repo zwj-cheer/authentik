@@ -17,7 +17,7 @@ import PFList from "@patternfly/patternfly/components/List/list.css";
 
 export interface BulkDeleteMetadata {
     key: string;
-    value: string;
+    value: SlottedTemplateResult | string | number | boolean | null | undefined;
 }
 
 @customElement("ak-used-by-table")
@@ -57,7 +57,7 @@ export class UsedByTable<T extends object> extends StaticTable<T> {
     }
 
     protected override row(item: T): SlottedTemplateResult[] {
-        return this.metadata(item).map((element) => element.value);
+        return this.metadata(item).map((element) => html`${element.value}`);
     }
 
     protected override renderToolbarContainer(): SlottedTemplateResult {

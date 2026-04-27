@@ -28,7 +28,6 @@ export class BoundStagesList extends Table<FlowStageBinding> {
     protected flowsAPI = new FlowsApi(DEFAULT_CONFIG);
 
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
 
     public override order = "order";
@@ -54,33 +53,25 @@ export class BoundStagesList extends Table<FlowStageBinding> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Stage binding(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: FlowStageBinding) => {
+    protected override rowDelete = {
+        objectLabel: msg("Stage binding(s)"),
+        metadata: (item: FlowStageBinding) => {
                 return [
                     { key: msg("Stage"), value: item.stageObj?.name || "" },
                     { key: msg("Stage type"), value: item.stageObj?.verboseName || "" },
                 ];
-            }}
-            .usedBy=${(item: FlowStageBinding) => {
+            },
+        usedBy: (item: FlowStageBinding) => {
                 return this.flowsAPI.flowsBindingsUsedByList({
                     fsbUuid: item.pk,
                 });
-            }}
-            .delete=${(item: FlowStageBinding) => {
+            },
+        delete: (item: FlowStageBinding) => {
                 return this.flowsAPI.flowsBindingsDestroy({
                     fsbUuid: item.pk,
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override row(item: FlowStageBinding): SlottedTemplateResult[] {
         return [

@@ -4,7 +4,7 @@ import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 import { globalAK } from "#common/global";
 
 import { AKElement } from "#elements/Base";
-import { WithBrandConfig } from "#elements/mixins/branding";
+import { globalBrandingMessage, WithBrandConfig } from "#elements/mixins/branding";
 import { WithSession } from "#elements/mixins/session";
 import { isAdminRoute } from "#elements/router/utils";
 import { SlottedTemplateResult } from "#elements/types";
@@ -173,7 +173,7 @@ export class AKPageNavbar
                         <div class="logo">
                             ${ThemedImage({
                                 src: this.brandingLogo,
-                                alt: msg("authentik Logo"),
+                                alt: globalBrandingMessage(msg("authentik Logo")),
                                 theme: this.activeTheme,
                                 themedUrls: this.brandingLogoThemedUrls,
                             })}

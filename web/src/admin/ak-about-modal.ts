@@ -5,7 +5,7 @@ import { globalAK } from "#common/global";
 
 import { asInvoker } from "#elements/dialogs";
 import { AKModal } from "#elements/dialogs/ak-modal";
-import { WithBrandConfig } from "#elements/mixins/branding";
+import { globalBrandingMessage, WithBrandConfig } from "#elements/mixins/branding";
 import { WithLicenseSummary } from "#elements/mixins/license";
 import { SlottedTemplateResult } from "#elements/types";
 import { DefaultFlowBackground, ThemedImage } from "#elements/utils/images";
@@ -36,7 +36,7 @@ function renderEntry([label, content = null]: AboutEntry): SlottedTemplateResult
 
 @customElement("ak-about-modal")
 export class AboutModal extends WithLicenseSummary(WithBrandConfig(AKModal)) {
-    public override formatARIALabel = () => msg("About authentik");
+    public override formatARIALabel = () => globalBrandingMessage(msg("About authentik"));
 
     public static hostStyles = [
         ...AKModal.hostStyles,
@@ -80,7 +80,7 @@ export class AboutModal extends WithLicenseSummary(WithBrandConfig(AKModal)) {
         `,
     ];
 
-    public static ariaLabel = msg("About authentik");
+    public static ariaLabel = globalBrandingMessage(msg("About authentik"));
 
     public static open = asInvoker(AboutModal);
 
@@ -207,7 +207,7 @@ export class AboutModal extends WithLicenseSummary(WithBrandConfig(AKModal)) {
                 ${this.renderLoadingBar()}
                 ${ThemedImage({
                     src: this.brandingFavicon,
-                    alt: msg("authentik Logo"),
+                    alt: globalBrandingMessage(msg("authentik Logo")),
                     className: "pf-c-about-modal-box__brand-image",
                     theme: this.activeTheme,
                     themedUrls: this.brandingFaviconThemedUrls,

@@ -3,7 +3,6 @@ import "#elements/forms/ConfirmationForm";
 import "#elements/AppIcon";
 import "#elements/ak-mdx/ak-mdx";
 import "#elements/buttons/SpinnerButton/ak-spinner-button";
-import "#elements/forms/DeleteBulkForm";
 import "#elements/forms/ModalForm";
 import "#elements/dialogs/ak-modal";
 import "#admin/applications/ApplicationForm";
@@ -55,8 +54,21 @@ export class ApplicationListPage extends WithBrandConfig(TablePage<Application>)
     }
     public pageIcon = "pf-icon pf-icon-applications";
 
-    public override checkbox = true;
     public override clearOnRefresh = true;
+
+    protected override rowDelete = {
+        objectLabel: msg("Application(s)"),
+        usedBy: (item: Application) => {
+            return new CoreApi(DEFAULT_CONFIG).coreApplicationsUsedByList({
+                slug: item.slug,
+            });
+        },
+        delete: (item: Application) => {
+            return new CoreApi(DEFAULT_CONFIG).coreApplicationsDestroy({
+                slug: item.slug,
+            });
+        },
+    };
 
     @property()
     public order = "name";
@@ -98,28 +110,6 @@ export class ApplicationListPage extends WithBrandConfig(TablePage<Application>)
                 </div>
             </div>
         </aside>`;
-    }
-
-    protected override renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Application(s)")}
-            .objects=${this.selectedElements}
-            .usedBy=${(item: Application) => {
-                return new CoreApi(DEFAULT_CONFIG).coreApplicationsUsedByList({
-                    slug: item.slug,
-                });
-            }}
-            .delete=${(item: Application) => {
-                return new CoreApi(DEFAULT_CONFIG).coreApplicationsDestroy({
-                    slug: item.slug,
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
     }
 
     protected row(item: Application): SlottedTemplateResult[] {

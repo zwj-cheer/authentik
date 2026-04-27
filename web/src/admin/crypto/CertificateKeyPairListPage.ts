@@ -11,6 +11,7 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { ModalInvokerButton } from "#elements/dialogs";
 import { PFColor } from "#elements/Label";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -31,7 +32,6 @@ export class CertificateKeyPairListPage extends TablePage<CertificateKeyPair> {
     static styles: CSSResult[] = [...super.styles, PFDescriptionList];
 
     public override expandable = true;
-    public override checkbox = true;
     public override clearOnRefresh = true;
     public override searchPlaceholder = msg("Search for a certificate or key name...");
 
@@ -58,39 +58,30 @@ export class CertificateKeyPairListPage extends TablePage<CertificateKeyPair> {
         [msg("Actions"), null, msg("Row Actions")],
     ];
 
-    protected override renderToolbarSelected(): SlottedTemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        const count = this.selectedElements.length;
-        return html`<ak-forms-delete-bulk
-            object-label=${count === 1 ? msg("Certificate-Key Pair") : msg("Certificate-Key Pairs")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: CertificateKeyPair) => {
-                return [
-                    { key: msg("Name"), value: item.name },
-                    { key: msg("Expiry"), value: item.certExpiry?.toLocaleString() },
-                ];
-            }}
-            .usedBy=${(item: CertificateKeyPair) => {
-                return new CryptoApi(DEFAULT_CONFIG).cryptoCertificatekeypairsUsedByList({
-                    kpUuid: item.pk,
-                });
-            }}
-            .delete=${(item: CertificateKeyPair) => {
-                return new CryptoApi(DEFAULT_CONFIG).cryptoCertificatekeypairsDestroy({
-                    kpUuid: item.pk,
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+    protected override rowDelete = {
+        objectLabel: msg("Certificate-Key Pair"),
+        metadata: (item: CertificateKeyPair) => {
+            return [
+                { key: msg("Name"), value: item.name },
+                { key: msg("Expiry"), value: item.certExpiry?.toLocaleString() },
+            ];
+        },
+        usedBy: (item: CertificateKeyPair) => {
+            return new CryptoApi(DEFAULT_CONFIG).cryptoCertificatekeypairsUsedByList({
+                kpUuid: item.pk,
+            });
+        },
+        delete: (item: CertificateKeyPair) => {
+            return new CryptoApi(DEFAULT_CONFIG).cryptoCertificatekeypairsDestroy({
+                kpUuid: item.pk,
+            });
+        },
+    };
 
     protected override row(item: CertificateKeyPair): SlottedTemplateResult[] {
-        let managedSubText = msg("Managed by authentik");
+        let managedSubText = globalBrandingMessage(msg("Managed by authentik"));
         if (item.managed && item.managed.startsWith("goauthentik.io/crypto/discovered")) {
-            managedSubText = msg("Managed by authentik (Discovered)");
+            managedSubText = globalBrandingMessage(msg("Managed by authentik (Discovered)"));
         }
         let color = PFColor.Green;
         if (item.certExpiry) {

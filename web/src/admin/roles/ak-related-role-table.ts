@@ -2,7 +2,6 @@ import "#admin/roles/ak-role-form";
 import "#admin/users/ak-user-role-table";
 import "#components/ak-status-label";
 import "#elements/buttons/SpinnerButton/index";
-import "#elements/forms/DeleteBulkForm";
 import "#elements/forms/HorizontalFormElement";
 import "#elements/forms/ModalForm";
 import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
@@ -20,7 +19,7 @@ import { RoleForm } from "#admin/roles/ak-role-form";
 import { Group, RbacApi, Role, User } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
-import { html, nothing, PropertyValues, TemplateResult } from "lit";
+import { html, nothing, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
 //#region Related Role Form
@@ -115,7 +114,6 @@ export class AddRelatedRoleForm extends Form<{ roles: string[] }> {
 export class RelatedRoleTable extends Table<Role> {
     #api = new RbacApi(DEFAULT_CONFIG);
 
-    checkbox = true;
     clearOnRefresh = true;
     protected override searchEnabled = true;
 
@@ -130,14 +128,6 @@ export class RelatedRoleTable extends Table<Role> {
 
     @property({ type: Boolean })
     public showInherited = false;
-
-    willUpdate(changedProperties: PropertyValues<this>) {
-        super.willUpdate(changedProperties);
-        if (changedProperties.has("showInherited")) {
-            // Disable checkboxes in showInherited mode (view-only)
-            this.checkbox = !this.showInherited;
-        }
-    }
 
     async apiEndpoint(): Promise<PaginatedResponse<Role>> {
         const config = await this.defaultEndpointConfig();
@@ -176,35 +166,26 @@ export class RelatedRoleTable extends Table<Role> {
         );
     };
 
-    renderToolbarSelected(): SlottedTemplateResult {
-        // Don't render Remove button in showInherited mode (view-only)
-        if (this.showInherited) {
-            return nothing;
-        }
-        const disabled = !this.selectedElements.length;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Role(s)")}
-            submit-label=${msg("Remove from Role(s)")}
-            action-subtext=${msg(
+    protected override rowDelete = {
+        objectLabel: msg("Role(s)"),
+        submitLabel: msg("Remove from Role(s)"),
+        action: msg("removed"),
+        actionSubtext: () =>
+            msg(
                 str`Are you sure you want to remove user ${this.targetUser?.username} from the following roles?`,
-            )}
-            button-label=${msg("Remove")}
-            .objects=${this.selectedElements}
-            .delete=${(item: Role) => {
-                if (!this.targetUser) return;
-                return this.#api.rbacRolesRemoveUserCreate({
-                    uuid: item.pk,
-                    userAccountSerializerForRoleRequest: {
-                        pk: this.targetUser.pk,
-                    },
-                });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Remove")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            ),
+        buttonLabel: msg("Remove"),
+        hidden: () => this.showInherited,
+        delete: (item: Role) => {
+            if (!this.targetUser) return;
+            return this.#api.rbacRolesRemoveUserCreate({
+                uuid: item.pk,
+                userAccountSerializerForRoleRequest: {
+                    pk: this.targetUser.pk,
+                },
+            });
+        },
+    };
 
     protected isInherited(role: Role): boolean {
         if (this.targetGroup) {

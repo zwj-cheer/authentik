@@ -3,6 +3,7 @@ import "#elements/EmptyState";
 import "#elements/buttons/SpinnerButton/index";
 import "#elements/chips/Chip";
 import "#elements/chips/ChipGroup";
+import "#elements/forms/DeleteBulkForm";
 import "#elements/table/TablePagination";
 import "#elements/table/TableSearch";
 import "#elements/timestamp/ak-timestamp";
@@ -19,6 +20,10 @@ import { GroupResult } from "#common/utils";
 import { AKElement } from "#elements/Base";
 import { intersectionObserver } from "#elements/decorators/intersection-observer";
 import { type TransclusionChildElement, TransclusionChildSymbol } from "#elements/dialogs/shared";
+import {
+    DeleteBulkButton,
+    type DeleteBulkButtonOptions,
+} from "#elements/forms/DeleteBulkForm";
 import { WithSession } from "#elements/mixins/session";
 import { getURLParam, updateURLParams } from "#elements/router/RouteMatch";
 import Styles from "#elements/table/Table.css";
@@ -73,6 +78,16 @@ export type RowType =
 export interface ColumnOptions {
     style?: string;
 }
+export type RowDeleteOptions<T> = Omit<
+    DeleteBulkButtonOptions<T>,
+    "item" | "itemLabel" | "submitLabel" | "actionSubtext"
+> & {
+    itemLabel?: (item: T) => string | null;
+    submitLabel?: string | ((item: T) => string);
+    actionSubtext?: string | ((item: T) => string);
+    hidden?: (item: T) => boolean;
+    notice?: (item: T) => SlottedTemplateResult | null;
+};
 
 /**
  * A base table component that handles fetching, pagination, selection, and grouping of data.
@@ -129,6 +144,8 @@ export abstract class Table<T extends object, D = T>
      */
     protected emptyStateMessage = msg("No objects found.");
 
+    protected rowDelete?: RowDeleteOptions<T>;
+
     /**
      * Whether the table is currently fetching data.
      */
@@ -177,6 +194,7 @@ export abstract class Table<T extends object, D = T>
 
         if (this.checkbox) nextColumnCount += 1;
         if (this.expandable) nextColumnCount += 1;
+        if (this.rowDelete && !this.hasRowActionsColumn()) nextColumnCount += 1;
 
         this.columnCount = nextColumnCount;
 
@@ -586,6 +604,74 @@ export abstract class Table<T extends object, D = T>
         return name || null;
     }
 
+    protected hasRowActionsColumn(): boolean {
+        const column = this.columns.at(-1);
+
+        if (!column) return false;
+
+        const [label, orderBy, ariaLabel] = column;
+
+        return orderBy === null && (label === msg("Actions") || ariaLabel === msg("Row Actions"));
+    }
+
+    protected renderRowDelete(item: T): SlottedTemplateResult {
+        if (!this.rowDelete || this.rowDelete.hidden?.(item)) {
+            return nothing;
+        }
+
+        return DeleteBulkButton({
+            item,
+            objectLabel: this.rowDelete.objectLabel,
+            itemLabel: this.rowDelete.itemLabel?.(item) ?? this.rowLabel(item),
+            submitLabel:
+                typeof this.rowDelete.submitLabel === "function"
+                    ? this.rowDelete.submitLabel(item)
+                    : this.rowDelete.submitLabel,
+            actionSubtext:
+                typeof this.rowDelete.actionSubtext === "function"
+                    ? this.rowDelete.actionSubtext(item)
+                    : this.rowDelete.actionSubtext,
+            action: this.rowDelete.action,
+            buttonLabel: this.rowDelete.buttonLabel,
+            notice: this.rowDelete.notice?.(item),
+            usedBy: this.rowDelete.usedBy,
+            delete: this.rowDelete.delete,
+            metadata: this.rowDelete.metadata,
+        });
+    }
+
+    protected renderRow(item: T): RowType[] {
+        const cells = [...this.row(item)];
+
+        if (!this.rowDelete) {
+            return cells;
+        }
+
+        const deleteButton = this.renderRowDelete(item);
+
+        if (this.hasRowActionsColumn()) {
+            const lastCell = cells.at(-1);
+
+            if (Array.isArray(lastCell)) {
+                const [template, options] = lastCell;
+
+                cells[cells.length - 1] = [
+                    html`<div class="ak-c-table__actions">${template} ${deleteButton}</div>`,
+                    options,
+                ];
+            } else {
+                cells[cells.length - 1] =
+                    html`<div class="ak-c-table__actions">${lastCell} ${deleteButton}</div>`;
+            }
+
+            return cells;
+        }
+
+        cells.push(html`<div class="ak-c-table__actions">${deleteButton}</div>`);
+
+        return cells;
+    }
+
     private renderRows(): SlottedTemplateResult | SlottedTemplateResult[] {
         if (this.error) {
             return this.renderEmpty(this.renderError());
@@ -786,8 +872,9 @@ export abstract class Table<T extends object, D = T>
         return html`
             <tr aria-selected=${selected ? "true" : "false"} class="${this.rowClassNames}">
                 ${memoizedCheckbox} ${memoizedExpansion}
-                ${this.row(item).map((cell, columnIndex) => {
-                    const columnID = this.#columnIDs.get(this.columns[columnIndex]);
+                ${this.renderRow(item).map((cell, columnIndex) => {
+                    const column = this.columns[columnIndex];
+                    const columnID = column ? this.#columnIDs.get(column) : "row-actions";
 
                     const headers = groupHeaderID
                         ? `${groupHeaderID} ${columnID}`.trim()
@@ -799,9 +886,15 @@ export abstract class Table<T extends object, D = T>
                     } else {
                         cellTemplate = cell;
                     }
+                    const isRowActionsCell = column
+                        ? column[1] === null && column[2] === msg("Row Actions")
+                        : columnID === "row-actions";
                     return html`<td
                         @click=${this.rowClickListener.bind(this, item)}
-                        class=${ifPresent(!columnID, "presentational")}
+                        class=${classMap({
+                            "presentational": !columnID,
+                            "ak-c-table__cell--actions": isRowActionsCell,
+                        })}
                         headers=${ifPresent(headers)}
                         style="${ifPresent(cellOptions.style)}"
                     >
@@ -1068,6 +1161,16 @@ export abstract class Table<T extends object, D = T>
                                     columnIndex: idx,
                                 });
                             })}
+                            ${this.rowDelete && !this.hasRowActionsColumn()
+                                ? renderTableColumn({
+                                      label: msg("Actions"),
+                                      ariaLabel: msg("Row Actions"),
+                                      id: "row-actions",
+                                      orderBy: null,
+                                      table: this,
+                                      columnIndex: this.columns.length,
+                                  })
+                                : nothing}
                         </tr>
                     </thead>
                     ${this.renderRows()}

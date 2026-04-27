@@ -18,7 +18,6 @@ import PFDescriptionList from "@patternfly/patternfly/components/DescriptionList
 
 @customElement("ak-rac-connection-token-list")
 export class ConnectionTokenListPage extends Table<ConnectionToken> {
-    checkbox = true;
     clearOnRefresh = true;
 
     protected override searchEnabled = true;
@@ -42,33 +41,25 @@ export class ConnectionTokenListPage extends Table<ConnectionToken> {
         });
     }
 
-    renderToolbarSelected(): TemplateResult {
-        const disabled = this.selectedElements.length < 1;
-        return html`<ak-forms-delete-bulk
-            object-label=${msg("Connection Token(s)")}
-            .objects=${this.selectedElements}
-            .metadata=${(item: ConnectionToken) => {
+    protected override rowDelete = {
+        objectLabel: msg("Connection Token(s)"),
+        metadata: (item: ConnectionToken) => {
                 return [
                     { key: msg("Endpoint"), value: item.endpointObj.name },
                     { key: msg("User"), value: item.user.username },
                 ];
-            }}
-            .usedBy=${(item: ConnectionToken) => {
+            },
+        usedBy: (item: ConnectionToken) => {
                 return new RacApi(DEFAULT_CONFIG).racConnectionTokensUsedByList({
                     connectionTokenUuid: item.pk || "",
                 });
-            }}
-            .delete=${(item: ConnectionToken) => {
+            },
+        delete: (item: ConnectionToken) => {
                 return new RacApi(DEFAULT_CONFIG).racConnectionTokensDestroy({
                     connectionTokenUuid: item.pk || "",
                 });
-            }}
-        >
-            <button ?disabled=${disabled} slot="trigger" class="pf-c-button pf-m-danger">
-                ${msg("Delete")}
-            </button>
-        </ak-forms-delete-bulk>`;
-    }
+            },
+    };
 
     protected override rowLabel(item: ConnectionToken): string | null {
         if (this.provider) {

@@ -9,6 +9,7 @@ import "#admin/common/ak-crypto-certificate-search";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { ModelForm } from "#elements/forms/ModelForm";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import {
     EventsApi,
@@ -118,7 +119,9 @@ export class TransportForm extends ModelForm<NotificationTransport, string> {
                     }}
                     .options=${[
                         {
-                            label: msg("Local (notifications will be created within authentik)"),
+                            label: globalBrandingMessage(
+                                msg("Local (notifications will be created within authentik)"),
+                            ),
                             value: TransportModeEnum.Local,
                             default: true,
                         },

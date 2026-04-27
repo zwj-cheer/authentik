@@ -13,6 +13,7 @@ import { propertyMappingsProvider, propertyMappingsSelector } from "./LDAPSource
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { RadioOption } from "#elements/forms/Radio";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import { placeholderHelperText } from "#admin/helperText";
 import { BaseSourceForm } from "#admin/sources/BaseSourceForm";
@@ -104,8 +105,10 @@ export class LDAPSourceForm extends BaseSourceForm<LDAPSource> {
                 name="passwordLoginUpdateInternalPassword"
                 label=${msg("Update internal password on login")}
                 ?checked=${this.instance?.passwordLoginUpdateInternalPassword ?? false}
-                help=${msg(
-                    "When the user logs in to authentik using this source password backend, update their credentials in authentik.",
+                help=${globalBrandingMessage(
+                    msg(
+                        "When the user logs in to authentik using this source password backend, update their credentials in authentik.",
+                    ),
                 )}
             ></ak-switch-input>
             <ak-switch-input
@@ -117,8 +120,10 @@ export class LDAPSourceForm extends BaseSourceForm<LDAPSource> {
                 name="syncUsersPassword"
                 label=${msg("User password writeback")}
                 ?checked=${this.instance?.syncUsersPassword ?? true}
-                help=${msg(
-                    "Login password is synced from LDAP into authentik automatically. Enable this option only to write password changes in authentik back to LDAP.",
+                help=${globalBrandingMessage(
+                    msg(
+                        "Login password is synced from LDAP into authentik automatically. Enable this option only to write password changes in authentik back to LDAP.",
+                    ),
                 )}
             ></ak-switch-input>
             <ak-switch-input
@@ -130,8 +135,10 @@ export class LDAPSourceForm extends BaseSourceForm<LDAPSource> {
                 name="deleteNotFoundObjects"
                 label=${msg("Delete Not Found Objects")}
                 ?checked=${this.instance?.deleteNotFoundObjects ?? false}
-                help=${msg(
-                    "Delete authentik users and groups which were previously supplied by this source, but are now missing from it.",
+                help=${globalBrandingMessage(
+                    msg(
+                        "Delete authentik users and groups which were previously supplied by this source, but are now missing from it.",
+                    ),
                 )}
             ></ak-switch-input>
             <ak-form-group open label="${msg("Connection settings")}">
