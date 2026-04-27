@@ -2,8 +2,17 @@ import { Flow, FlowDesignationEnum, FlowLayoutEnum } from "@goauthentik/api";
 
 import { msg } from "@lit/localize";
 
+export function FlowNameToLabel(name: string): string {
+    switch (name) {
+        case "Authorize Application":
+            return msg("Authorize Application");
+        default:
+            return name;
+    }
+}
+
 export function RenderFlowOption(flow: Flow): string {
-    return `${flow.slug} (${flow.name})`;
+    return `${flow.slug} (${FlowNameToLabel(flow.name)})`;
 }
 
 export function DesignationToLabel(designation: FlowDesignationEnum): string {

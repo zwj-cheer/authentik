@@ -9,7 +9,7 @@ import "#elements/forms/Radio";
 import { DEFAULT_CONFIG } from "#common/api/config";
 
 import { ModelForm } from "#elements/forms/ModelForm";
-import { globalBrandingMessage } from "#elements/mixins/branding";
+import { globalBrandingMessage, WithBrandConfig } from "#elements/mixins/branding";
 import { WithCapabilitiesConfig } from "#elements/mixins/capabilities";
 
 import { AKLabel } from "#components/ak-label";
@@ -38,7 +38,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
  * @prop {string} instancePk - The primary key of the instance to load.
  */
 @customElement("ak-flow-form")
-export class FlowForm extends WithCapabilitiesConfig(ModelForm<Flow, string>) {
+export class FlowForm extends WithBrandConfig(WithCapabilitiesConfig(ModelForm<Flow, string>)) {
     public static override verboseName = msg("Flow");
     public static override verboseNamePlural = msg("Flows");
 
@@ -57,6 +57,15 @@ export class FlowForm extends WithCapabilitiesConfig(ModelForm<Flow, string>) {
     }
 
     protected override async send(data: Flow): Promise<void | Flow> {
+        if (this.instance) {
+            if (data.name === this.brandingMessage(this.instance.name)) {
+                data.name = this.instance.name;
+            }
+            if (data.title === this.brandingMessage(this.instance.title)) {
+                data.title = this.instance.title;
+            }
+        }
+
         if (this.instance) {
             return this.#api.flowsInstancesUpdate({
                 slug: this.instance.slug,
@@ -77,7 +86,9 @@ export class FlowForm extends WithCapabilitiesConfig(ModelForm<Flow, string>) {
                 autocomplete="off"
                 required
                 name="name"
-                value="${ifDefined(this.instance?.name)}"
+                value="${ifDefined(
+                    this.instance ? this.brandingMessage(this.instance.name) : undefined,
+                )}"
             ></ak-text-input>
             <ak-text-input
                 label=${msg("Title")}
@@ -86,7 +97,9 @@ export class FlowForm extends WithCapabilitiesConfig(ModelForm<Flow, string>) {
                 autocomplete="off"
                 required
                 name="title"
-                value="${ifDefined(this.instance?.title)}"
+                value="${ifDefined(
+                    this.instance ? this.brandingMessage(this.instance.title) : undefined,
+                )}"
             ></ak-text-input>
 
             <ak-slug-input

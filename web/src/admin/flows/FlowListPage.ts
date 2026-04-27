@@ -11,6 +11,7 @@ import { docLink } from "#common/global";
 import { groupBy } from "#common/utils";
 
 import { IconEditButton, modalInvoker, ModalInvokerButton } from "#elements/dialogs";
+import { WithBrandConfig } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -21,14 +22,14 @@ import { DesignationToLabel } from "#admin/flows/utils";
 import { Flow, FlowsApi } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
-import { html, TemplateResult } from "lit";
+import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 
 import PFBanner from "@patternfly/patternfly/components/Banner/banner.css";
 
 @customElement("ak-flow-list")
-export class FlowListPage extends TablePage<Flow> {
-    static styles = [...super.styles, PFBanner];
+export class FlowListPage extends WithBrandConfig(TablePage<Flow>) {
+    static styles = [...TablePage.styles, PFBanner];
 
     protected override searchEnabled = true;
     public override searchPlaceholder = msg("Search for a flow by name or identifier...");
@@ -75,18 +76,21 @@ export class FlowListPage extends TablePage<Flow> {
     };
 
     row(item: Flow): SlottedTemplateResult[] {
+        const itemName = this.brandingMessage(item.name);
+        const itemTitle = this.brandingMessage(item.title);
+
         return [
             html`<a href="#/flow/flows/${item.slug}" class="pf-m-block">
                     <code>${item.slug}</code>
                 </a>
-                <small>${item.title}</small>`,
-            item.name,
+                <small>${itemTitle}</small>`,
+            itemName,
             Array.from(item.stages || []).length,
             Array.from(item.policies || []).length,
             html`<div class="ak-c-table__actions">
-                ${IconEditButton(FlowForm, item.slug, item.name)}
+                ${IconEditButton(FlowForm, item.slug, itemName)}
                 <button
-                    aria-label=${msg(str`Execute "${item.name}"`)}
+                    aria-label=${msg(str`Execute "${itemName}"`)}
                     class="pf-c-button pf-m-plain"
                     @click=${() => {
                         const finalURL = `${window.location.origin}/if/flow/${item.slug}/${AndNext(
@@ -102,7 +106,7 @@ export class FlowListPage extends TablePage<Flow> {
                 <a
                     class="pf-c-button pf-m-plain"
                     href=${item.exportUrl}
-                    aria-label=${msg(str`Export "${item.name}"`)}
+                    aria-label=${msg(str`Export "${itemName}"`)}
                 >
                     <pf-tooltip position="top" content=${msg("Export")}>
                         <i class="fas fa-download" aria-hidden="true"></i>

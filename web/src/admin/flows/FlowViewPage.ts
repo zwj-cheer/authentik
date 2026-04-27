@@ -11,6 +11,7 @@ import { isResponseErrorLike } from "#common/errors/network";
 
 import { AKElement } from "#elements/Base";
 import { modalInvoker } from "#elements/dialogs";
+import { WithBrandConfig } from "#elements/mixins/branding";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { setPageDetails } from "#components/ak-page-navbar";
@@ -33,7 +34,7 @@ import PFPage from "@patternfly/patternfly/components/Page/page.css";
 import PFGrid from "@patternfly/patternfly/layouts/Grid/grid.css";
 
 @customElement("ak-flow-view")
-export class FlowViewPage extends AKElement {
+export class FlowViewPage extends WithBrandConfig(AKElement) {
     @property({ type: String })
     flowSlug?: string;
 
@@ -73,6 +74,8 @@ export class FlowViewPage extends AKElement {
         if (!this.flow) {
             return nothing;
         }
+        const flowName = this.brandingMessage(this.flow.name);
+
         return html`<main part="main">
             <ak-tabs exportparts="container:tabs">
                 <div
@@ -90,7 +93,7 @@ export class FlowViewPage extends AKElement {
                             <div class="pf-c-card__title">${msg("Flow Info")}</div>
                             <div class="pf-c-card__body">
                                 ${renderDescriptionList([
-                                    [msg("Name"), html`${this.flow.name}`],
+                                    [msg("Name"), html`${flowName}`],
                                     [msg("Slug"), html`<code>${this.flow.slug}</code>`],
                                     [
                                         msg("Designation"),
@@ -116,9 +119,7 @@ export class FlowViewPage extends AKElement {
                                     [
                                         msg("Execute flow"),
                                         html`<button
-                                                aria-label=${msg(
-                                                    str`Execute "${this.flow.name}" normally`,
-                                                )}
+                                                aria-label=${msg(str`Execute "${flowName}" normally`)}
                                                 class="pf-c-button pf-m-block pf-m-primary"
                                                 @click=${() => {
                                                     const finalURL = `${
@@ -133,7 +134,7 @@ export class FlowViewPage extends AKElement {
                                             </button>
                                             <button
                                                 aria-label=${msg(
-                                                    str`Execute "${this.flow.name}" as current user`,
+                                                    str`Execute "${flowName}" as current user`,
                                                 )}
                                                 class="pf-c-button pf-m-block pf-m-secondary"
                                                 @click=${() => {
@@ -153,7 +154,7 @@ export class FlowViewPage extends AKElement {
                                             </button>
                                             <button
                                                 aria-label=${msg(
-                                                    str`Execute "${this.flow.name}" with inspector`,
+                                                    str`Execute "${flowName}" with inspector`,
                                                 )}
                                                 class="pf-c-button pf-m-block pf-m-secondary"
                                                 @click=${() => {
@@ -255,8 +256,8 @@ export class FlowViewPage extends AKElement {
         if (changed.has("flow")) {
             setPageDetails({
                 icon: "pf-icon pf-icon-process-automation",
-                header: this.flow?.name,
-                description: this.flow?.title,
+                header: this.flow ? this.brandingMessage(this.flow.name) : undefined,
+                description: this.flow ? this.brandingMessage(this.flow.title) : undefined,
             });
         }
     }
