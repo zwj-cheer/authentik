@@ -1,5 +1,6 @@
 """API Utilities"""
 
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import action
 from rest_framework.fields import (
@@ -62,7 +63,7 @@ class TypesMixin:
             try:
                 type_signature = {
                     "name": subclass._meta.verbose_name,
-                    "description": subclass.__doc__,
+                    "description": _(subclass.__doc__ or ""),
                     "component": instance.component,
                     "model_name": subclass._meta.model_name,
                     "icon_url": getattr(instance, "icon_url", None),

@@ -5553,7 +5553,7 @@ doesn't pass when either or both of the selected options are equal or above the 
   <target>搜索用户</target>
 </trans-unit>
 <trans-unit id="s3616cc78631f5893">
-  <source>Warning: You're about to delete the user you're logged in as (<x id="0" equiv-text="${shouldShowWarning.username}"/>). Proceed at your own risk.</source>
+  <source>Warning: You're about to delete the user you're logged in as (<x id="0" equiv-text="${item.username}"/>). Proceed at your own risk.</source>
   <target>警告：您即将删除当前登录的用户（
         <x id="0" equiv-text="${shouldShowWarning.username}"/>）。如果继续，请自担风险。</target>
 </trans-unit>
@@ -8394,10 +8394,6 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>Site links</source>
   <target>网站链接</target>
 </trans-unit>
-<trans-unit id="s6fe64b4625517333">
-  <source>Powered by authentik</source>
-  <target>由 authentik 强力驱动</target>
-</trans-unit>
 <trans-unit id="sd766cdc29b25ff95">
   <source>Authenticating with Apple...</source>
   <target>正在使用 Apple 进行身份验证...</target>
@@ -9111,10 +9107,6 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>file</source>
   <target>文件</target>
 </trans-unit>
-<trans-unit id="s69f800801812a5f0">
-  <source>files</source>
-  <target>文件</target>
-</trans-unit>
 <trans-unit id="s96668830629e0dfc">
   <source>Upload</source>
   <target>上传</target>
@@ -9222,10 +9214,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="sc47f8ab6162bb2bb">
   <source>Outpost configuration</source>
   <target>接入节点配置</target>
-</trans-unit>
-<trans-unit id="s11a2ac9f2bd811d8">
-  <source>Delete Object Permission</source>
-  <target>删除对象权限</target>
 </trans-unit>
 <trans-unit id="s78aa910bcb26034d">
   <source>Global and object permission</source>
@@ -10370,33 +10358,43 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sa16713eb1eae6a97">
   <source>Type an optional publisher name...</source>
+  <target>输入可选的发布者名称...</target>
 </trans-unit>
 <trans-unit id="s1c030a6ae5c6f468">
   <source>Type an optional description...</source>
+  <target>输入可选的描述...</target>
 </trans-unit>
 <trans-unit id="s0cb0cee97f520223">
   <source>New Application</source>
+  <target>新建应用程序</target>
 </trans-unit>
 <trans-unit id="s41d4dd186ab1e7bc">
   <source>Opens the new application wizard, which will guide you through creating a new application with an existing provider.</source>
+  <target>打开新建应用程序向导，引导您使用现有提供程序创建新的应用程序。</target>
 </trans-unit>
 <trans-unit id="sf9c86f02a5609e71">
   <source>Opens the new application form, which will guide you through creating a new application with an existing provider.</source>
+  <target>打开新建应用程序表单，引导您使用现有提供程序创建新的应用程序。</target>
 </trans-unit>
 <trans-unit id="s7f1579146577efc4">
   <source>Clear Cache</source>
+  <target>清除缓存</target>
 </trans-unit>
 <trans-unit id="sea15e8e7527354c0">
   <source>Search for a provider...</source>
+  <target>搜索提供程序...</target>
 </trans-unit>
 <trans-unit id="sdfe21d69a2da53f4">
   <source>e.g. my-application</source>
+  <target>例如 my-application</target>
 </trans-unit>
 <trans-unit id="s96d43986e69a9db8">
   <source>The publisher is shown in the application library.</source>
+  <target>发布者会显示在应用程序库中。</target>
 </trans-unit>
 <trans-unit id="s4107487a961394e2">
   <source>The description is shown in the application library and may provide additional information about the application to end users.</source>
+  <target>描述会显示在应用程序库中，可向最终用户提供应用程序的补充信息。</target>
 </trans-unit>
 <trans-unit id="sfafe0cba4a679e37">
   <source>Select Groups</source>
@@ -10740,21 +10738,26 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s16e5e5a4c64523c6">
   <source>Applications search</source>
+  <target>应用程序搜索</target>
 </trans-unit>
 <trans-unit id="sf8057578c1d38b31">
   <source>Search for application by name, group or provider...</source>
+  <target>按名称、分组或提供程序搜索应用程序...</target>
 </trans-unit>
 <trans-unit id="sb18de48205b43ea1">
   <source>New Application options</source>
+  <target>新建应用程序选项</target>
 </trans-unit>
 <trans-unit id="sea74880d1b9b5d2e">
   <source>Select a <x id="0" equiv-text="${title}"/>...</source>
 </trans-unit>
 <trans-unit id="s6d46b842e227be57">
   <source>Application Details</source>
+  <target>应用程序详情</target>
 </trans-unit>
 <trans-unit id="sda5e30fff0fb8622">
   <source>Provider Details</source>
+  <target>提供程序详情</target>
 </trans-unit>
 <trans-unit id="s39291e42ae3e80aa">
   <source>Flow Blueprint</source>
@@ -10976,33 +10979,43 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s8d85c6a707771cb6">
   <source>Authorization Flow</source>
+  <target>授权流程</target>
 </trans-unit>
 <trans-unit id="sf36c94b3dd7dec9a">
   <source>Client Type</source>
+  <target>客户端类型</target>
 </trans-unit>
 <trans-unit id="se5c0444127d1b66f">
   <source>Authentication Flow</source>
+  <target>身份验证流程</target>
 </trans-unit>
 <trans-unit id="s0b58e50282384c23">
   <source>Invalidation Flow</source>
+  <target>失效流程</target>
 </trans-unit>
 <trans-unit id="scba3dc0c14daa5da">
   <source>Access Code Validity</source>
+  <target>访问代码有效期</target>
 </trans-unit>
 <trans-unit id="s0d88c641cac72430">
   <source>Access Token Validity</source>
+  <target>访问令牌有效期</target>
 </trans-unit>
 <trans-unit id="s2de57d3c2a118199">
   <source>Refresh Token Validity</source>
+  <target>刷新令牌有效期</target>
 </trans-unit>
 <trans-unit id="s92c4633a05e01db6">
   <source>Refresh Token Threshold</source>
+  <target>刷新令牌阈值</target>
 </trans-unit>
 <trans-unit id="s514c283c447dbcca">
   <source>Subject Mode</source>
+  <target>Subject 模式</target>
 </trans-unit>
 <trans-unit id="s584808e53254531c">
   <source>Search for provider by name, type or assigned application...</source>
+  <target>按名称、类型或已分配应用程序搜索提供程序...</target>
 </trans-unit>
 <trans-unit id="sd8d09a02b5e34dda">
   <source>RAC Endpoint</source>
@@ -11158,7 +11171,7 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>e.g. my-slug</source>
 </trans-unit>
 <trans-unit id="form.create-submit">
-  <source>Create <x id="0" equiv-text="${verboseName}"/></source>
+  <source>Create <x id="0" equiv-text="${noun}"/></source>
   <target>创建<x id="0" equiv-text="${verboseName}"/></target>
 </trans-unit>
 <trans-unit id="form.create-submit-no-entity">
@@ -11188,12 +11201,14 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s3741f519c32ac391">
   <source>New</source>
+  <target>新建</target>
 </trans-unit>
 <trans-unit id="invoker.label.modifier-noun">
   <source><x id="0" equiv-text="${createLabel} ${verboseName}"/></source>
 </trans-unit>
 <trans-unit id="form.new-entity">
   <source>New</source>
+  <target>新建</target>
 </trans-unit>
 <trans-unit id="form.submit.verb.create">
   <source>Create</source>
@@ -11282,12 +11297,15 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s7716f6051e0040ee">
   <source>with New Provider...</source>
+  <target>使用新的提供程序...</target>
 </trans-unit>
 <trans-unit id="s389abd73a230985b">
   <source>with Existing Provider...</source>
+  <target>使用现有提供程序...</target>
 </trans-unit>
 <trans-unit id="sf57dea661d832af7">
   <source>Select one or more backchannel providers...</source>
+  <target>选择一个或多个反向通道提供程序...</target>
 </trans-unit>
 <trans-unit id="s0b0a02a4470de153">
   <source>Device</source>
@@ -11474,6 +11492,13 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="outpost.form.headline.create">
   <source>Create access node</source>
   <target>创建接入节点</target>
+</trans-unit>
+<trans-unit id="s99ada7cfffc5d29e">
+  <source>Authorize Application</source>
+  <target>授权应用程序</target>
+</trans-unit>
+<trans-unit id="login.identifier.upn">
+  <source>UPN</source>
 </trans-unit>
 </body>
 </file>

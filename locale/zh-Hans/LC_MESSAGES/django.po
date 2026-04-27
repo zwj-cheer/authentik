@@ -1994,6 +1994,10 @@ msgstr ""
 "设备的情况下才应该启用，否则密码可能会因为包含分号而被错误地拒绝。"
 
 #: authentik/providers/ldap/models.py
+msgid "Allow applications to authenticate against authentik's users using LDAP."
+msgstr "允许应用程序通过 LDAP 对 authentik 用户进行身份验证。"
+
+#: authentik/providers/ldap/models.py
 msgid "LDAP Provider"
 msgstr "LDAP 提供程序"
 
@@ -2202,6 +2206,10 @@ msgid ""
 msgstr "任何由选定来源的 JWK 签发的 JWT 都可以用于身份验证。"
 
 #: authentik/providers/oauth2/models.py
+msgid "OAuth2 Provider for generic OAuth and OpenID Connect Applications."
+msgstr "用于通用 OAuth 和 OpenID Connect 应用程序的 OAuth2 提供程序。"
+
+#: authentik/providers/oauth2/models.py
 msgid "OAuth2/OpenID Provider"
 msgstr "OAuth2/OpenID 提供程序"
 
@@ -2353,6 +2361,12 @@ msgid ""
 msgstr "用于 HTTP-Basic 标头的密码部分的用户/组属性。"
 
 #: authentik/providers/proxy/models.py
+msgid ""
+"Protect applications that don't support any of the other\n"
+"    Protocols by using a Reverse-Proxy."
+msgstr "通过反向代理保护不支持其他协议的应用程序。"
+
+#: authentik/providers/proxy/models.py
 msgid "Proxy Provider"
 msgstr "代理提供程序"
 
@@ -2373,6 +2387,10 @@ msgstr "确定会话持续多长时间。默认值为 0 表示会话持续到浏
 #: authentik/providers/rac/models.py
 msgid "When set to true, connection tokens will be deleted upon disconnect."
 msgstr "启用时，连接令牌将会在断开连接时被删除。"
+
+#: authentik/providers/rac/models.py
+msgid "Remotely access computers/servers via RDP/SSH/VNC."
+msgstr "通过 RDP/SSH/VNC 远程访问计算机或服务器。"
 
 #: authentik/providers/rac/models.py
 msgid "RAC Provider"
@@ -2424,6 +2442,10 @@ msgid ""
 "specific CIDR will match before a looser one. Clients connecting from a non-"
 "specified CIDR will be dropped."
 msgstr "允许客户端连接的 CIDR 列表（逗号分隔）。严格的 CIDR 会在宽松的之前匹配。来自 CIDR 范围外的客户端连接将会被丢弃。"
+
+#: authentik/providers/radius/models.py
+msgid "Allow applications to authenticate against authentik's users using Radius."
+msgstr "允许应用程序通过 Radius 对 authentik 用户进行身份验证。"
 
 #: authentik/providers/radius/models.py
 msgid "Radius Provider"
@@ -2637,6 +2659,10 @@ msgid "Default relay_state value for IDP-initiated logins"
 msgstr "用于 IDP 发起登录的默认 relay_state 值"
 
 #: authentik/providers/saml/models.py
+msgid "SAML 2.0 Endpoint for applications which support SAML."
+msgstr "用于支持 SAML 的应用程序的 SAML 2.0 端点。"
+
+#: authentik/providers/saml/models.py
 msgid "SAML Provider"
 msgstr "SAML 提供程序"
 
@@ -2651,6 +2677,10 @@ msgstr "SAML 提供程序属性映射"
 #: authentik/providers/saml/models.py
 msgid "SAML Provider Property Mappings"
 msgstr "SAML 提供程序属性映射"
+
+#: authentik/providers/saml/models.py
+msgid "Create a SAML Provider by importing its Metadata."
+msgstr "通过导入元数据创建 SAML 提供程序。"
 
 #: authentik/providers/saml/models.py
 msgid "SAML Provider from Metadata"
@@ -2737,6 +2767,10 @@ msgid ""
 "Cache duration for ServiceProviderConfig responses. Set minutes=0 to "
 "disable."
 msgstr "ServiceProviderConfig 响应的缓存持续时间。填写 minutes=0 可禁用此设置。"
+
+#: authentik/providers/scim/models.py
+msgid "SCIM 2.0 provider to create users and groups in external applications"
+msgstr "用于在外部应用程序中创建用户和组的 SCIM 2.0 提供程序"
 
 #: authentik/providers/scim/models.py
 msgid "SCIM Provider"
