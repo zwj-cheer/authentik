@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - Source authentication flow
+  name: 默认来源认证流程
 entries:
 - attrs:
     designation: authentication
-    name: Welcome to authentik!
-    title: Welcome to authentik!
+    name: 欢迎使用 authentik！
+    title: 欢迎使用 authentik！
     authentication: require_unauthenticated
   identifiers:
     slug: default-source-authentication
@@ -13,8 +13,7 @@ entries:
   id: flow
 - attrs:
     expression:  |
-      # This policy ensures that this flow can only be used when the user
-      # is in a SSO Flow (meaning they come from an external IdP)
+      # 该策略确保此流程只能用于单点登录流程，也就是用户来自外部身份提供商
       return ak_is_sso_flow
   identifiers:
     name: default-source-authentication-if-sso

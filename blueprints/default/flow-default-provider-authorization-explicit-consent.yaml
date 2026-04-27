@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - Provider authorization flow (explicit consent)
+  name: 默认提供程序授权流程（显式同意）
 entries:
 - attrs:
     designation: authorization
-    name: Authorize Application
-    title: Redirecting to %(app)s
+    name: 授权应用程序
+    title: 正在重定向到 %(app)s
     authentication: require_authenticated
   identifiers:
     slug: default-provider-authorization-explicit-consent

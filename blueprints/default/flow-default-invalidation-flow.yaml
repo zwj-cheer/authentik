@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - Invalidation flow
+  name: 默认注销流程
 entries:
 - attrs:
     designation: invalidation
-    name: Logout
-    title: Default Invalidation Flow
+    name: 注销
+    title: 默认注销流程
     authentication: none
   identifiers:
     slug: default-invalidation-flow

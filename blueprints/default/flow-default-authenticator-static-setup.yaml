@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - Static MFA setup flow
+  name: 默认静态多因素认证配置流程
 entries:
 - attrs:
     designation: stage_configuration
-    name: default-authenticator-static-setup
-    title: Setup Static OTP Tokens
+    name: 默认静态一次性密码配置
+    title: 配置静态一次性密码令牌
     authentication: require_authenticated
   identifiers:
     slug: default-authenticator-static-setup
@@ -14,7 +14,7 @@ entries:
 - attrs:
     configure_flow: !KeyOf flow
     token_count: 6
-    friendly_name: Static tokens
+    friendly_name: 静态令牌
   identifiers:
     name: default-authenticator-static-setup
   id: default-authenticator-static-setup

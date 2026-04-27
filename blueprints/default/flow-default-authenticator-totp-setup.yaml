@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - TOTP MFA setup flow
+  name: 默认 TOTP 多因素认证配置流程
 entries:
 - attrs:
     designation: stage_configuration
-    name: default-authenticator-totp-setup
-    title: Set up Two-Factor authentication
+    name: 默认 TOTP 配置
+    title: 配置双因素认证
     authentication: require_authenticated
   identifiers:
     slug: default-authenticator-totp-setup
@@ -14,7 +14,7 @@ entries:
 - attrs:
     configure_flow: !KeyOf flow
     digits: 6
-    friendly_name: TOTP Device
+    friendly_name: TOTP 设备
   identifiers:
     name: default-authenticator-totp-setup
   id: default-authenticator-totp-setup

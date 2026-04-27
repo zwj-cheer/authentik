@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - Source enrollment flow
+  name: 默认来源注册流程
 entries:
 - attrs:
     designation: enrollment
-    name: Welcome to authentik! Please select a username.
-    title: Welcome to authentik! Please select a username.
+    name: 欢迎使用 authentik！请选择用户名。
+    title: 欢迎使用 authentik！请选择用户名。
     authentication: none
   identifiers:
     slug: default-source-enrollment
@@ -13,20 +13,19 @@ entries:
   id: flow
 - attrs:
     order: 100
-    placeholder: Username
+    placeholder: 用户名
     placeholder_expression: false
     required: true
     type: username
     field_key: username
-    label: Username
+    label: 用户名
   identifiers:
     name: default-source-enrollment-field-username
   id: prompt-field-username
   model: authentik_stages_prompt.prompt
 - attrs:
     expression: |
-      # Check if we''ve not been given a username by the external IdP
-      # and trigger the enrollment flow
+      # 如果外部身份提供商没有提供用户名，则触发注册流程
       return 'username' not in context.get('prompt_data', {})
   identifiers:
     name: default-source-enrollment-if-username
@@ -34,8 +33,7 @@ entries:
   model: authentik_policies_expression.expressionpolicy
 - attrs:
     expression: |
-      # This policy ensures that this flow can only be used when the user
-      # is in a SSO Flow (meaning they come from an external IdP)
+      # 该策略确保此流程只能用于单点登录流程，也就是用户来自外部身份提供商
       return ak_is_sso_flow
   identifiers:
     name: default-source-enrollment-if-sso

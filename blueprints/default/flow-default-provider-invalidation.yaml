@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - Provider invalidation flow
+  name: 默认提供程序注销流程
 entries:
 - attrs:
     designation: invalidation
-    name: Logged out of application
-    title: You've logged out of %(app)s.
+    name: 已退出应用程序
+    title: 你已退出 %(app)s。
     authentication: none
   identifiers:
     slug: default-provider-invalidation-flow

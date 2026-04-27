@@ -2,14 +2,14 @@ metadata:
   labels:
     blueprints.goauthentik.io/system-oobe: "true"
     blueprints.goauthentik.io/system: "true"
-  name: Default - Out-of-box-experience flow
+  name: 默认首次设置流程
 version: 1
 entries:
 - attrs:
     denied_action: message_continue
     designation: stage_configuration
-    name: default-oobe-setup
-    title: Welcome to authentik!
+    name: 默认首次设置
+    title: 欢迎使用 authentik！
   id: flow
   identifiers:
     slug: initial-setup
@@ -17,57 +17,56 @@ entries:
 - attrs:
     order: 100
     initial_value:
-      Welcome to authentik! Please set a password and email address for the default admin
-      user, akadmin.
+      return f"欢迎使用 {request.brand.branding_title}！请为默认管理员用户 akadmin 设置密码和邮箱地址。"
+    initial_value_expression: true
     placeholder_expression: false
     required: true
     type: static
     field_key: oobe-header-text
-    label: oobe-header-text
+    label: 首次设置说明
   id: prompt-field-header
   identifiers:
     name: initial-setup-field-header
   model: authentik_stages_prompt.prompt
 - attrs:
     order: 101
-    placeholder: Admin email
+    placeholder: 管理员邮箱
     placeholder_expression: false
     required: true
     type: email
     field_key: email
-    label: Email
+    label: 邮箱
   id: prompt-field-email
   identifiers:
     name: initial-setup-field-email
   model: authentik_stages_prompt.prompt
 - attrs:
     order: 300
-    placeholder: Password
+    placeholder: 密码
     placeholder_expression: false
     required: true
     type: password
     field_key: password
-    label: Password
+    label: 密码
   id: prompt-field-password
   identifiers:
     name: initial-setup-field-password
   model: authentik_stages_prompt.prompt
 - attrs:
     order: 301
-    placeholder: Password (repeat)
+    placeholder: 重复密码
     placeholder_expression: false
     required: true
     type: password
     field_key: password_repeat
-    label: Password (repeat)
+    label: 重复密码
   id: prompt-field-password-repeat
   identifiers:
     name: initial-setup-field-password-repeat
   model: authentik_stages_prompt.prompt
 - attrs:
     expression: |
-      # This policy sets the user for the currently running flow
-      # by injecting "pending_user"
+      # 该策略通过注入 "pending_user" 为当前运行的流程设置用户
       akadmin = ak_user_by(username="akadmin")
       context["flow_plan"].context["pending_user"] = akadmin
       return True
@@ -77,14 +76,13 @@ entries:
   model: authentik_policies_expression.expressionpolicy
 - attrs:
     expression: |
-      # This policy ensures that the setup flow can only be
-      # executed when the admin user doesn't have a password set
+      # 该策略确保只有管理员用户尚未设置密码时才能执行设置流程
       akadmin = ak_user_by(username="akadmin")
-      # Ensure flow was started correctly
+      # 确保流程以正确方式启动
       started_by = context.get("goauthentik.io/core/setup/started-by")
       if started_by != "setup":
           setup_url = request.http_request.build_absolute_uri("/")
-          ak_message(f"Access the authentik setup by navigating to {setup_url}")
+          ak_message(f"请访问 {setup_url} 打开初始设置。")
           return False
       return akadmin is None or not akadmin.has_usable_password()
   id: policy-default-oobe-password-usable

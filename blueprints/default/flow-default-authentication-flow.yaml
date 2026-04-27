@@ -1,16 +1,16 @@
 version: 1
 metadata:
-  name: Default - Authentication flow
+  name: 默认认证流程
 entries:
 - model: authentik_blueprints.metaapplyblueprint
   attrs:
     identifiers:
-      name: Default - Password change flow
+      name: 默认密码修改流程
     required: false
 - attrs:
     designation: authentication
-    name: Welcome to authentik!
-    title: Welcome to authentik!
+    name: 欢迎使用 authentik！
+    title: 欢迎使用 authentik！
     authentication: none
   identifiers:
     slug: default-authentication-flow
@@ -77,8 +77,7 @@ entries:
       flow_plan = request.context.get("flow_plan")
       if not flow_plan:
           return True
-      # If the user does not have a backend attached to it, they haven't
-      # been authenticated yet and we need the password stage
+      # 如果用户没有绑定认证后端，说明尚未完成认证，需要进入密码阶段
       return not hasattr(flow_plan.context.get("pending_user"), "backend")
 - model: authentik_policies_expression.expressionpolicy
   id: default-authentication-flow-authenticator-validate-optional
@@ -89,8 +88,7 @@ entries:
       flow_plan = request.context.get("flow_plan")
       if not flow_plan:
           return True
-      # if the authentication method is webauthn (passwordless), then we skip the authenticator
-      # validation stage by returning false (true will execute the stage)
+      # 如果认证方式是 WebAuthn 免密码登录，则返回 false 跳过验证器校验阶段
       return not (flow_plan.context.get("auth_method") == "auth_webauthn_pwl")
 - model: authentik_policies.policybinding
   identifiers:

@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  name: Default - Source pre-authentication flow
+  name: 默认来源预认证流程
 entries:
 - attrs:
     designation: stage_configuration
-    name: Pre-Authentication
-    title: Pre-authentication
+    name: 预认证
+    title: 预认证
     authentication: none
   identifiers:
     slug: default-source-pre-authentication
