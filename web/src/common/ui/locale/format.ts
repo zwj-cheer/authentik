@@ -2,7 +2,6 @@ import { allLocales } from "../../../locale-codes.js";
 
 import { CJKLanguageTag, isCJKLanguageTag, isHanLanguageTag } from "#common/ui/locale/cjk";
 import {
-    PseudoLanguageTag,
     SourceLanguageTag,
     TargetLanguageTag,
 } from "#common/ui/locale/definitions";
@@ -93,10 +92,6 @@ export function createIntlCollator(
         if (activeLocale === aLocale) return -1;
         if (activeLocale === bLocale) return 1;
 
-        // Pseudo locale always last
-        if (PseudoLanguageTag === aLocale) return 1;
-        if (PseudoLanguageTag === bLocale) return -1;
-
         const aIsCJK = isCJKLanguageTag(aLocale);
         const bIsCJK = isCJKLanguageTag(bLocale);
 
@@ -132,10 +127,6 @@ export interface FormatLocaleOptionsInit {
 const SPECIAL_LOCALE_FALLBACKS: ReadonlyMap<TargetLanguageTag, () => string> = new Map([
     [SourceLanguageTag, () => msg("English", { id: "en" })],
     [CJKLanguageTag.HanSimplified, () => msg("Chinese (Simplified)", { id: "zh-Hans" })],
-    [CJKLanguageTag.HanTraditional, () => msg("Chinese (Traditional)", { id: "zh-Hant" })],
-    [CJKLanguageTag.Japanese, () => msg("Japanese", { id: "ja-JP" })],
-    [CJKLanguageTag.Korean, () => msg("Korean", { id: "ko-KR" })],
-    [PseudoLanguageTag, () => msg("English (Pseudo-Accents)", { id: "en-XA" })],
 ]);
 
 /**
@@ -145,7 +136,7 @@ const SPECIAL_LOCALE_FALLBACKS: ReadonlyMap<TargetLanguageTag, () => string> = n
  */
 export function formatLocaleDisplayNames(
     activeLanguageTag: Intl.UnicodeBCP47LocaleIdentifier | Intl.Locale,
-    { collatorOptions = {}, languageNames, debug }: FormatLocaleOptionsInit = {},
+    { collatorOptions = {}, languageNames }: FormatLocaleOptionsInit = {},
 ): LocaleDisplay[] {
     const activeLocaleTag =
         typeof activeLanguageTag === "string" ? activeLanguageTag : activeLanguageTag.baseName;
@@ -159,11 +150,6 @@ export function formatLocaleDisplayNames(
 
     // Process all locales
     for (const tag of allLocales) {
-        // Skip pseudo unless debug
-        if (tag === PseudoLanguageTag && !debug) {
-            continue;
-        }
-
         const specialFallback = SPECIAL_LOCALE_FALLBACKS.get(tag);
 
         if (specialFallback) {
@@ -201,13 +187,11 @@ export function formatRelativeLocaleDisplayName(
     localizedDisplayName: string,
     relativeDisplayName: string,
 ) {
-    const pseudo = languageTag === PseudoLanguageTag;
-
     const same =
         relativeDisplayName &&
         normalizeDisplayName(relativeDisplayName) === normalizeDisplayName(localizedDisplayName);
 
-    if (same || pseudo) {
+    if (same) {
         return localizedDisplayName;
     }
 

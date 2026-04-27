@@ -12,9 +12,6 @@ import { TargetLanguageTag } from "#common/ui/locale/definitions";
  */
 export const CJKLanguageTag = {
     HanSimplified: "zh-Hans",
-    HanTraditional: "zh-Hant",
-    Japanese: "ja-JP",
-    Korean: "ko-KR",
 } as const satisfies Record<string, TargetLanguageTag>;
 
 export type CJKLanguageTag = (typeof CJKLanguageTag)[keyof typeof CJKLanguageTag];
@@ -24,13 +21,12 @@ export type CJKLanguageTag = (typeof CJKLanguageTag)[keyof typeof CJKLanguageTag
  */
 export const HanLanguageTags = new Set([
     CJKLanguageTag.HanSimplified,
-    CJKLanguageTag.HanTraditional,
 ] as const satisfies TargetLanguageTag[]);
 
 export type HanLanguageTag = UnwrapSet<typeof HanLanguageTags>;
 
 /**
- * A set of **supported language tags** representing Chinese, Japanese, and Korean languages.
+ * A set of **supported language tags** representing CJK languages.
  */
 export const CJKLanguageTags = new Set<CJKLanguageTag>(Object.values(CJKLanguageTag));
 
@@ -61,7 +57,7 @@ export const ZHRegionToHanScript: ReadonlyMap<string, HanScriptTag> = new Map([
  * Resolve a Chinese locale to it's preferred script tag.
  *
  * Priority:
- * 1. Explicit script subtag (zh-Hant, zh-Hans)
+ * 1. Explicit script subtag
  * 2. Known region mapping (TW, HK, CN, etc.)
  * 3. CLDR maximize() inference
  * 4. Fallback to Simplified (Hans)
@@ -96,18 +92,9 @@ export function resolveChineseScript(locale: Intl.Locale): HanScriptTag {
 }
 
 /**
- * Resolve Chinese locale fallback to either zh-Hans or zh-Hant.
+ * Resolve any Chinese locale to the supported Chinese language tag.
  */
-export function resolveChineseFallback(
-    candidate: string,
-): typeof CJKLanguageTag.HanSimplified | typeof CJKLanguageTag.HanTraditional {
-    // Explicit script?
-    if (/[-_]hant\b/i.test(candidate)) return CJKLanguageTag.HanTraditional;
-    if (/[-_]hans\b/i.test(candidate)) return CJKLanguageTag.HanSimplified;
-
-    // Traditional region?
-    if (/[-_](tw|hk|mo)\b/i.test(candidate)) return CJKLanguageTag.HanTraditional;
-
+export function resolveChineseFallback(_candidate: string): typeof CJKLanguageTag.HanSimplified {
     return CJKLanguageTag.HanSimplified;
 }
 

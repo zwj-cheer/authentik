@@ -17,8 +17,6 @@
 import * as fs from "node:fs/promises";
 import path, { resolve } from "node:path";
 
-import { generatePseudoLocaleModule } from "./pseudolocalize.mjs";
-
 import { ConsoleLogger } from "#logger/node";
 import { PackageRoot } from "#paths/node";
 
@@ -51,9 +49,7 @@ const EmittedLocalesDirectory = resolve(
     /** @type {string} */ (localizeRules.output.outputDir),
 );
 
-const targetLocales = localizeRules.targetLocales.filter((localeCode) => {
-    return localeCode !== "en-XA";
-});
+const targetLocales = localizeRules.targetLocales;
 
 //#endregion
 
@@ -151,9 +147,6 @@ async function checkIfLocalesAreCurrent() {
 }
 
 export async function generateLocaleModules() {
-    logger.info("Updating pseudo-locale...");
-    await generatePseudoLocaleModule();
-
     logger.info("Generating locale modules...");
 
     /**

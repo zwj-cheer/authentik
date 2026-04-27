@@ -1,4 +1,4 @@
-import { PseudoLanguageTag, TargetLanguageTag } from "#common/ui/locale/definitions";
+import { TargetLanguageTag } from "#common/ui/locale/definitions";
 import { formatRelativeLocaleDisplayName, LocaleDisplay } from "#common/ui/locale/format";
 
 import type { LitFC, SlottedTemplateResult } from "#elements/types";
@@ -19,16 +19,13 @@ export const LocaleOptions: LitFC<LocaleOptionsProps> = ({ entries, activeLocale
         entries,
         ([languageTag]) => languageTag,
         ([languageTag, localizedDisplayName, relativeDisplayName]) => {
-            const pseudo = languageTag === PseudoLanguageTag;
-
             const localizedMessage = formatRelativeLocaleDisplayName(
                 languageTag,
                 localizedDisplayName,
                 relativeDisplayName,
             );
 
-            return html`${pseudo ? html`<hr />` : null}
-                <option value=${languageTag} ?selected=${languageTag === activeLocaleTag}>
+            return html`<option value=${languageTag} ?selected=${languageTag === activeLocaleTag}>
                     ${localizedMessage}
                 </option>`;
         },

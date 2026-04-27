@@ -6,17 +6,8 @@
 <trans-unit id="en">
   <source>English</source>
 </trans-unit>
-<trans-unit id="ja-JP">
-  <source>Japanese</source>
-</trans-unit>
-<trans-unit id="ko-KR">
-  <source>Korean</source>
-</trans-unit>
 <trans-unit id="zh-Hans">
   <source>Chinese (Simplified)</source>
-</trans-unit>
-<trans-unit id="zh-Hant">
-  <source>Chinese (Traditional)</source>
 </trans-unit>
 <!-- #endregion -->
 
@@ -7126,9 +7117,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sd69873a0783f8e39">
   <source>Export data</source>
-</trans-unit>
-<trans-unit id="en-XA">
-  <source>English (Pseudo-Accents)</source>
 </trans-unit>
 <trans-unit id="sbb99d4ec27fbb263">
   <source>Finished</source>

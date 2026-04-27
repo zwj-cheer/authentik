@@ -4452,11 +4452,11 @@ msgstr "可选的预设输入初始值。在创建固定选项字段时，启用
 
 #: authentik/stages/prompt/models.py
 msgid "Prompt"
-msgstr "输入"
+msgstr "输入项"
 
 #: authentik/stages/prompt/models.py
 msgid "Prompts"
-msgstr "输入"
+msgstr "输入项"
 
 #: authentik/stages/prompt/models.py
 msgid "Prompt Stage"

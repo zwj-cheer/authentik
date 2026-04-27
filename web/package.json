@@ -20,7 +20,6 @@
         "precommit": "wireit",
         "prettier": "prettier --cache --write -u .",
         "prettier-check": "prettier --cache --check -u .",
-        "pseudolocalize": "node ./scripts/pseudolocalize.mjs",
         "storybook": "storybook dev -p 6006",
         "storybook:build": "wireit",
         "test": "vitest",

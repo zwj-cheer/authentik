@@ -6,21 +6,9 @@
   <source>English</source>
   <target>英语</target>
 </trans-unit>
-<trans-unit id="ja-JP">
-  <source>Japanese</source>
-  <target>日语</target>
-</trans-unit>
-<trans-unit id="ko-KR">
-  <source>Korean</source>
-  <target>韩语</target>
-</trans-unit>
 <trans-unit id="zh-Hans">
   <source>Chinese (Simplified)</source>
   <target>简体中文</target>
-</trans-unit>
-<trans-unit id="zh-Hant">
-  <source>Chinese (Traditional)</source>
-  <target>繁体中文</target>
 </trans-unit>
 <!-- #endregion -->
 
@@ -6086,7 +6074,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s2be6121210e2a2f8">
   <source>Prompts</source>
-  <target>输入</target>
+  <target>输入项</target>
 </trans-unit>
 <trans-unit id="s42fc6f4b64eff5d9">
   <source>Single Prompts that can be used for Prompt Stages.</source>
@@ -6102,11 +6090,11 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="sec7443a45fd141e5">
   <source>Prompt(s)</source>
-  <target>输入</target>
+  <target>输入项</target>
 </trans-unit>
 <trans-unit id="s61b6f3e6bc59c6dd">
   <source>Create Prompt</source>
-  <target>创建输入</target>
+  <target>创建输入项</target>
 </trans-unit>
 <trans-unit id="s916b32ac64ea2b05">
   <source>Successfully updated stage.</source>
@@ -9525,10 +9513,6 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>Export data</source>
   <target>导出数据</target>
 </trans-unit>
-<trans-unit id="en-XA">
-  <source>English (Pseudo-Accents)</source>
-  <target>英语（伪口音）</target>
-</trans-unit>
 <trans-unit id="sbb99d4ec27fbb263">
   <source>Finished</source>
   <target>已完成</target>
@@ -11118,9 +11102,11 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s54393bfa280ea55b">
   <source>Prompt</source>
+  <target>输入项</target>
 </trans-unit>
 <trans-unit id="s8aeb9bdd78a93bda">
   <source>Search for a prompt by name, field or type...</source>
+  <target>按名称、字段或类型搜索输入项...</target>
 </trans-unit>
 <trans-unit id="sde53bdf1d16d16ed">
   <source>Search for a stage name, type, or flow...</source>

@@ -1,8 +1,7 @@
 import { allLocales, sourceLocale as SourceLanguageTag } from "../../../locale-codes.js";
 
-import { resolveChineseScript, resolveChineseScriptLegacy } from "#common/ui/locale/cjk";
+import { resolveChineseFallback } from "#common/ui/locale/cjk";
 import {
-    PseudoLanguageTag,
     TargetLanguageTag,
     TargetLanguageTags,
 } from "#common/ui/locale/definitions";
@@ -76,22 +75,12 @@ export function getBestMatchLocale(candidate: string): TargetLanguageTag | null 
 
     // Pseudo-locale
     if (language === "en") {
-        const region = locale?.region ?? normalized.split(/[-_]/)[1]?.toUpperCase();
-
-        if (region === "XA") {
-            return PseudoLanguageTag;
-        }
-
         return SourceLanguageTag;
     }
 
     // Chinese Han script
     if (language === "zh") {
-        const script = locale
-            ? resolveChineseScript(locale)
-            : resolveChineseScriptLegacy(normalized);
-
-        return `${language}-${script}`;
+        return resolveChineseFallback(normalized);
     }
 
     const parsed = getParsedSupportedLocales();
