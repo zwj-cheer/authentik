@@ -124,20 +124,25 @@ export function findSupportedLocale(candidates: string[]): TargetLanguageTag | n
 //#region Persistence
 
 const sessionLocaleKey = "authentik:locale";
+const localeCookieKey = "authentik_language";
 
 /**
  * Persist the given locale code to sessionStorage.
  */
 export function setSessionLocale(languageTag: TargetLanguageTag | null): void {
     try {
-        if (!languageTag || languageTag === SourceLanguageTag) {
+        if (!languageTag) {
             sessionStorage?.removeItem?.(sessionLocaleKey);
+            document.cookie = `${localeCookieKey}=; path=/; max-age=0; samesite=lax`;
             return;
         }
 
         sessionStorage?.setItem?.(sessionLocaleKey, languageTag);
+        document.cookie = `${localeCookieKey}=${encodeURIComponent(
+            languageTag,
+        )}; path=/; max-age=31536000; samesite=lax`;
     } catch (error) {
-        console.debug("authentik/locale: Unable to persist locale to sessionStorage", error);
+        console.debug("authentik/locale: Unable to persist locale", error);
     }
 }
 

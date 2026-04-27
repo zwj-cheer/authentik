@@ -18,13 +18,13 @@ class BrandMiddleware:
         self.get_response = get_response
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
-        locale_to_set = None
         if not hasattr(request, "brand"):
             brand = get_brand_for_request(request)
             request.brand = brand
-            locale = brand.default_locale
-            if locale != "":
-                locale_to_set = locale
+        else:
+            brand = request.brand
+
+        locale_to_set = request.COOKIES.get("authentik_language") or brand.default_locale
         if locale_to_set:
             with override(locale_to_set):
                 return self.get_response(request)

@@ -27,6 +27,14 @@ msgstr ""
 "Language: zh-Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: blueprints/default/flow-default-authentication-flow.yaml
+msgid "Welcome to authentik!"
+msgstr "欢迎登录"
+
+#: blueprints/default/flow-password-change.yaml
+msgid "Change password"
+msgstr "修改密码"
+
 #: authentik/admin/files/api.py
 #, python-brace-format
 msgid "File size ({file.size}B) exceeds maximum allowed "
@@ -574,7 +582,7 @@ msgstr "前往首页"
 #: authentik/core/templates/login/base_full.html
 #: authentik/flows/templates/if/flow-sfe.html
 msgid "Powered by authentik"
-msgstr "由 authentik 强力驱动"
+msgstr "由 authentik 提供支持"
 
 #: authentik/core/views/apps.py
 #: authentik/enterprise/providers/ws_federation/views.py
@@ -1855,7 +1863,7 @@ msgstr "如果 zxcvbn 分数小于等于此值，则策略失败。"
 
 #: authentik/policies/password/models.py
 msgid "Invalid password."
-msgstr "无效密码。"
+msgstr "密码错误。"
 
 #: authentik/policies/password/models.py
 #, python-brace-format
@@ -1918,7 +1926,7 @@ msgstr "用户的头像"
 
 #: authentik/policies/templates/policies/denied.html
 msgid "Not you?"
-msgstr "不是您？"
+msgstr "返回上一步"
 
 #: authentik/policies/templates/policies/denied.html
 msgid "Error"
@@ -4326,7 +4334,7 @@ msgstr "密码阶段"
 
 #: authentik/stages/password/stage.py
 msgid "Invalid password"
-msgstr "无效密码"
+msgstr "密码错误"
 
 #: authentik/stages/prompt/models.py
 msgid "Text: Simple Text input"

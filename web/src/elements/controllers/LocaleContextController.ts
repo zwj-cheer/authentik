@@ -2,7 +2,7 @@ import { sourceLocale, targetLocales } from "../../locale-codes.js";
 
 import { LocaleLoaderRecord, TargetLanguageTag } from "#common/ui/locale/definitions";
 import { formatDisplayName } from "#common/ui/locale/format";
-import { autoDetectLanguage, isTargetLanguageTag } from "#common/ui/locale/utils";
+import { autoDetectLanguage, isTargetLanguageTag, setSessionLocale } from "#common/ui/locale/utils";
 
 import { kAKLocale, LocaleContext, LocaleContextValue, LocaleMixin } from "#elements/mixins/locale";
 import type { ReactiveElementHost } from "#elements/types";
@@ -177,6 +177,8 @@ export class LocaleContextController implements ReactiveController {
         if (nextLocale !== sourceLocale) {
             this.#applyLocale(nextLocale);
         }
+
+        setSessionLocale(nextLocale);
     }
 
     #localeStatusListener = (event: CustomEvent<LocaleStatusEventDetail>) => {

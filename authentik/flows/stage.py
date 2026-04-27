@@ -9,6 +9,7 @@ from django.http import HttpRequest
 from django.http.request import QueryDict
 from django.http.response import HttpResponse
 from django.urls import reverse
+from django.utils.translation import gettext
 from django.views.generic.base import View
 from prometheus_client import Histogram
 from rest_framework.request import Request
@@ -155,16 +156,16 @@ class ChallengeStageView(StageView):
     def format_title(self) -> str:
         """Allow usage of placeholder in flow title."""
         if not self.executor.plan:
-            return self.executor.flow.title
+            return gettext(self.executor.flow.title)
         try:
-            return self.executor.flow.title % {
+            return gettext(self.executor.flow.title) % {
                 "app": self.executor.plan.context.get(PLAN_CONTEXT_APPLICATION, ""),
                 "user": self.get_pending_user(for_display=True),
             }
 
         except Exception as exc:  # noqa
             self.logger.warning("failed to template title", exc=exc)
-            return self.executor.flow.title
+            return gettext(self.executor.flow.title)
 
     @property
     def cancel_url(self) -> str:

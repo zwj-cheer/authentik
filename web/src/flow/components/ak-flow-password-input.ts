@@ -21,7 +21,7 @@ import PFInputGroup from "@patternfly/patternfly/components/InputGroup/input-gro
  */
 interface VisibilityProps {
     icon: string;
-    label: string;
+    label: () => string;
 }
 
 /**
@@ -30,11 +30,11 @@ interface VisibilityProps {
 const Visibility = {
     Reveal: {
         icon: "fa-eye",
-        label: msg("Show password"),
+        label: () => msg("Show password"),
     },
     Mask: {
         icon: "fa-eye-slash",
-        label: msg("Hide password"),
+        label: () => msg("Hide password"),
     },
 } as const satisfies Record<string, VisibilityProps>;
 
@@ -78,6 +78,14 @@ export class InputPassword extends AKElement {
      */
     @property({ type: String })
     placeholder = msg("Please enter your password");
+
+    /**
+     * Browser autocomplete hint for password managers.
+     *
+     * @attr
+     */
+    @property({ type: String })
+    autocomplete = "current-password";
 
     /**
      * The initial value of the input field.
@@ -264,7 +272,7 @@ export class InputPassword extends AKElement {
 
         toggleElement.setAttribute(
             "aria-label",
-            masked ? Visibility.Reveal.label : Visibility.Mask.label,
+            masked ? Visibility.Reveal.label() : Visibility.Mask.label(),
         );
 
         const iconElement = toggleElement.querySelector("i")!;
@@ -280,7 +288,7 @@ export class InputPassword extends AKElement {
 
         return html`<button
             ${ref(this.toggleVisibilityRef)}
-            aria-label=${label}
+            aria-label=${label()}
             @click=${this.togglePasswordVisibility}
             class="pf-c-button pf-m-control"
             type="button"
@@ -319,7 +327,7 @@ export class InputPassword extends AKElement {
                             id=${this.inputID}
                             name=${this.name}
                             placeholder=${this.placeholder}
-                            autocomplete="current-password"
+                            autocomplete=${this.autocomplete}
                             class="${classMap({
                                 "pf-c-form-control": true,
                                 "pf-m-icon": true,

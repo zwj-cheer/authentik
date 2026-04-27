@@ -20,7 +20,7 @@ import { AKSessionAuthenticatedEvent } from "#common/ws/events";
 import { listen } from "#elements/decorators/listen";
 import { Interface } from "#elements/Interface";
 import { showAPIErrorMessage } from "#elements/messages/MessageContainer";
-import { WithBrandConfig } from "#elements/mixins/branding";
+import { globalBrandingMessage, WithBrandConfig } from "#elements/mixins/branding";
 import { LitPropertyRecord, SlottedTemplateResult } from "#elements/types";
 import { exportParts } from "#elements/utils/attributes";
 import { ThemedImage } from "#elements/utils/images";
@@ -47,7 +47,7 @@ import {
 import { spread } from "@open-wc/lit-helpers";
 import { match, P } from "ts-pattern";
 
-import { msg } from "@lit/localize";
+import { LOCALE_STATUS_EVENT, LocaleStatusEventDetail, msg } from "@lit/localize";
 import { CSSResult, html, nothing, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { guard } from "lit/directives/guard.js";
@@ -122,6 +122,14 @@ export class FlowExecutor extends WithBrandConfig(Interface) implements StageHos
     #logger = ConsoleLogger.prefix("flow-executor");
 
     #api: FlowsApi;
+
+    #localeStatusListener = (event: CustomEvent<LocaleStatusEventDetail>) => {
+        if (event.detail.status !== "ready" || !this.challenge) {
+            return;
+        }
+
+        this.refresh();
+    };
 
     // Listen for challenge-forwarding events from iframe-based third-party verifiers (Device Compliance)
     #flowIframeMessageController = new FlowIframeMessageController(this);
@@ -248,13 +256,23 @@ export class FlowExecutor extends WithBrandConfig(Interface) implements StageHos
         });
     }
 
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        window.addEventListener(LOCALE_STATUS_EVENT, this.#localeStatusListener);
+    }
+
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        window.removeEventListener(LOCALE_STATUS_EVENT, this.#localeStatusListener);
+    }
+
     // DOM post-processing has to happen after the render.
     public updated(changedProperties: PropertyValues<this>) {
         super.updated(changedProperties);
 
         document.title = match(this.challenge?.flowInfo?.title)
             .with(P.nullish, () => this.brandingTitle)
-            .otherwise((title) => `${title} - ${this.brandingTitle}`);
+            .otherwise((title) => `${this.brandingMessage(title)} - ${this.brandingTitle}`);
 
         if (changedProperties.has("challenge") && this.challenge?.flowInfo) {
             this.layout = this.challenge?.flowInfo?.layout || FlowExecutor.DefaultLayout;
@@ -442,7 +460,7 @@ export class FlowExecutor extends WithBrandConfig(Interface) implements StageHos
                 <div class="pf-c-login__main-header pf-c-brand" part="branding">
                     ${ThemedImage({
                         src: this.brandingLogo,
-                        alt: msg("authentik Logo"),
+                        alt: globalBrandingMessage(msg("authentik Logo")),
                         className: "branding-logo",
                         theme: this.activeTheme,
                         themedUrls: this.brandingLogoThemedUrls,

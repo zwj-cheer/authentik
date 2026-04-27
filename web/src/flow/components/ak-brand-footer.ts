@@ -5,14 +5,14 @@ import { AKElement } from "#elements/Base";
 
 import { FooterLink } from "@goauthentik/api";
 
-import { msg } from "@lit/localize";
+import { LOCALE_STATUS_EVENT, LocaleStatusEventDetail, msg } from "@lit/localize";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { map } from "lit/directives/map.js";
 
 /**
  * @part list - The list element containing the links
- * @part list-item - Each item in the list, including the "Powered by authentik" item
+ * @part list-item - Each configured footer link item
  * @part list-item-link - The link element for each item, if applicable
  */
 @customElement("ak-brand-links")
@@ -32,14 +32,29 @@ export class BrandLinks extends AKElement {
     @property({ type: Array, attribute: false })
     public links: FooterLink[] = globalAK().brand.uiFooterLinks || [];
 
+    #localeStatusListener = (event: CustomEvent<LocaleStatusEventDetail>) => {
+        if (event.detail.status === "ready") {
+            this.requestUpdate();
+        }
+    };
+
+    public override connectedCallback() {
+        super.connectedCallback();
+        window.addEventListener(LOCALE_STATUS_EVENT, this.#localeStatusListener);
+    }
+
+    public override disconnectedCallback() {
+        super.disconnectedCallback();
+        window.removeEventListener(LOCALE_STATUS_EVENT, this.#localeStatusListener);
+    }
+
     render() {
-        const links = [
-            ...this.links,
-            {
-                name: msg("Powered by authentik"),
-                href: null,
-            },
-        ];
+        const links = this.links;
+
+        if (links.length < 1) {
+            return null;
+        }
+
         return html`<ul
             aria-label=${msg("Site links")}
             class="pf-c-list pf-m-inline"

@@ -52,15 +52,15 @@ export const PasswordManagerPrefill: {
     totp?: string;
 } = {};
 
-export const OR_LIST_FORMATTERS: Intl.ListFormat = new Intl.ListFormat("default", {
+export const OR_LIST_FORMATTER_OPTIONS: Intl.ListFormatOptions = {
     style: "short",
     type: "disjunction",
-});
+};
 
-const UI_FIELDS: { [key: string]: string } = {
-    [UserFieldsEnum.Username]: msg("Username"),
-    [UserFieldsEnum.Email]: msg("Email"),
-    [UserFieldsEnum.Upn]: msg("UPN"),
+const UI_FIELDS: { [key: string]: () => string } = {
+    [UserFieldsEnum.Username]: () => msg("Username", { id: "login.identifier.username" }),
+    [UserFieldsEnum.Email]: () => msg("Email", { id: "login.identifier.email" }),
+    [UserFieldsEnum.Upn]: () => msg("UPN", { id: "login.identifier.upn" }),
 };
 
 const sortLoginSources = (a: LoginSource, b: LoginSource) =>
@@ -298,7 +298,9 @@ export class IdentificationStage extends BaseStage<
 
         const offerRecovery = flowDesignation === FlowDesignationEnum.Recovery;
         const type = fields.length === 1 && fields[0] === UserFieldsEnum.Email ? "email" : "text";
-        const label = OR_LIST_FORMATTERS.format(fields.map((f) => UI_FIELDS[f]));
+        const label = new Intl.ListFormat(this.activeLanguageTag, OR_LIST_FORMATTER_OPTIONS).format(
+            fields.map((f) => UI_FIELDS[f]()),
+        );
         const username = rememberMe.username ?? pendingUserIdentifier;
 
         // When webauthn is enabled, add "webauthn" to autocomplete to enable passkey autofill

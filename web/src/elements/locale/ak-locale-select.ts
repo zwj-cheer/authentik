@@ -1,4 +1,6 @@
+import { CJKLanguageTag } from "#common/ui/locale/cjk";
 import { TargetLanguageTag } from "#common/ui/locale/definitions";
+import { SourceLanguageTag } from "#common/ui/locale/definitions";
 import { formatLocaleDisplayNames } from "#common/ui/locale/format";
 import { setSessionLocale } from "#common/ui/locale/utils";
 
@@ -15,6 +17,12 @@ import { html, PropertyValues } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { guard } from "lit/directives/guard.js";
 import { createRef, ref } from "lit/directives/ref.js";
+
+const DEFAULT_LANGUAGE_TAG = CJKLanguageTag.HanSimplified;
+const LOCALE_SWITCHER_LANGUAGE_TAGS = new Set<TargetLanguageTag>([
+    DEFAULT_LANGUAGE_TAG,
+    SourceLanguageTag,
+]);
 
 @customElement("ak-locale-select")
 export class AKLocaleSelect extends WithLocale(WithCapabilitiesConfig(AKElement)) {
@@ -34,8 +42,8 @@ export class AKLocaleSelect extends WithLocale(WithCapabilitiesConfig(AKElement)
         this.blur();
 
         requestAnimationFrame(() => {
-            this.activeLanguageTag = locale;
             setSessionLocale(locale);
+            this.activeLanguageTag = locale;
         });
     };
 
@@ -48,6 +56,8 @@ export class AKLocaleSelect extends WithLocale(WithCapabilitiesConfig(AKElement)
             this.ready = true;
             window.clearTimeout(this.#readyTimeout);
         }
+
+        this.requestUpdate();
     };
 
     /**
@@ -90,10 +100,14 @@ export class AKLocaleSelect extends WithLocale(WithCapabilitiesConfig(AKElement)
     public override connectedCallback(): void {
         super.connectedCallback();
 
-        window.addEventListener(LOCALE_STATUS_EVENT, this.#localeStatusListener, {
-            once: true,
-            passive: true,
-        });
+        if (!LOCALE_SWITCHER_LANGUAGE_TAGS.has(this.activeLanguageTag)) {
+            requestAnimationFrame(() => {
+                this.activeLanguageTag = DEFAULT_LANGUAGE_TAG;
+                setSessionLocale(DEFAULT_LANGUAGE_TAG);
+            });
+        }
+
+        window.addEventListener(LOCALE_STATUS_EVENT, this.#localeStatusListener, { passive: true });
     }
 
     public override disconnectedCallback(): void {
@@ -127,7 +141,7 @@ export class AKLocaleSelect extends WithLocale(WithCapabilitiesConfig(AKElement)
         return guard([activeLocaleTag, debug], () => {
             const entries = formatLocaleDisplayNames(activeLocaleTag, {
                 debug,
-            });
+            }).filter(([languageTag]) => LOCALE_SWITCHER_LANGUAGE_TAGS.has(languageTag));
 
             return html`<label
                     part="label"
