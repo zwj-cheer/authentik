@@ -2,37 +2,37 @@
 title: Applications
 ---
 
-Applications, as defined in authentik, are used to configure and separate the authorization/access control and the appearance of a specific software application in the **My applications** page.
+在 authentik 中，应用程序用于配置并区分某个软件应用的授权/访问控制，以及它在 **我的应用程序** 页面中的显示方式。
 
-When a user logs into authentik, they see a list of the applications for which authentik is configured to provide authentication and authorization (the applications that they are authorized to use).
+用户登录 authentik 后，会看到 authentik 已配置为其提供身份验证和授权的应用程序列表，也就是该用户被授权使用的应用程序。
 
-Applications are the "other half" of providers. They typically exist in a 1-to-1 relationship; each application needs a provider and every provider can be used with one application. Applications can, however, use specific, additional providers to augment the functionality of the main provider. For more information, see [Backchannel providers](./manage_apps.mdx#backchannel-providers).
+应用程序是提供程序的“另一半”。它们通常是一对一关系：每个应用程序都需要一个提供程序，每个提供程序也只能用于一个应用程序。不过，应用程序也可以使用特定的附加提供程序来增强主提供程序的功能。更多信息请参阅 [反向通道提供程序](./manage_apps.mdx#backchannel-providers)。
 
-Furthermore, the [RAC (Remote Access Control)](../providers/rac/index.md) feature uses a single application and a single provider, but multiple "endpoints". An endpoint defines each remote machine.
+此外，[RAC（远程访问控制）](../providers/rac/index.md) 功能使用一个应用程序和一个提供程序，但可以包含多个“端点”。每个端点用于定义一台远程机器。
 
 :::info
-For information about creating and managing applications, refer to [Manage applications](./manage_apps.mdx).
+有关创建和管理应用程序的信息，请参阅 [管理应用程序](./manage_apps.mdx)。
 :::
 
-## Appearance
+## 外观
 
-Applications are displayed to users when:
+满足以下条件时，应用程序会显示给用户：
 
-- The user has access defined via policies (or the application has no policies bound)
-- A valid Launch URL is configured/could be guessed, this consists of URLs starting with http:// and https://
+- 用户通过策略获得访问权限，或应用程序没有绑定任何策略
+- 已配置有效的启动 URL，或 authentik 可以推断出有效的启动 URL；URL 需要以 http:// 或 https:// 开头
 
-The following options can be configured:
+可以配置以下选项：
 
-- _Name_: This is the name shown for the application card
-- _Launch URL_: The URL that is opened when a user clicks on the application. When left empty, authentik tries to guess it based on the provider
+- _名称_：应用程序卡片上显示的名称
+- _启动 URL_：用户点击应用程序时打开的 URL。留空时，authentik 会尝试根据提供程序推断
 
-    You can use placeholders in the launch url to build them dynamically based on the logged in user. For example, you can set the Launch URL to `https://goauthentik.io/%(username)s`, which will be replaced with the currently logged in user's username.
+    可以在启动 URL 中使用占位符，根据当前登录用户动态生成 URL。例如，将启动 URL 设置为 `https://goauthentik.io/%(username)s`，其中的占位符会被替换为当前登录用户的用户名。
 
-    For a reference of all fields available, see [the API schema for the User object](https://api.goauthentik.io/reference/core-users-retrieve/).
+    如需查看所有可用字段，请参阅 [User 对象的 API schema](https://api.goauthentik.io/reference/core-users-retrieve/)。
 
-    Only applications whose launch URL starts with `http://` or `https://` or are relative URLs are shown on the users' **My applications** page. This can also be used to hide applications that shouldn't be visible on the **My applications** page but are still accessible by users, by setting the _Launch URL_ to `blank://blank`.
+    只有启动 URL 以 `http://`、`https://` 开头，或使用相对 URL 的应用程序，才会显示在用户的 **我的应用程序** 页面。也可以把 _启动 URL_ 设置为 `blank://blank`，用于隐藏不应显示在 **我的应用程序** 页面、但用户仍可访问的应用程序。
 
-- _Icon (URL)_: Optionally configure an icon for the application. You can select from files uploaded to the [Files](../../customize/files.md) library or enter an absolute URL.
+- _图标（URL）_：可选配置应用程序图标。可以从上传到 [文件](../../customize/files.md) 库的文件中选择，或输入绝对 URL。
 
-- _Publisher_: Text shown in the application card's expandable kebab menu (⋮)
-- _Description_: Text shown in the application card's expandable kebab menu (⋮)
+- _发布者_：显示在应用程序卡片展开菜单（⋮）中的文本
+- _描述_：显示在应用程序卡片展开菜单（⋮）中的文本
