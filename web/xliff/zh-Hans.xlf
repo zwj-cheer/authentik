@@ -2862,6 +2862,10 @@
   <source>Username</source>
   <target>用户名</target>
 </trans-unit>
+<trans-unit id="login.identifier.username">
+  <source>Username</source>
+  <target>用户名</target>
+</trans-unit>
 <trans-unit id="s3f63421908094590">
   <source>Current status</source>
   <target>当前状态</target>
@@ -5713,6 +5717,10 @@ doesn't pass when either or both of the selected options are equal or above the 
   <target>设备</target>
 </trans-unit>
 <trans-unit id="sd1f44f1a8bc20e67">
+  <source>Email</source>
+  <target>电子邮箱</target>
+</trans-unit>
+<trans-unit id="login.identifier.email">
   <source>Email</source>
   <target>电子邮箱</target>
 </trans-unit>
