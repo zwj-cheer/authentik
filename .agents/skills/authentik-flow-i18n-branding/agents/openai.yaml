@@ -1,0 +1,4 @@
+interface:
+  display_name: "authentik Flow I18n"
+  short_description: "Flow i18n and branding placeholders"
+  default_prompt: "Use this skill when changing authentik flow names, titles, prompts, descriptions, Chinese localization, or branding placeholders."
