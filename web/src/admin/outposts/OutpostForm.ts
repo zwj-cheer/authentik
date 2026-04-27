@@ -11,6 +11,7 @@ import { groupBy } from "#common/utils";
 
 import { DataProvider, DualSelectPair } from "#elements/ak-dual-select/types";
 import { ModelForm } from "#elements/forms/ModelForm";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse } from "#elements/table/Table";
 
 import { AKLabel } from "#components/ak-label";
@@ -138,6 +139,12 @@ export class OutpostForm extends ModelForm<Outpost, string> {
             : msg("Successfully created outpost.");
     }
 
+    protected override formatHeadline(): string {
+        return this.instance
+            ? msg("Edit access node", { id: "outpost.form.headline.edit" })
+            : msg("Create access node", { id: "outpost.form.headline.create" });
+    }
+
     async send(data: Outpost): Promise<Outpost> {
         if (this.instance) {
             return new OutpostsApi(DEFAULT_CONFIG).outpostsInstancesUpdate({
@@ -234,8 +241,10 @@ export class OutpostForm extends ModelForm<Outpost, string> {
                 </ak-search-select>
                 <div id="service-connection-help">
                     <p class="pf-c-form__helper-text">
-                        ${msg(
-                            "Selecting an integration enables the management of the outpost by authentik.",
+                        ${globalBrandingMessage(
+                            msg(
+                                "Selecting an integration enables the management of the outpost by authentik.",
+                            ),
                         )}
                     </p>
                     <p class="pf-c-form__helper-text">

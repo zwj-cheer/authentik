@@ -397,6 +397,12 @@ export class Form<T = Record<string, unknown>, D = T>
         const noun = this.verboseName;
         const verb = (this.constructor as typeof Form).submitVerb;
 
+        if (noun && verb === Form.submitVerb) {
+            return msg(str`Create ${noun}`, {
+                id: "form.create-submit",
+            });
+        }
+
         return noun
             ? msg(str`${verb} ${noun}`, {
                   id: "form.submit.verb-entity",

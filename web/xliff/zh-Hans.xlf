@@ -659,11 +659,11 @@
 </trans-unit>
 <trans-unit id="s113c05ef9996ca4b">
   <source>Embedded outpost is not configured correctly.</source>
-  <target>嵌入式前哨配置不正确。</target>
+  <target>嵌入式接入节点配置不正确。</target>
 </trans-unit>
 <trans-unit id="seb5ba88f21937c98">
   <source>Check outposts.</source>
-  <target>检查前哨。</target>
+  <target>检查接入节点。</target>
 </trans-unit>
 <trans-unit id="sd0bc94e11935ee5a">
   <source>HTTPS is not detected correctly</source>
@@ -693,7 +693,7 @@
 </trans-unit>
 <trans-unit id="s08272eeeddfd244e">
   <source>An outpost is on an incorrect version!</source>
-  <target>一个前哨的版本不正确！</target>
+  <target>一个接入节点的版本不正确！</target>
 </trans-unit>
 <trans-unit id="s713d147e1761d0f0">
   <source>Up-to-date!</source>
@@ -781,19 +781,19 @@
 </trans-unit>
 <trans-unit id="s3f01dbc864d2a8b9">
   <source>Outpost status chart</source>
-  <target>前哨状态图表</target>
+  <target>接入节点状态图表</target>
 </trans-unit>
 <trans-unit id="sfeb82261bcf99edd">
   <source>Healthy outposts</source>
-  <target>健康的前哨</target>
+  <target>健康的接入节点</target>
 </trans-unit>
 <trans-unit id="s21b3058faf874368">
   <source>Outdated outposts</source>
-  <target>过时的前哨</target>
+  <target>过时的接入节点</target>
 </trans-unit>
 <trans-unit id="s51f92b6fa76656ca">
   <source>Unhealthy outposts</source>
-  <target>不健康的前哨</target>
+  <target>不健康的接入节点</target>
 </trans-unit>
 <trans-unit id="s74d86eb7e5a10fdf">
   <source>Operation failed to complete</source>
@@ -846,7 +846,7 @@
 </trans-unit>
 <trans-unit id="s8763a33c3d46aaf5">
   <source>Outpost status</source>
-  <target>前哨状态</target>
+  <target>接入节点状态</target>
 </trans-unit>
 <trans-unit id="scc286303aa9c6cb0">
   <source>Sync status</source>
@@ -1612,7 +1612,7 @@
 </trans-unit>
 <trans-unit id="s30d0d0e6c626a234">
   <source>The outpost holds all users and groups in-memory and will refresh every 5 Minutes</source>
-  <target>前哨将所有用户和组保存在内存中，并每 5 分钟刷新一次</target>
+  <target>接入节点将所有用户和组保存在内存中，并每 5 分钟刷新一次</target>
 </trans-unit>
 <trans-unit id="sffc14b8200a9f938">
   <source>Direct querying</source>
@@ -1652,11 +1652,11 @@
 </trans-unit>
 <trans-unit id="scef3f4ad80abbd22">
   <source>Configure how the outpost authenticates requests.</source>
-  <target>配置前哨如何验证请求的身份。</target>
+  <target>配置接入节点如何验证请求的身份。</target>
 </trans-unit>
 <trans-unit id="s8b87df5664de7eb8">
   <source>Configure how the outpost queries the core authentik server's users.</source>
-  <target>配置前哨如何查询核心 authentik 服务器的用户。</target>
+  <target>配置接入节点如何查询核心 authentik 服务器的用户。</target>
 </trans-unit>
 <trans-unit id="s254d527e3a53dbb7">
   <source>Code-based MFA Support</source>
@@ -2014,7 +2014,7 @@
 </trans-unit>
 <trans-unit id="s93574c03953f25dd">
   <source>This provider will behave like a transparent reverse-proxy, except requests must be authenticated. If your upstream application uses HTTPS, make sure to connect to the outpost using HTTPS as well.</source>
-  <target>除了请求必须经过身份验证外，此提供程序的行为类似于透明反向代理。如果您的上游应用程序使用 HTTPS，请确保连接到前哨时也使用 HTTPS。</target>
+  <target>除了请求必须经过身份验证外，此提供程序的行为类似于透明反向代理。如果您的上游应用程序使用 HTTPS，请确保连接到接入节点时也使用 HTTPS。</target>
 </trans-unit>
 <trans-unit id="sa29b5680cfafacc8">
   <source>External host</source>
@@ -2046,7 +2046,7 @@
 </trans-unit>
 <trans-unit id="sff0ac1ace2d90709">
   <source>Use this provider with nginx's auth_request or traefik's forwardAuth. Each application/domain needs its own provider. Additionally, on each domain, /outpost.goauthentik.io must be routed to the outpost (when using a managed outpost, this is done for you).</source>
-  <target>与 nginx 的 auth_request 或 traefik 的 ForwardAuth 一起使用此提供程序。每个应用程序/域名都需要自己的提供程序。此外，在每个域名上，/outpost.goauthentik.io 必须路由到前哨（在使用托管的 Outpost 时，这已经为您处理好了）。</target>
+  <target>与 nginx 的 auth_request 或 traefik 的 ForwardAuth 一起使用此提供程序。每个应用程序/域名都需要自己的提供程序。此外，在每个域名上，/outpost.goauthentik.io 必须路由到接入节点（使用托管接入节点时，这已经为您处理好了）。</target>
 </trans-unit>
 <trans-unit id="s44c90273f08fb718">
   <source>Use this provider with nginx's auth_request or traefik's forwardAuth. Only a single provider is required per root domain. You can't do per-application authorization, but you don't have to create a provider for each application.</source>
@@ -2972,7 +2972,7 @@
 </trans-unit>
 <trans-unit id="s05e395ff60af047b">
   <source>Warning: Provider is not used by any Outpost.</source>
-  <target>警告：提供程序未被任何前哨使用。</target>
+  <target>警告：提供程序未被任何接入节点使用。</target>
 </trans-unit>
 <trans-unit id="sccbfc4dec0c8d80c">
   <source>Assigned to application</source>
@@ -3907,7 +3907,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="application.outpost.missing.warning">
   <source>Warning: Application is not used by any Outpost.</source>
-  <target>警告：应用并没有被任何前哨站使用</target>
+  <target>警告：应用并没有被任何接入节点使用</target>
 </trans-unit>
 <trans-unit id="sb6cbd4f92ebaf5d8">
   <source>Related</source>
@@ -7213,7 +7213,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="sbfaee8cfbf4e44e8">
   <source>Require Outpost (flow can only be executed from an outpost)</source>
-  <target>需要前哨（流程只能从前哨执行）</target>
+  <target>需要接入节点（流程只能从接入节点执行）</target>
 </trans-unit>
 <trans-unit id="sfad9279cc42c6b61">
   <source>Required authentication level for this flow.</source>
@@ -7538,7 +7538,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s90c3b62194fe8508">
   <source>Outpost Deployment Info</source>
-  <target>前哨部署信息</target>
+  <target>接入节点部署信息</target>
 </trans-unit>
 <trans-unit id="s35f9df7668d5fa79">
   <source>View deployment documentation</source>
@@ -7554,11 +7554,11 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s6f270e1668c036e9">
   <source>Successfully updated outpost.</source>
-  <target>已成功更新前哨。</target>
+  <target>已成功更新接入节点。</target>
 </trans-unit>
 <trans-unit id="s79aed8154d7c472c">
   <source>Successfully created outpost.</source>
-  <target>已成功创建前哨。</target>
+  <target>已成功创建接入节点。</target>
 </trans-unit>
 <trans-unit id="sc3259eb55cf91e8c">
   <source>LDAP</source>
@@ -7578,7 +7578,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s9c29565c5ae1cc92">
   <source>Selecting an integration enables the management of the outpost by authentik.</source>
-  <target>选择集成使 authentik 能够管理前哨。</target>
+  <target>选择集成使 authentik 能够管理接入节点。</target>
 </trans-unit>
 <trans-unit id="scb76a63c68b0d81f">
   <source>Available Applications</source>
@@ -7620,11 +7620,11 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s5e169e1bac20b4a6">
   <source>Outposts</source>
-  <target>前哨</target>
+  <target>接入节点</target>
 </trans-unit>
 <trans-unit id="s8802553bc57617ee">
   <source>Outposts are deployments of authentik components to support different environments and protocols, like reverse proxies.</source>
-  <target>前哨是对 authentik 组件的部署，用于支持不同的环境和协议，例如反向代理。</target>
+  <target>接入节点是对 authentik 组件的部署，用于支持不同的环境和协议，例如反向代理。</target>
 </trans-unit>
 <trans-unit id="s84d7d6ebbedcb586">
   <source>Health and Version</source>
@@ -7645,7 +7645,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s1d49ec5030447643">
   <source>Outpost(s)</source>
-  <target>前哨</target>
+  <target>接入节点</target>
 </trans-unit>
 <trans-unit id="sdc1ef94016f0d855">
   <source>Successfully updated integration.</source>
@@ -7697,11 +7697,11 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s1b85e6ac2978a2c0">
   <source>Outpost integrations</source>
-  <target>前哨集成</target>
+  <target>接入节点集成</target>
 </trans-unit>
 <trans-unit id="sec55a3a7f18615ec">
   <source>Outpost integrations define how authentik connects to external platforms to manage and deploy Outposts.</source>
-  <target>前哨集成定义了 authentik 如何连接到外部平台以管理和部署前哨。</target>
+  <target>接入节点集成定义了 authentik 如何连接到外部平台以管理和部署接入节点。</target>
 </trans-unit>
 <trans-unit id="sae239213b7c70376">
   <source>State</source>
@@ -7713,7 +7713,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sa8e255492bb6ae0d">
   <source>Outpost integration(s)</source>
-  <target>前哨集成</target>
+  <target>接入节点集成</target>
 </trans-unit>
 <trans-unit id="s9d18948d25c68d66">
   <source>Successfully generated certificate-key pair.</source>
@@ -8284,7 +8284,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s6b79e73ca77148a0">
   <source>Outpost Integrations</source>
-  <target>前哨集成</target>
+  <target>接入节点集成</target>
 </trans-unit>
 <trans-unit id="s7df5b92a3f93544f">
   <source>Warning: The current user count has exceeded the configured licenses.</source>
@@ -9213,15 +9213,15 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s49ae82ba527f8e01">
   <source>Type an outpost name...</source>
-  <target>输入前哨名称...</target>
+  <target>输入接入节点名称...</target>
 </trans-unit>
 <trans-unit id="s574ed5d3a52d45c8">
   <source>Outpost Name</source>
-  <target>前哨名称</target>
+  <target>接入节点名称</target>
 </trans-unit>
 <trans-unit id="sc47f8ab6162bb2bb">
   <source>Outpost configuration</source>
-  <target>前哨配置</target>
+  <target>接入节点配置</target>
 </trans-unit>
 <trans-unit id="s11a2ac9f2bd811d8">
   <source>Delete Object Permission</source>
@@ -9887,21 +9887,27 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s3934affe32f6a454">
   <source><x id="0" equiv-text="${availableCount}"/> item marked to add.</source>
+  <target><x id="0" equiv-text="${availableCount}"/> 项待添加。</target>
 </trans-unit>
 <trans-unit id="s8b68948382758d57">
   <source><x id="0" equiv-text="${availableCount}"/> items marked to add.</source>
+  <target><x id="0" equiv-text="${availableCount}"/> 项待添加。</target>
 </trans-unit>
 <trans-unit id="s3a482e34c3713e41">
   <source><x id="0" equiv-text="${selectedTotal}"/> item selected.</source>
+  <target><x id="0" equiv-text="${selectedTotal}"/> 项已选择。</target>
 </trans-unit>
 <trans-unit id="s726a7342e18dc660">
   <source><x id="0" equiv-text="${selectedTotal}"/> items selected.</source>
+  <target><x id="0" equiv-text="${selectedTotal}"/> 项已选择。</target>
 </trans-unit>
 <trans-unit id="s403a360d48a11d5f">
   <source><x id="0" equiv-text="${selectedCount}"/> item marked to remove.</source>
+  <target><x id="0" equiv-text="${selectedCount}"/> 项待移除。</target>
 </trans-unit>
 <trans-unit id="s2e92b61847f32e72">
   <source><x id="0" equiv-text="${selectedCount}"/> items marked to remove.</source>
+  <target><x id="0" equiv-text="${selectedCount}"/> 项待移除。</target>
 </trans-unit>
 <trans-unit id="sa5d4a82c5daae3de">
   <source>Reply URL</source>
@@ -10043,6 +10049,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s8e5d1a84bd559a27">
   <source>Select an object...</source>
+  <target>选择一个对象...</target>
 </trans-unit>
 <trans-unit id="s69e44328a5b45aa2">
   <source>Rule Name</source>
@@ -10549,6 +10556,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s031945e67717bf79">
   <source>Save Changes</source>
+  <target>保存更改</target>
 </trans-unit>
 <trans-unit id="s934c5d00f93dda66">
   <source>Resend Email</source>
@@ -10582,18 +10590,21 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s5cfb19cfce5f69b1">
   <source>Outpost</source>
+  <target>接入节点</target>
 </trans-unit>
 <trans-unit id="s67910ccb738e5fa5">
   <source>No instances running.</source>
 </trans-unit>
 <trans-unit id="s06763f4bb18a1897">
   <source>New Outpost</source>
+  <target>新建接入节点</target>
 </trans-unit>
 <trans-unit id="s80ec46e704f8c452">
   <source>No providers configured.</source>
 </trans-unit>
 <trans-unit id="s3397d8bb9edb5637">
   <source>Outpost Info</source>
+  <target>接入节点信息</target>
 </trans-unit>
 <trans-unit id="sbaf0a7c417e388af">
   <source>Health</source>
@@ -10879,18 +10890,23 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sddd96d7a8c730493">
   <source>Outpost Integration</source>
+  <target>接入节点集成</target>
 </trans-unit>
 <trans-unit id="seeaf3a5c5dda2b0d">
   <source>Search outposts by name, type or assigned integration...</source>
+  <target>按名称、类型或分配的集成搜索接入节点...</target>
 </trans-unit>
 <trans-unit id="s627fcb2e3b756726">
   <source>Search for an outpost integration by name, type or assigned integration...</source>
+  <target>按名称、类型或分配的集成搜索接入节点集成...</target>
 </trans-unit>
 <trans-unit id="s3d50d9689caaf646">
   <source>Open the wizard to create a new service connection.</source>
+  <target>打开向导以创建新的服务连接。</target>
 </trans-unit>
 <trans-unit id="s6614cd5f6913ff3d">
   <source>New Outpost Integration</source>
+  <target>新建接入节点集成</target>
 </trans-unit>
 <trans-unit id="s0a6b1b964ef82473">
   <source>Open the wizard to create a new policy.</source>
@@ -11143,21 +11159,26 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="form.create-submit">
   <source>Create <x id="0" equiv-text="${verboseName}"/></source>
+  <target>创建<x id="0" equiv-text="${verboseName}"/></target>
 </trans-unit>
 <trans-unit id="form.create-submit-no-entity">
   <source>Create</source>
+  <target>创建</target>
 </trans-unit>
 <trans-unit id="sdccd8f78d52d3a87">
   <source>Copy to clipboard</source>
 </trans-unit>
 <trans-unit id="s757a4c2248c0b9da">
   <source>Entity</source>
+  <target>实体</target>
 </trans-unit>
 <trans-unit id="entity.edit.named">
   <source>Edit "<x id="0" equiv-text="${itemName}"/>" <x id="1" equiv-text="${noun}"/></source>
+  <target>编辑“<x id="0" equiv-text="${itemName}"/>”<x id="1" equiv-text="${noun}"/></target>
 </trans-unit>
 <trans-unit id="entity.edit">
   <source>Edit <x id="0" equiv-text="${noun}"/></source>
+  <target>编辑<x id="0" equiv-text="${noun}"/></target>
 </trans-unit>
 <trans-unit id="permissions.modal-invoker.named">
   <source>Open "<x id="0" equiv-text="${itemName}"/>" permissions</source>
@@ -11176,21 +11197,26 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="form.submit.verb.create">
   <source>Create</source>
+  <target>创建</target>
 </trans-unit>
 <trans-unit id="form.submit.verb.creating">
   <source>Creating</source>
+  <target>正在创建</target>
 </trans-unit>
 <trans-unit id="form.submit.verb-entity">
   <source><x id="0" equiv-text="${verb} ${noun}"/></source>
 </trans-unit>
 <trans-unit id="form.modifier.edit">
   <source>Edit</source>
+  <target>编辑</target>
 </trans-unit>
 <trans-unit id="form.submit.save-changes">
   <source>Save Changes</source>
+  <target>保存更改</target>
 </trans-unit>
 <trans-unit id="form.submit.saving-changes">
   <source>Saving Changes...</source>
+  <target>正在保存更改...</target>
 </trans-unit>
 <trans-unit id="se0bf7f662ec09302">
   <source>An error occurred while loading <x id="0" equiv-text="${this.verboseName}"/>.</source>
@@ -11436,6 +11462,18 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="usedBy.count.zero">
   <source><x id="0" equiv-text="${verboseName}"/> is not associated with any objects.</source>
   <note from="lit-localize">Zero: no objects use this entity.</note>
+</trans-unit>
+<trans-unit id="outpost.embedded.name">
+  <source>authentik built-in access node</source>
+  <target>authentik 内置接入节点</target>
+</trans-unit>
+<trans-unit id="outpost.form.headline.edit">
+  <source>Edit access node</source>
+  <target>编辑接入节点</target>
+</trans-unit>
+<trans-unit id="outpost.form.headline.create">
+  <source>Create access node</source>
+  <target>创建接入节点</target>
 </trans-unit>
 </body>
 </file>
