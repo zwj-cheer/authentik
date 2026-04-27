@@ -1,4 +1,3 @@
-import "#elements/LicenseNotice";
 import "#elements/Alert";
 import "#elements/forms/FormGroup";
 
@@ -100,6 +99,12 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
         this.host.valid = !!this.selectedType;
     };
 
+    protected get visibleTypes(): TypeCreate[] | null {
+        if (!this.types) return null;
+
+        return this.types.filter((type) => !type.requiresEnterprise || this.hasEnterpriseLicense);
+    }
+
     #selectDispatch = (type: TypeCreate) => {
         this.dispatchEvent(
             new CustomEvent("ak-type-create-select", {
@@ -115,13 +120,13 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
     //#region Grid layout
 
     protected renderGridItems(): SlottedTemplateResult {
-        if (!this.types?.length) {
+        const types = this.visibleTypes;
+
+        if (!types?.length) {
             return null;
         }
 
-        return this.types.map((type, idx) => {
-            const disabled = !!(type.requiresEnterprise && !this.hasEnterpriseLicense);
-
+        return types.map((type, idx) => {
             const selected = this.selectedType === type;
             const inputID = `${type.component}-${type.modelName}`;
 
@@ -130,22 +135,17 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
                     "pf-l-grid__item": true,
                     "pf-m-3-col": true,
                     "pf-c-card": true,
-                    "pf-m-non-selectable-raised": disabled,
-                    "ak-m-enterprise-only": disabled,
-                    "pf-m-selectable-raised": !disabled,
+                    "pf-m-selectable-raised": true,
                     "pf-m-selected-raised": selected,
                 })}
                 tabindex=${idx}
                 role="option"
                 data-component=${type.component}
                 data-model-name=${type.modelName}
-                aria-disabled="${disabled ? "true" : "false"}"
                 aria-selected="${selected ? "true" : "false"}"
                 aria-label=${type.name}
                 aria-describedby=${`${inputID}-description`}
                 @click=${() => {
-                    if (disabled) return;
-
                     this.selectedType = type;
                     this.#selectDispatch(type);
                 }}
@@ -165,17 +165,14 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
                 <div class="pf-c-card__body" id=${`${inputID}-description`}>
                     ${type.description}
                 </div>
-                ${disabled
-                    ? html`<div class="pf-c-card__footer">
-                          <ak-license-notice></ak-license-notice>
-                      </div> `
-                    : null}
             </div>`;
         });
     }
 
     protected renderGrid(): SlottedTemplateResult {
-        if (!this.types?.length) {
+        const types = this.visibleTypes;
+
+        if (!types) {
             return html`<div class="ak-c-loading-skeleton ak-m-grid"></div>`;
         }
 
@@ -198,12 +195,13 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
     //#region List layout
 
     protected renderListItems(): SlottedTemplateResult {
-        if (!this.types?.length) {
+        const types = this.visibleTypes;
+
+        if (!types?.length) {
             return null;
         }
 
-        return this.types.map((type) => {
-            const disabled = !!(type.requiresEnterprise && !this.hasEnterpriseLicense);
+        return types.map((type) => {
             const inputID = `${type.component}-${type.modelName}`;
             const selected = this.selectedType === type;
 
@@ -219,7 +217,6 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
                         this.selectedType = type;
                         this.#selectDispatch(type);
                     }}
-                    ?disabled=${disabled}
                 />
                 <div
                     aria-selected="${selected ? "true" : "false"}"
@@ -230,7 +227,6 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
                 </div>
                 <span id="${inputID}-description" class="pf-c-radio__description"
                     >${type.description}
-                    ${disabled ? html`<ak-license-notice></ak-license-notice>` : null}
                     ${type.deprecated
                         ? html`<ak-alert class="pf-c-radio__description" inline plain>
                               ${msg("This type is deprecated.")}
@@ -242,7 +238,9 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
     }
 
     protected renderList(): SlottedTemplateResult {
-        if (!this.types?.length) {
+        const types = this.visibleTypes;
+
+        if (!types) {
             return html`<div class="ak-c-loading-skeleton ak-m-list"></div>`;
         }
 
