@@ -182,7 +182,11 @@ class OutpostViewSet(UsedByMixin, ModelViewSet):
         """Get outposts current health"""
         outpost: Outpost = self.get_object()
         states = []
-        for state in outpost.state:
+        for state in sorted(
+            (state for state in outpost.state if state.last_seen is not None),
+            key=lambda state: state.last_seen,
+            reverse=True,
+        ):
             states.append(
                 {
                     "uid": state.uid,

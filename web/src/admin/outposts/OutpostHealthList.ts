@@ -5,6 +5,8 @@ import { StaticTable } from "#elements/table/StaticTable";
 import { TableColumn } from "#elements/table/Table";
 import { SlottedTemplateResult } from "#elements/types";
 
+import { isKnownOutpostLastSeen } from "#admin/outposts/utils";
+
 import { OutpostHealth } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
@@ -24,6 +26,10 @@ export class OutpostHealthList extends StaticTable<OutpostHealth> {
         if (item.fipsEnabled) {
             versionString = msg(str`${versionString} (FIPS)`);
         }
+        const lastSeenKnown = isKnownOutpostLastSeen(item.lastSeen);
+        const lastSeen = lastSeenKnown
+            ? msg(str`${formatElapsedTime(item.lastSeen)} (${item.lastSeen.toLocaleTimeString()})`)
+            : msg("Not available");
         return [
             html`${item.hostname}`,
             html`${item.versionOutdated
@@ -31,11 +37,9 @@ export class OutpostHealthList extends StaticTable<OutpostHealth> {
                       >${msg(str`${item.version}, should be ${item.versionShould}`)}
                   </ak-label>`
                 : html`<ak-label color=${PFColor.Green} compact>${versionString} </ak-label>`}`,
-            html`<ak-label color=${PFColor.Green} compact>
-                ${msg(
-                    str`${formatElapsedTime(item.lastSeen)} (${item.lastSeen?.toLocaleTimeString()})`,
-                )}
-            </ak-label>`,
+            html`<ak-label color=${lastSeenKnown ? PFColor.Green : PFColor.Grey} compact
+                >${lastSeen}</ak-label
+            >`,
         ];
     }
 }

@@ -7,6 +7,8 @@ import { formatElapsedTime } from "#common/temporal";
 import { AKElement } from "#elements/Base";
 import { PFColor } from "#elements/Label";
 
+import { isKnownOutpostLastSeen } from "#admin/outposts/utils";
+
 import { OutpostHealth, OutpostsApi } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
@@ -63,6 +65,9 @@ export class OutpostHealthSimpleElement extends AKElement {
             >`;
         }
         const lastSeen = this.outpostHealths[0].lastSeen;
+        if (!isKnownOutpostLastSeen(lastSeen)) {
+            return html`<ak-label color=${PFColor.Grey}>${msg("Not available")}</ak-label>`;
+        }
         return html`<ak-label color=${PFColor.Green}>
             ${msg(
                 str`Last seen: ${formatElapsedTime(lastSeen)} (${lastSeen.toLocaleTimeString()})`,

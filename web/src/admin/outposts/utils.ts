@@ -4,6 +4,10 @@ import { msg } from "@lit/localize";
 
 export const embeddedOutpostManaged = "goauthentik.io/outposts/embedded";
 
+export function isKnownOutpostLastSeen(lastSeen?: Date): lastSeen is Date {
+    return lastSeen instanceof Date && Number.isFinite(lastSeen.getTime()) && lastSeen.getTime() > 0;
+}
+
 export function outpostTypeToLabel(type?: OutpostTypeEnum): string {
     if (!type) return "";
     switch (type) {
