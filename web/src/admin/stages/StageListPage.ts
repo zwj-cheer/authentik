@@ -6,6 +6,7 @@ import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 
 import { DEFAULT_CONFIG } from "#common/api/config";
 
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { IconEditButtonByTagName, modalInvoker, ModalInvokerButton } from "#elements/dialogs";
 import { IconPermissionButton } from "#elements/dialogs/components/IconPermissionButton";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
@@ -14,6 +15,7 @@ import { SlottedTemplateResult } from "#elements/types";
 
 import { AKStageWizard } from "#admin/stages/ak-stage-wizard";
 import { DuoDeviceImportForm } from "#admin/stages/authenticator_duo/DuoDeviceImportForm";
+import { displayStageName } from "#admin/stages/displayName";
 
 import { ModelEnum, Stage, StagesApi } from "@goauthentik/api";
 
@@ -75,13 +77,14 @@ export class StageListPage extends TablePage<Stage> {
 
     protected override row(item: Stage): SlottedTemplateResult[] {
         return [
-            html`<div>${item.name}</div>
+            html`<div>${displayStageName(item.name)}</div>
                 <small>${item.verboseName}</small>`,
             html`<ul class="pf-c-list">
                 ${item.flowSet?.map((flow) => {
+                    const flowLabel = flow.name ? globalBrandingMessage(flow.name) : flow.slug;
                     return html`<li>
-                        <a href="#/flow/flows/${flow.slug}">
-                            <code>${flow.slug}</code>
+                        <a href="#/flow/flows/${flow.slug}" title=${flow.slug}>
+                            <code>${flowLabel}</code>
                         </a>
                     </li>`;
                 })}

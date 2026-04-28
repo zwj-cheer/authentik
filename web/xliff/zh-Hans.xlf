@@ -11486,6 +11486,134 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="login.identifier.upn">
   <source>UPN</source>
 </trans-unit>
+<trans-unit id="sbaeca564db29e3d2">
+  <source>Default authentication identification stage</source>
+  <target>默认认证识别阶段</target>
+</trans-unit>
+<trans-unit id="sfb6c400fbcb420ed">
+  <source>Default authentication password stage</source>
+  <target>默认认证密码阶段</target>
+</trans-unit>
+<trans-unit id="sb1bea0d9176ee999">
+  <source>Default authentication MFA validation stage</source>
+  <target>默认认证多因素验证阶段</target>
+</trans-unit>
+<trans-unit id="s8fbf58cbc231ab25">
+  <source>Default authentication login stage</source>
+  <target>默认认证登录阶段</target>
+</trans-unit>
+<trans-unit id="sce5eb5931bcbdd34">
+  <source>Default static authenticator setup stage</source>
+  <target>默认静态身份验证器设置阶段</target>
+</trans-unit>
+<trans-unit id="sf8f604c15f73b6ef">
+  <source>Default TOTP authenticator setup stage</source>
+  <target>默认 TOTP 身份验证器设置阶段</target>
+</trans-unit>
+<trans-unit id="s625f0c46f3abba90">
+  <source>Default WebAuthn authenticator setup stage</source>
+  <target>默认 WebAuthn 身份验证器设置阶段</target>
+</trans-unit>
+<trans-unit id="s696df46ffe2115a6">
+  <source>Default invalidation logout stage</source>
+  <target>默认注销阶段</target>
+</trans-unit>
+<trans-unit id="s0325b063f7ee7393">
+  <source>Default password change prompt stage</source>
+  <target>默认密码修改输入阶段</target>
+</trans-unit>
+<trans-unit id="s5d8758c8114225f8">
+  <source>Default password change write stage</source>
+  <target>默认密码修改写入阶段</target>
+</trans-unit>
+<trans-unit id="s08a187962f63abf2">
+  <source>Default provider authorization consent stage</source>
+  <target>默认提供程序授权同意阶段</target>
+</trans-unit>
+<trans-unit id="s42162a912758ff2c">
+  <source>Default source authentication SSO check stage</source>
+  <target>默认源认证 SSO 检查阶段</target>
+</trans-unit>
+<trans-unit id="s648d9a95fcdf8d5e">
+  <source>Default source authentication login stage</source>
+  <target>默认源认证登录阶段</target>
+</trans-unit>
+<trans-unit id="s5970c1d9f35e3ca5">
+  <source>Default source enrollment username check stage</source>
+  <target>默认源注册用户名检查阶段</target>
+</trans-unit>
+<trans-unit id="s1846aa4e60664cb0">
+  <source>Default source enrollment SSO check stage</source>
+  <target>默认源注册 SSO 检查阶段</target>
+</trans-unit>
+<trans-unit id="sef23cb08fd83e0c2">
+  <source>Default source enrollment login stage</source>
+  <target>默认源注册登录阶段</target>
+</trans-unit>
+<trans-unit id="s0f784cca30d4b013">
+  <source>Default source enrollment prompt stage</source>
+  <target>默认源注册输入阶段</target>
+</trans-unit>
+<trans-unit id="s45869d1d0c17b778">
+  <source>Default source enrollment write stage</source>
+  <target>默认源注册写入阶段</target>
+</trans-unit>
+<trans-unit id="s3e42811c11a12d1a">
+  <source>Default user settings prompt stage</source>
+  <target>默认用户设置输入阶段</target>
+</trans-unit>
+<trans-unit id="s56f79eef8058c307">
+  <source>Default user settings write stage</source>
+  <target>默认用户设置写入阶段</target>
+</trans-unit>
+<trans-unit id="s585f2c940b3cd5c1">
+  <source>Default initial setup prompt stage</source>
+  <target>默认首次设置输入阶段</target>
+</trans-unit>
+<trans-unit id="s57801352b6bd5a9f">
+  <source>Default source enrollment username field</source>
+  <target>默认源注册用户名字段</target>
+</trans-unit>
+<trans-unit id="s6bac44f3f1cda05a">
+  <source>Default user settings username field</source>
+  <target>默认用户设置用户名字段</target>
+</trans-unit>
+<trans-unit id="seb6dd74c5bb691c9">
+  <source>Default user settings name field</source>
+  <target>默认用户设置名称字段</target>
+</trans-unit>
+<trans-unit id="sd6f5ae1a5536a69a">
+  <source>Default user settings email field</source>
+  <target>默认用户设置邮箱字段</target>
+</trans-unit>
+<trans-unit id="s978d9f7fecb40aa1">
+  <source>Default authentik user settings locale field</source>
+  <target>默认 authentik 用户设置语言字段</target>
+</trans-unit>
+<trans-unit id="s9cbf9a9995ddd10e">
+  <source>Default password change password field</source>
+  <target>默认密码修改密码字段</target>
+</trans-unit>
+<trans-unit id="secb8df62b20fc251">
+  <source>Default password change password repeat field</source>
+  <target>默认密码修改重复密码字段</target>
+</trans-unit>
+<trans-unit id="s9a18b89c0c02c0c4">
+  <source>Default initial setup header field</source>
+  <target>默认首次设置标题字段</target>
+</trans-unit>
+<trans-unit id="sc446cffa0c0bcbaf">
+  <source>Default initial setup email field</source>
+  <target>默认首次设置邮箱字段</target>
+</trans-unit>
+<trans-unit id="s26b94f2a57fc051c">
+  <source>Default initial setup password field</source>
+  <target>默认首次设置密码字段</target>
+</trans-unit>
+<trans-unit id="se9d0e131079754ff">
+  <source>Default initial setup password repeat field</source>
+  <target>默认首次设置重复密码字段</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

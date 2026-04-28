@@ -16,6 +16,7 @@ import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { PromptForm } from "#admin/stages/prompt/PromptForm";
+import { displayPromptName, displayPromptType, displayStageName } from "#admin/stages/displayName";
 
 import { ModelEnum, Prompt, StagesApi } from "@goauthentik/api";
 
@@ -66,12 +67,12 @@ export class PromptListPage extends TablePage<Prompt> {
 
     protected override row(item: Prompt): SlottedTemplateResult[] {
         return [
-            item.name,
+            displayPromptName(item.name),
             html`<code>${item.fieldKey}</code>`,
-            item.type,
+            displayPromptType(item.type),
             item.order || msg("-"),
             html`${item.promptStagesObj.map((stage) => {
-                return html`<li>${stage.name}</li>`;
+                return html`<li>${displayStageName(stage.name)}</li>`;
             })}`,
             html`<div class="ak-c-table__actions">
                 ${IconEditButton(PromptForm, item.pk, item.name, {
