@@ -11,9 +11,11 @@ import "#elements/commands/ak-command-palette-user-modal";
 import {
     createAdminSidebarEnterpriseEntries,
     createAdminSidebarEntries,
+    findSidebarBreadcrumbs,
     isCommandVisibleSidebarEntry,
     isEnterpriseSidebarEntry,
     renderSidebarItems,
+    SidebarBreadcrumb,
     SidebarEntry,
 } from "./navigation/sidebar.js";
 
@@ -40,8 +42,11 @@ import {
     readDrawerParams,
     renderNotificationDrawerPanel,
 } from "#elements/notifications/utils";
+import { RouteChangeEvent } from "#elements/router/events";
 import { navigate } from "#elements/router/RouterOutlet";
 import { SlottedTemplateResult } from "#elements/types";
+
+import { setPageDetails } from "#components/ak-page-navbar";
 
 import Styles from "#admin/ak-interface-admin.css";
 import { ROUTES } from "#admin/Routes";
@@ -108,12 +113,17 @@ export class AdminInterface extends WithCapabilitiesConfig(
     };
 
     @eventOptions({ passive: true })
-    protected routeChangeListener() {
+    protected routeChangeListener(event: RouteChangeEvent) {
         this.sidebarOpen = this.#sidebarMatcher.matches;
+        this.activeRoute = event.route.fullURL;
+        setPageDetails({});
     }
 
     @state()
     protected drawer: DrawerState = readDrawerParams();
+
+    @state()
+    protected activeRoute = "";
 
     @listen(AKDrawerChangeEvent, { target: window })
     protected drawerListener = (event: AKDrawerChangeEvent) => {
@@ -297,6 +307,7 @@ export class AdminInterface extends WithCapabilitiesConfig(
                         <div class="pf-c-drawer__main">
                             <div class="pf-c-drawer__content">
                                 <div class="pf-c-drawer__body">
+                                    ${this.renderPageHeader()}
                                     <ak-router-outlet
                                         role="presentation"
                                         class="pf-c-page__main"
@@ -323,6 +334,45 @@ export class AdminInterface extends WithCapabilitiesConfig(
                 </div>
             </div>
             ${this.commandPalette}`;
+    }
+
+    protected renderPageHeader(): SlottedTemplateResult {
+        const breadcrumbs = this.renderBreadcrumbs();
+
+        if (breadcrumbs === nothing) {
+            return nothing;
+        }
+
+        return html`<header class="pf-c-page__main-section ak-c-page-header">
+            ${breadcrumbs}
+        </header>`;
+    }
+
+    protected renderBreadcrumbs(): SlottedTemplateResult {
+        const breadcrumbs = findSidebarBreadcrumbs(this.activeRoute, [
+            ...this.entries,
+            ...createAdminSidebarEnterpriseEntries(),
+        ]);
+
+        if (breadcrumbs.length === 0) {
+            return nothing;
+        }
+
+        return html`<nav class="ak-c-page-header__breadcrumbs" aria-label=${msg("Breadcrumb")}>
+            <ol>
+                ${breadcrumbs.map((breadcrumb: SidebarBreadcrumb, index) => {
+                    const isLast = index === breadcrumbs.length - 1;
+
+                    return html`<li>
+                        ${breadcrumb.path && !isLast
+                            ? html`<a href="#${breadcrumb.path}">${breadcrumb.label}</a>`
+                            : html`<span aria-current=${isLast ? "page" : nothing}
+                                  >${breadcrumb.label}</span
+                              >`}
+                    </li>`;
+                })}
+            </ol>
+        </nav>`;
     }
 
     protected renderCommandPaletteButton(): SlottedTemplateResult {

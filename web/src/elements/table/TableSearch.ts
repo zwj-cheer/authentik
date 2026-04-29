@@ -1,7 +1,5 @@
-import "#components/ak-search-ql/index";
-
 import { AKElement } from "#elements/Base";
-import { PaginatedResponse } from "#elements/table/Table";
+import type { PaginatedResponse } from "#elements/table/Table";
 import { ifPresent } from "#elements/utils/attributes";
 
 import { msg } from "@lit/localize";
@@ -71,6 +69,12 @@ export class TableSearchForm extends AKElement {
     ];
 
     #formRef = createRef<HTMLFormElement>();
+    #searchQLImport?: Promise<unknown>;
+
+    #loadSearchQL(): Promise<unknown> {
+        this.#searchQLImport ??= import("#components/ak-search-ql/index");
+        return this.#searchQLImport;
+    }
 
     public reset = (): void => {
         this.#formRef.value?.reset();
@@ -112,6 +116,8 @@ export class TableSearchForm extends AKElement {
 
     protected renderInput(): TemplateResult {
         if (this.supportsQL) {
+            this.#loadSearchQL();
+
             return html`<ak-search-ql
                     label=${ifPresent(this.label)}
                     role="presentation"

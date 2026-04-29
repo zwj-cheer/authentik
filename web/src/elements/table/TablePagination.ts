@@ -1,6 +1,6 @@
 import { AKElement } from "#elements/Base";
 
-import { Pagination } from "@goauthentik/api";
+import type { Pagination } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
 import { css, CSSResult, html, nothing } from "lit";

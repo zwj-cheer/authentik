@@ -2,7 +2,7 @@
     --pf-c-page__header-tools--MarginRight: 0;
     --ak-c-page-navbar__brand-logo--Height: 2rem;
     --ak-c-page-navbar__brand---BackgroundColor: var(--pf-c-page__sidebar--BackgroundColor);
-    --ak-c-page-navbar--Height: 7.5rem;
+    --ak-c-page-navbar--Height: 4rem;
     --ak-c-page-navbar--BackgroundColor: var(--pf-c-page__main-nav--BackgroundColor);
     --ak-c-page-navbar--BorderColor: var(--pf-global--BorderColor--100);
     --ak-c-page-navbar__action--hover--BackgroundColor: var(--pf-global--BackgroundColor--200);
@@ -30,13 +30,12 @@
         color-mix(in oklab, var(--pf-global--BackgroundColor--dark-100) 8%, transparent);
 
     display: grid;
+    align-items: center;
     column-gap: var(--pf-global--spacer--sm);
 
     grid-template-columns: [brand] auto [toggle] auto [primary] 1fr [secondary] auto;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-        "brand toggle primary secondary"
-        "brand toggle description secondary";
+    grid-template-rows: auto;
+    grid-template-areas: "brand toggle primary secondary";
 
     @media (width <= 425px) {
         /* Fix for mobile flickering between elements with box shadows. */
@@ -47,12 +46,8 @@
     }
 
     @media (width <= 767px) {
-        row-gap: var(--pf-global--spacer--xs);
-
         align-items: center;
-        grid-template-areas:
-            "toggle primary secondary"
-            "toggle description description";
+        grid-template-areas: "toggle primary secondary";
         justify-content: space-between;
         width: 100%;
     }
@@ -64,58 +59,6 @@
 
 .items {
     display: block;
-
-    &.primary {
-        grid-column: primary;
-        grid-row: primary / description;
-
-        align-self: center;
-        padding-block: var(--pf-global--spacer--sm);
-
-        @media (width <= 768px) {
-            padding-block: var(--pf-global--spacer--sm);
-        }
-
-        @media (width >= 425px) {
-            &.block-sibling {
-                align-self: end;
-                padding-block-end: 0;
-                padding-block-start: var(--pf-global--spacer--sm);
-                grid-row: primary;
-            }
-        }
-
-        .accent-icon {
-            height: 1.2em;
-            width: 1.2em;
-
-            @media (width <= 768px) {
-                display: none;
-            }
-        }
-    }
-
-    &.page-description {
-        padding-top: 0.1em;
-        grid-area: description;
-        margin-block-end: var(--pf-global--spacer--sm);
-
-        display: box;
-        display: -webkit-box;
-        line-clamp: 2;
-        -webkit-line-clamp: 2;
-        box-orient: vertical;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-
-        @media (width <= 425px) {
-            display: none;
-        }
-
-        @media (width >= 769px) {
-            text-wrap: balance;
-        }
-    }
 
     &.secondary {
         grid-area: secondary;
@@ -198,22 +141,4 @@
     slot[name="toggle"] {
         display: none;
     }
-}
-
-.pf-c-content .page-title {
-    display: box;
-    display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    box-orient: vertical;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-h1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center !important;
-    gap: var(--pf-global--spacer--sm);
-    margin-block: 0;
 }
