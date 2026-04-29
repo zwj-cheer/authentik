@@ -1,8 +1,16 @@
 :host {
     --pf-c-page__header-tools--MarginRight: 0;
-    --ak-c-page-navbar__brand-logo--Height: var(--pf-global--FontSize--4xl, 2.25rem);
+    --ak-c-page-navbar__brand-logo--Height: 2rem;
     --ak-c-page-navbar__brand---BackgroundColor: var(--pf-c-page__sidebar--BackgroundColor);
     --ak-c-page-navbar--Height: 7.5rem;
+    --ak-c-page-navbar--BackgroundColor: var(--pf-c-page__main-nav--BackgroundColor);
+    --ak-c-page-navbar--BorderColor: var(--pf-global--BorderColor--100);
+    --ak-c-page-navbar__action--hover--BackgroundColor: var(--pf-global--BackgroundColor--200);
+    --ak-c-page-navbar__action--active--BackgroundColor: color-mix(
+        in oklab,
+        var(--ak-accent) 14%,
+        transparent
+    );
 }
 
 :host([theme="dark"]) {
@@ -12,16 +20,17 @@
 .main-content {
     border-bottom-width: 0.5px;
     border-bottom-style: solid;
-    border-bottom-color: var(--pf-global--BorderColor--100);
-    background-color: var(--pf-c-page__main-nav--BackgroundColor);
+    border-bottom-color: var(--ak-c-page-navbar--BorderColor);
+    background-color: var(--ak-c-page-navbar--BackgroundColor);
     display: flex;
     height: var(--ak-c-page-navbar--Height);
 
     flex-direction: row;
-    box-shadow: var(--pf-global--BoxShadow--sm-bottom);
+    box-shadow: 0 1px 2px
+        color-mix(in oklab, var(--pf-global--BackgroundColor--dark-100) 8%, transparent);
 
     display: grid;
-    column-gap: var(--pf-global--spacer--md);
+    column-gap: var(--pf-global--spacer--sm);
 
     grid-template-columns: [brand] auto [toggle] auto [primary] 1fr [secondary] auto;
     grid-template-rows: auto auto;
@@ -61,7 +70,7 @@
         grid-row: primary / description;
 
         align-self: center;
-        padding-block: var(--pf-global--spacer--md);
+        padding-block: var(--pf-global--spacer--sm);
 
         @media (width <= 768px) {
             padding-block: var(--pf-global--spacer--sm);
@@ -71,6 +80,7 @@
             &.block-sibling {
                 align-self: end;
                 padding-block-end: 0;
+                padding-block-start: var(--pf-global--spacer--sm);
                 grid-row: primary;
             }
         }
@@ -86,9 +96,9 @@
     }
 
     &.page-description {
-        padding-top: 0.3em;
+        padding-top: 0.1em;
         grid-area: description;
-        margin-block-end: var(--pf-global--spacer--md);
+        margin-block-end: var(--pf-global--spacer--sm);
 
         display: box;
         display: -webkit-box;
@@ -112,11 +122,11 @@
         flex: 0 0 auto;
         justify-self: end;
         padding-block: var(--pf-global--spacer--sm);
-        padding-inline-end: var(--pf-global--spacer--sm);
+        padding-inline-end: var(--pf-global--spacer--md);
 
         @media (width >= 769px) {
             align-content: center;
-            padding-block: var(--pf-global--spacer--md);
+            padding-block: var(--pf-global--spacer--sm);
             padding-inline-end: var(--pf-global--spacer--lg);
         }
     }
@@ -128,7 +138,7 @@
     height: 100%;
     width: var(--pf-c-page__sidebar--Width);
     align-items: center;
-    padding-inline: var(--pf-global--spacer--sm);
+    padding-inline: var(--pf-global--spacer--md);
 
     display: flex;
     justify-content: center;
@@ -158,10 +168,30 @@
 }
 
 ::slotted([slot="toggle"]) {
-    --pf-c-button--FontSize: var(--pf-global--FontSize--2xl) !important;
+    --pf-c-button--FontSize: var(--pf-global--FontSize--xl) !important;
     height: 100%;
+    min-width: var(--pf-global--target-size--MinWidth);
 
     grid-area: toggle;
+}
+
+::slotted([slot="toggle"]:hover),
+::slotted([slot="toggle"]:focus-visible),
+::slotted([slot="nav-buttons"]:hover),
+::slotted([slot="nav-buttons"]:focus-visible) {
+    --pf-c-button--m-plain--hover--BackgroundColor: var(
+        --ak-c-page-navbar__action--hover--BackgroundColor
+    );
+    --pf-c-button--m-plain--focus--BackgroundColor: var(
+        --ak-c-page-navbar__action--hover--BackgroundColor
+    );
+}
+
+::slotted([slot="toggle"]:active),
+::slotted([slot="nav-buttons"]:active) {
+    --pf-c-button--m-plain--active--BackgroundColor: var(
+        --ak-c-page-navbar__action--active--BackgroundColor
+    );
 }
 
 @media (width >= 1200px) {
@@ -184,4 +214,6 @@ h1 {
     display: flex;
     flex-direction: row;
     align-items: center !important;
+    gap: var(--pf-global--spacer--sm);
+    margin-block: 0;
 }

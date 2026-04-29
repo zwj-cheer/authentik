@@ -1,6 +1,7 @@
 :host {
     z-index: 100;
     --pf-c-page__sidebar--Transition: 0 !important;
+    background-color: var(--pf-c-page__sidebar--BackgroundColor);
 }
 
 .pf-c-nav {
@@ -12,15 +13,25 @@
     --pf-c-nav__link--hover--before--BorderBottomWidth: 1px;
     --pf-c-nav__link--before--BorderColor: transparent;
 
-    --pf-c-nav__link--PaddingTop: var(--pf-global--spacer--sm);
-    --pf-c-nav__link--PaddingRight: var(--pf-global--spacer--sm);
-    --pf-c-nav__link--PaddingBottom: var(--pf-global--spacer--sm);
+    --pf-c-nav__link--PaddingTop: 0.625rem;
+    --pf-c-nav__link--PaddingRight: var(--pf-global--spacer--md);
+    --pf-c-nav__link--PaddingBottom: 0.625rem;
 
-    --pf-c-nav__subnav__link--PaddingLeft: var(--pf-global--spacer--md);
-    --pf-c-nav__subnav--PaddingBottom: var(--pf-global--spacer--sm);
+    --pf-c-nav__subnav__link--PaddingLeft: var(--pf-global--spacer--lg);
+    --pf-c-nav__subnav--PaddingBottom: var(--pf-global--spacer--xs);
     --pf-c-nav__item--before--BorderColor: transparent;
-    --pf-c-nav__link--after--BorderColor: var(--pf-global--BorderColor--300);
-    --pf-c-nav__link--m-current--Color: var(--ak-accent);
+    --pf-c-nav__link--after--BorderColor: transparent;
+    --pf-c-nav__link--m-current--Color: var(--ak-c-sidebar__link--current--Color, var(--ak-accent));
+    --pf-c-nav__link--m-current--BackgroundColor: var(
+        --ak-c-sidebar__link--current--BackgroundColor,
+        color-mix(in oklab, var(--ak-accent) 12%, transparent)
+    );
+    --pf-c-nav__link--hover--BackgroundColor: var(
+        --ak-c-sidebar__link--hover--BackgroundColor,
+        var(--pf-global--BackgroundColor--200)
+    );
+    --pf-c-nav__link--focus--BackgroundColor: var(--pf-c-nav__link--hover--BackgroundColor);
+    --pf-c-nav__link--active--BackgroundColor: var(--pf-c-nav__link--hover--BackgroundColor);
 
     display: flex;
     flex-direction: column;
@@ -35,7 +46,11 @@
 .pf-c-nav__list {
     flex-grow: 1;
     overflow-y: auto;
-    padding-block-start: var(--pf-global--spacer--sm);
+    padding-block: var(--pf-global--spacer--sm);
+}
+
+.pf-c-nav__list.ak-m-scroll-shadows {
+    --ak-m-scroll-shadows--BackgroundColor: var(--pf-c-page__sidebar--BackgroundColor);
 }
 
 .pf-c-nav__link.pf-m-current::after,
@@ -57,13 +72,9 @@
  */
 :host(:not([theme="dark"])) .pf-c-nav {
     --pf-c-nav__item--m-current--not--m-expanded__link--BackgroundColor: var(
-        --pf-global--BackgroundColor--light-400
+        --pf-c-nav__link--m-current--BackgroundColor
     );
-    --pf-c-nav__link--hover--BackgroundColor: var(--pf-global--BackgroundColor--light-300);
-    --pf-c-nav__link--focus--BackgroundColor: var(--pf-global--BackgroundColor--light-300);
-    --pf-c-nav__link--active--BackgroundColor: var(--pf-global--BackgroundColor--light-300);
-    --pf-c-nav__link--m-current--BackgroundColor: var(--pf-global--BackgroundColor--light-300);
-    --pf-c-nav__link--before--BorderColor: var(--pf-global--BackgroundColor--light-300);
+    --pf-c-nav__link--before--BorderColor: transparent;
     --pf-c-nav--m-tertiary__link--Color: var(--pf-global--Color--light-100);
     --pf-c-nav--m-tertiary__scroll-button--Color: var(--pf-global--Color--light-100);
     --pf-c-nav--m-horizontal-subnav__link--hover--BackgroundColor: var(
@@ -76,7 +87,7 @@
         --pf-global--BackgroundColor--light-300
     );
     --pf-c-nav--m-horizontal-subnav__link--m-current--BackgroundColor: var(
-        --pf-global--BackgroundColor--light-400
+        --pf-c-nav__link--m-current--BackgroundColor
     );
     --pf-c-nav__section-title--BorderBottomColor: var(--pf-global--BackgroundColor--light-300);
     --pf-c-nav__scroll-button--before--BorderColor: var(--pf-global--BackgroundColor--light-300);
@@ -104,7 +115,7 @@
         --pf-global--BackgroundColor--light-300
     );
     --pf-c-nav--c-menu__item--m-current--BackgroundColor: var(
-        --pf-global--BackgroundColor--light-400
+        --pf-c-nav__link--m-current--BackgroundColor
     );
     --pf-c-nav__link--Color: var(--pf-global--Color--dark-100);
     --pf-c-nav__link--hover--Color: var(--pf-global--Color--dark-100);
@@ -133,18 +144,8 @@
  * @see PatternFly's nav.css for reference:
  */
 :host([theme="dark"]) .pf-c-nav {
-    --pf-c-nav__link--hover--BackgroundColor: var(--pf-global--BackgroundColor--150);
-
-    /**
-     * We override this to maintain a color that fits our original
-     * "partially themed" appearance where the current item is more prominently
-     * highlighted.
-     */
-    --pf-c-nav__link--m-current--BackgroundColor: var(--pf-global--BackgroundColor--400);
-
     --pf-c-nav__item--item__link--after--Top: -1px;
-    --pf-c-nav__link--focus--BackgroundColor: var(--pf-global--BackgroundColor--300);
-    --pf-c-nav__link--active--BackgroundColor: var(--pf-global--BackgroundColor--300);
+    --ak-m-scroll-shadows--ShadowColor: var(--pf-c-page__sidebar--BackgroundColor);
 
     --pf-c-nav--m-tertiary__scroll-button--before--BorderColor: var(--pf-global--BorderColor--100);
 

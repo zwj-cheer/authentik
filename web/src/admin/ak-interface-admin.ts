@@ -1,5 +1,7 @@
 import "#elements/banner/EnterpriseStatusBanner";
 import "#elements/banner/VersionBanner";
+import "#elements/notifications/APIDrawer";
+import "#elements/notifications/NotificationDrawer";
 import "#elements/sidebar/Sidebar";
 import "#elements/sidebar/SidebarItem";
 import "#elements/router/RouterOutlet";
@@ -10,6 +12,7 @@ import {
     createAdminSidebarEnterpriseEntries,
     createAdminSidebarEntries,
     isCommandVisibleSidebarEntry,
+    isEnterpriseSidebarEntry,
     renderSidebarItems,
     SidebarEntry,
 } from "./navigation/sidebar.js";
@@ -142,6 +145,13 @@ export class AdminInterface extends WithCapabilitiesConfig(
 
     #refreshCommandsFrameID = -1;
 
+    #isCommandVisibleSidebarEntry = (entry: SidebarEntry) => {
+        return (
+            isCommandVisibleSidebarEntry(entry) ||
+            (isEnterpriseSidebarEntry(entry) && this.can(CapabilitiesEnum.IsEnterprise))
+        );
+    };
+
     #refreshCommands = () => {
         const commands: PaletteCommandDefinitionInit[] = [
             {
@@ -162,7 +172,7 @@ export class AdminInterface extends WithCapabilitiesConfig(
                 group: msg("Users"),
             },
             ...this.entries.flatMap(([, label, , children]) => [
-                ...(children ?? []).filter(isCommandVisibleSidebarEntry).map(
+                ...(children ?? []).filter(this.#isCommandVisibleSidebarEntry).map(
                     ([path, childLabel]): PaletteCommandDefinitionInit => ({
                         namespace: PaletteCommandNamespace.Navigation,
                         label: childLabel,

@@ -1,5 +1,44 @@
 .pf-c-page__header-tools {
     display: flex;
+    align-items: center;
+    gap: var(--pf-global--spacer--xs);
+}
+
+.pf-c-page__header-tools-group {
+    align-items: center;
+    gap: var(--pf-global--spacer--xs);
+}
+
+.pf-c-page__header-tools-item {
+    align-items: center;
+}
+
+.pf-c-button.pf-m-plain {
+    border-radius: var(--pf-global--BorderRadius--sm);
+    min-width: var(--pf-global--target-size--MinWidth);
+    min-height: var(--pf-global--target-size--MinHeight);
+}
+
+.pf-c-button.pf-m-plain:hover,
+.pf-c-button.pf-m-plain:focus-visible {
+    --pf-c-button--m-plain--hover--BackgroundColor: var(
+        --ak-c-page-navbar__action--hover--BackgroundColor,
+        var(--pf-global--BackgroundColor--200)
+    );
+    --pf-c-button--m-plain--focus--BackgroundColor: var(
+        --ak-c-page-navbar__action--hover--BackgroundColor,
+        var(--pf-global--BackgroundColor--200)
+    );
+}
+
+.pf-c-button.pf-m-plain:active,
+:host([notificationDrawerOpen]) #notification-drawer-toggle-button,
+:host([apiDrawerOpen]) #api-drawer-toggle-button {
+    --pf-c-button--m-plain--active--BackgroundColor: var(
+        --ak-c-page-navbar__action--active--BackgroundColor,
+        var(--pf-global--BackgroundColor--300)
+    );
+    background-color: var(--pf-c-button--m-plain--active--BackgroundColor);
 }
 
 .pf-c-avatar {

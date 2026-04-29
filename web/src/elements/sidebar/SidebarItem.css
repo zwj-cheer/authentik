@@ -4,7 +4,7 @@
 }
 
 button.pf-c-nav__link {
-    margin-block-end: var(--pf-global--spacer--xs);
+    margin-block-end: 0;
 }
 
 :host([highlight]) .pf-c-nav__item {
@@ -20,7 +20,7 @@ button.pf-c-nav__link {
 .pf-c-nav__link.pf-m-current:hover::after,
 .pf-c-nav__item.pf-m-current:not(.pf-m-expanded) .pf-c-nav__link::after {
     --pf-c-nav__link--m-current--after--BorderColor: var(--ak-accent);
-    --pf-c-nav__link--m-current--after--BorderLeftWidth: var(--pf-global--BorderWidth--md);
+    --pf-c-nav__link--m-current--after--BorderLeftWidth: 0;
 }
 
 .pf-c-nav__list .sidebar-brand {
@@ -35,19 +35,44 @@ button.pf-c-nav__link {
 
 .pf-c-nav__item {
     user-select: none;
-    --pf-c-nav__item--MarginTop: 0;
-    --pf-c-nav__link--m-current--after--BorderLeftWidth: 1px;
-    margin-inline-start: 0.2rem;
+    --pf-c-nav__item--MarginTop: var(--pf-global--spacer--xs);
+    --pf-c-nav__link--m-current--after--BorderLeftWidth: 0;
+    margin-inline: var(--ak-c-sidebar__link--MarginInline, var(--pf-global--spacer--sm));
+}
+
+.pf-c-nav__link {
+    border-radius: var(--ak-c-sidebar__link--BorderRadius, var(--pf-global--BorderRadius--sm));
+    transition-property: background-color, color, border-color;
+    transition-timing-function: var(--pf-global--TimingFunction);
+    transition-duration: var(--pf-global--TransitionDuration);
+}
+
+.pf-c-nav__link.pf-m-current {
+    font-weight: var(--pf-global--FontWeight--semi-bold);
+}
+
+.pf-c-nav__item.pf-m-expanded > .pf-c-nav__link:not(.pf-m-current) {
+    background-color: transparent;
 }
 
 .pf-c-nav__link::after {
-    transition-property: border-color;
-    transition-timing-function: cubic-bezier(0.08, 0.52, 0.52, 1);
-    transition-duration: 0.2s;
+    border-radius: inherit;
 }
 
 .pf-c-nav__item:not(.pf-m-expandable) {
-    --pf-c-nav__link--after--BorderLeftWidth: 1px !important;
+    --pf-c-nav__link--after--BorderLeftWidth: 0 !important;
+}
+
+.pf-c-nav__subnav {
+    padding-block-start: var(--pf-global--spacer--xs);
+}
+
+.pf-c-nav__subnav .pf-c-nav__item {
+    margin-inline-end: 0;
+}
+
+.pf-c-nav__toggle {
+    margin-inline-start: auto;
 }
 
 .pf-c-nav__enterprise-notice {
@@ -57,4 +82,9 @@ button.pf-c-nav__link {
     margin-inline-start: 0.5rem;
     padding: 0.1rem 0.5rem;
     border-radius: var(--pf-global--BorderRadius--sm);
+}
+
+:host([theme="dark"]) .pf-c-nav__enterprise-notice {
+    color: var(--pf-global--Color--light-200);
+    background-color: var(--pf-global--BackgroundColor--300);
 }

@@ -1,5 +1,56 @@
+.pf-c-page,
+:host {
+    --ak-admin-shell-sidebar--Width: 17.5rem;
+    --ak-admin-shell-sidebar--BackgroundColor: var(--pf-global--BackgroundColor--100);
+    --ak-admin-shell-sidebar--BorderColor: var(--pf-global--BorderColor--100);
+    --ak-admin-shell-sidebar-link--BorderRadius: 6px;
+    --ak-admin-shell-sidebar-link--MarginInline: var(--pf-global--spacer--sm);
+    --ak-admin-shell-sidebar-link--hover--BackgroundColor: var(--pf-global--BackgroundColor--200);
+    --ak-admin-shell-sidebar-link--current--BackgroundColor: color-mix(
+        in oklab,
+        var(--ak-accent) 12%,
+        transparent
+    );
+    --ak-admin-shell-sidebar-link--current--Color: var(--ak-accent);
+    --ak-admin-shell-header--Height: 5.5rem;
+    --ak-admin-shell-header--BackgroundColor: color-mix(
+        in oklab,
+        var(--pf-global--BackgroundColor--100) 72%,
+        var(--pf-global--BackgroundColor--200)
+    );
+    --ak-admin-shell-header--BorderColor: var(--pf-global--BorderColor--100);
+    --ak-admin-shell-header-action--hover--BackgroundColor: var(--pf-global--BackgroundColor--200);
+    --ak-admin-shell-header-action--active--BackgroundColor: color-mix(
+        in oklab,
+        var(--ak-accent) 14%,
+        transparent
+    );
+}
+
+:host([theme="dark"]) {
+    --ak-admin-shell-sidebar--BackgroundColor: var(--pf-global--BackgroundColor--100);
+    --ak-admin-shell-sidebar--BorderColor: var(--pf-global--BorderColor--100);
+    --ak-admin-shell-sidebar-link--hover--BackgroundColor: var(--pf-global--BackgroundColor--300);
+    --ak-admin-shell-sidebar-link--current--BackgroundColor: color-mix(
+        in oklab,
+        var(--ak-accent) 24%,
+        var(--pf-global--BackgroundColor--300)
+    );
+    --ak-admin-shell-header--BackgroundColor: var(--pf-global--BackgroundColor--150);
+    --ak-admin-shell-header--BorderColor: var(--pf-global--BorderColor--100);
+    --ak-admin-shell-header-action--hover--BackgroundColor: var(--pf-global--BackgroundColor--300);
+    --ak-admin-shell-header-action--active--BackgroundColor: color-mix(
+        in oklab,
+        var(--ak-accent) 26%,
+        var(--pf-global--BackgroundColor--300)
+    );
+}
+
 .pf-c-page {
     height: 100dvh;
+    --pf-c-page__sidebar--Width: var(--ak-admin-shell-sidebar--Width);
+    --pf-c-page__sidebar--BackgroundColor: var(--ak-admin-shell-sidebar--BackgroundColor);
+    --pf-c-page__main-nav--BackgroundColor: var(--ak-admin-shell-header--BackgroundColor);
 }
 
 .pf-c-page__main {
@@ -16,6 +67,29 @@
 
 ak-page-navbar {
     grid-area: header;
+    --ak-c-page-navbar--Height: var(--ak-admin-shell-header--Height);
+    --ak-c-page-navbar__brand---BackgroundColor: var(--ak-admin-shell-sidebar--BackgroundColor);
+    --ak-c-page-navbar--BackgroundColor: var(--ak-admin-shell-header--BackgroundColor);
+    --ak-c-page-navbar--BorderColor: var(--ak-admin-shell-header--BorderColor);
+    --ak-c-page-navbar__action--hover--BackgroundColor: var(
+        --ak-admin-shell-header-action--hover--BackgroundColor
+    );
+    --ak-c-page-navbar__action--active--BackgroundColor: var(
+        --ak-admin-shell-header-action--active--BackgroundColor
+    );
+}
+
+ak-sidebar {
+    border-right: 1px solid var(--ak-admin-shell-sidebar--BorderColor);
+    --ak-c-sidebar__link--BorderRadius: var(--ak-admin-shell-sidebar-link--BorderRadius);
+    --ak-c-sidebar__link--MarginInline: var(--ak-admin-shell-sidebar-link--MarginInline);
+    --ak-c-sidebar__link--hover--BackgroundColor: var(
+        --ak-admin-shell-sidebar-link--hover--BackgroundColor
+    );
+    --ak-c-sidebar__link--current--BackgroundColor: var(
+        --ak-admin-shell-sidebar-link--current--BackgroundColor
+    );
+    --ak-c-sidebar__link--current--Color: var(--ak-admin-shell-sidebar-link--current--Color);
 }
 
 ak-sidebar::part(about-dialog-trigger) {
@@ -39,4 +113,21 @@ ak-sidebar-item:active ak-sidebar-item::part(list-item) {
     cursor: pointer;
 
     padding-inline-end: var(--pf-global--spacer--sm);
+    border-radius: var(--pf-global--BorderRadius--sm);
+}
+
+.command-palette-trigger:hover,
+.command-palette-trigger:focus-visible {
+    --pf-c-button--m-plain--hover--BackgroundColor: var(
+        --ak-admin-shell-header-action--hover--BackgroundColor
+    );
+    --pf-c-button--m-plain--focus--BackgroundColor: var(
+        --ak-admin-shell-header-action--hover--BackgroundColor
+    );
+}
+
+.command-palette-trigger:active {
+    --pf-c-button--m-plain--active--BackgroundColor: var(
+        --ak-admin-shell-header-action--active--BackgroundColor
+    );
 }

@@ -29,7 +29,8 @@ export default metadata;
 class AKPageNavbarStory extends AKPageNavbar {
     brand: CurrentBrand = {
         ...DefaultBrand,
-        brandingLogo: new URL(DefaultBrand.brandingLogo, "http://localhost:9000").toString(),
+        brandingLogo:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 32'%3E%3Crect width='32' height='32' rx='6' fill='%23fd4b2d'/%3E%3Ctext x='42' y='22' font-family='Arial,sans-serif' font-size='18' font-weight='700' fill='%23151a1f'%3Eauthentik%3C/text%3E%3C/svg%3E",
     };
 }
 
@@ -40,9 +41,20 @@ declare global {
 }
 
 export const SimplePageNavbar = () => {
-    return html`<story-ak-page-navbar></story-ak-page-navbar>`;
+    return html`<story-ak-page-navbar .header=${"Overview"}></story-ak-page-navbar>`;
 };
 
 export const PageNavbarWithIcon = () => {
-    return html`<story-ak-page-navbar></story-ak-page-navbar>`;
+    return html`<story-ak-page-navbar
+        .header=${"Applications"}
+        .icon=${"fa fa-th"}
+    ></story-ak-page-navbar>`;
+};
+
+export const PageNavbarWithDescription = () => {
+    return html`<story-ak-page-navbar
+        .header=${"Provider configuration"}
+        .description=${html`Review provider bindings, launch URLs, and access policy status.`}
+        .icon=${"fa fa-plug"}
+    ></story-ak-page-navbar>`;
 };

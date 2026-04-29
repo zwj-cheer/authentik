@@ -8,9 +8,11 @@ import { globalAK } from "#common/global";
 import { formatUserDisplayName } from "#common/users";
 
 import { AKElement } from "#elements/Base";
+import { listen } from "#elements/decorators/listen";
 import { WithNotifications } from "#elements/mixins/notifications";
 import { WithSession } from "#elements/mixins/session";
 import { AKDrawerChangeEvent } from "#elements/notifications/events";
+import { DrawerState, readDrawerParams } from "#elements/notifications/utils";
 import { isDefaultAvatar } from "#elements/utils/images";
 
 import Styles from "#components/ak-nav-button.css";
@@ -38,6 +40,21 @@ export class NavigationButtons extends WithNotifications(WithSession(AKElement))
 
     @property({ type: Boolean, reflect: true })
     apiDrawerOpen = false;
+
+    #syncDrawerState(drawer: DrawerState) {
+        this.notificationDrawerOpen = drawer.notifications;
+        this.apiDrawerOpen = drawer.api;
+    }
+
+    @listen(AKDrawerChangeEvent, { target: window })
+    protected drawerListener = (event: AKDrawerChangeEvent) => {
+        this.#syncDrawerState(event.drawer);
+    };
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        this.#syncDrawerState(readDrawerParams());
+    }
 
     static styles = [
         PFDisplay,

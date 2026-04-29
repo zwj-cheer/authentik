@@ -18,12 +18,16 @@ export type SidebarEntry = [
     children?: SidebarEntry[],
 ];
 
-export function isCommandVisibleSidebarEntry([, , attributes]: SidebarEntry): boolean {
+export function isEnterpriseSidebarEntry([, , attributes]: SidebarEntry): boolean {
     if (Array.isArray(attributes)) {
-        return true;
+        return false;
     }
 
-    return !attributes?.enterprise;
+    return !!attributes?.enterprise;
+}
+
+export function isCommandVisibleSidebarEntry(entry: SidebarEntry): boolean {
+    return !isEnterpriseSidebarEntry(entry);
 }
 
 /**
