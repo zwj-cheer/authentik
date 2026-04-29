@@ -78,6 +78,17 @@ export class TableSearchForm extends AKElement {
         this.onSearch?.("");
     };
 
+    public submitSearch = (): void => {
+        const form = this.#formRef.value;
+
+        if (!form || !this.onSearch || !form.reportValidity()) return;
+
+        const data = new FormData(form);
+        const value = data.get("search")?.toString() ?? "";
+
+        this.onSearch(value);
+    };
+
     #searchListener = (event: InputEvent) => {
         const target = event.target;
 
@@ -96,17 +107,7 @@ export class TableSearchForm extends AKElement {
         event.preventDefault();
         event.stopPropagation();
 
-        const form = this.#formRef.value;
-
-        if (!form || !this.onSearch) return;
-
-        form.reportValidity();
-
-        const data = new FormData(form);
-
-        const value = data.get("search")?.toString() ?? "";
-
-        this.onSearch(value);
+        this.submitSearch();
     };
 
     protected renderInput(): TemplateResult {

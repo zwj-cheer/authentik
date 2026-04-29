@@ -11276,6 +11276,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sc74b7675f65c3e23">
   <source>Query</source>
+  <target>查询</target>
 </trans-unit>
 <trans-unit id="s6e8a8fbb24dfafb6">
   <source>Event query using the AKQL syntax.</source>
@@ -11677,6 +11678,26 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="s77149c42b6d94e03">
   <source>Configure WebAuthn</source>
   <target>配置 WebAuthn</target>
+</trans-unit>
+<trans-unit id="s337a1e9022a8d19f">
+  <source>Table</source>
+  <target>表格</target>
+</trans-unit>
+<trans-unit id="sb0e27ff0ee16bbf6">
+  <source>Search and filter</source>
+  <target>搜索和筛选</target>
+</trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+  <target>重置</target>
+</trans-unit>
+<trans-unit id="s6e49c910704149ad">
+  <source><x id="0" equiv-text="${startIndex}"/>-<x id="1" equiv-text="${endIndex}"/> of <x id="2" equiv-text="${pageCount}"/></source>
+  <target>第 <x id="0" equiv-text="${startIndex}"/>-<x id="1" equiv-text="${endIndex}"/> 条/共 <x id="2" equiv-text="${pageCount}"/> 条</target>
+</trans-unit>
+<trans-unit id="s5697808ce744d508">
+  <source>Current page, page <x id="0" equiv-text="${currentPage}"/></source>
+  <target>当前页，第 <x id="0" equiv-text="${currentPage}"/> 页</target>
 </trans-unit>
 </body>
 </file>

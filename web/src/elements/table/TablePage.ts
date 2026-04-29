@@ -120,7 +120,9 @@ export abstract class TablePage<T extends object> extends Table<T> {
                     <div class="pf-c-sidebar__main">
                         ${this.renderSidebarBefore?.()}
                         <main aria-label=${this.pageTitle} class="pf-c-sidebar__content">
-                            <div class="pf-c-card">${this.renderTable()}</div>
+                            <div class="pf-c-card ak-c-table-page__table-surface">
+                                ${this.renderTable()}
+                            </div>
                         </main>
                         ${this.renderSidebarAfter?.()}
                     </div>

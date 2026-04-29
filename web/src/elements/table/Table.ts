@@ -332,9 +332,16 @@ export abstract class Table<T extends object, D = T>
     }
 
     public clearSearch = () => {
+        const searchInput = this.searchInputRef.value;
+
+        if (searchInput) {
+            searchInput.reset();
+            return;
+        }
+
         this.data = null;
-        this.searchInputRef.value?.reset();
-        this.requestUpdate("search");
+        this.search = "";
+        this.page = 1;
 
         return this.fetch();
     };
@@ -921,27 +928,55 @@ export abstract class Table<T extends object, D = T>
 
     protected renderToolbarAfter?(): SlottedTemplateResult;
 
+    protected renderSearchPanel(): SlottedTemplateResult {
+        const hasSearchPanel = this.searchEnabled || this.renderToolbarAfter;
+
+        return hasSearchPanel
+            ? html`<section
+                  class="ak-c-table__search-panel"
+                  part="search-panel"
+                  aria-label=${msg("Search and filter")}
+              >
+                  <div class="ak-c-table__search-grid">
+                      ${this.searchEnabled
+                          ? html`<div class="ak-c-table__search-field">
+                                <span class="ak-c-table__field-label">
+                                    ${this.searchLabel ?? msg("Search")}
+                                </span>
+                                ${this.renderSearch()}
+                            </div>`
+                          : nothing}
+                      ${this.renderToolbarAfter
+                          ? html`<div class="ak-c-table__filter-field" part="toolbar-after">
+                                ${this.renderToolbarAfter()}
+                            </div>`
+                          : nothing}
+                      ${this.searchEnabled
+                          ? html`<div class="ak-c-table__search-actions">
+                                <button
+                                    type="button"
+                                    class="pf-c-button pf-m-secondary"
+                                    @click=${this.clearSearch}
+                                >
+                                    ${msg("Reset")}
+                                </button>
+                                <button
+                                    type="button"
+                                    class="pf-c-button pf-m-primary"
+                                    @click=${() => this.searchInputRef.value?.submitSearch()}
+                                >
+                                    ${msg("Query")}
+                                </button>
+                            </div>`
+                          : nothing}
+                  </div>
+              </section>`
+            : nothing;
+    }
+
     protected renderToolbarContainer(): SlottedTemplateResult {
         const label = this.toolbarLabel ?? msg(str`${this.label ?? "Table"} actions`);
-
-        // We need to conditionally render the primary toolbar section
-        // to avoid an empty container which applies a gap unnecessarily.
-        // This may happen when a table toolbar has an unusual markup,
-        // such as in the Recent Events card.
-
-        const primaryToolbar: SlottedTemplateResult[] = [];
-
-        if (this.searchEnabled) {
-            primaryToolbar.push(this.renderSearch());
-        }
-
-        if (this.renderToolbarAfter) {
-            primaryToolbar.push(
-                html`<div class="pf-c-toolbar__group" part="toolbar-after">
-                    ${this.renderToolbarAfter()}
-                </div>`,
-            );
-        }
+        const tableTitle = this.label ?? msg("Table");
 
         return html`<header
             class="pf-c-toolbar"
@@ -949,17 +984,9 @@ export abstract class Table<T extends object, D = T>
             aria-label="${label}"
             part="toolbar"
         >
-            ${primaryToolbar.length
-                ? html`<div class="pf-c-toolbar__content" part="toolbar-primary">
-                      ${primaryToolbar}
-                  </div>`
-                : nothing}
-
-            <div class="pf-c-toolbar__content" part="toolbar-secondary">
-                <div class="pf-c-toolbar__group">
-                    ${this.renderToolbar()} ${this.renderToolbarSelected()}
-                </div>
-                ${this.renderTablePagination()}
+            <div class="ak-c-table__title" part="toolbar-title">${tableTitle}</div>
+            <div class="pf-c-toolbar__group">
+                ${this.renderToolbar()} ${this.renderToolbarSelected()}
             </div>
         </header>`;
     }
@@ -1132,49 +1159,54 @@ export abstract class Table<T extends object, D = T>
         return html`${this.renderLoadingBar()}${this.needChipGroup
                 ? this.renderChipGroup()
                 : nothing}
-            ${this.renderToolbarContainer()}
-            <div part="table-container">
-                <table
-                    part="table"
-                    aria-live="polite"
-                    aria-busy=${this.loading ? "true" : "false"}
-                    aria-label=${this.label ? msg(str`${this.label} table`) : msg("Table content")}
-                    aria-rowcount=${totalItemCount}
-                    class="pf-c-table pf-m-compact pf-m-grid-md pf-m-expandable"
-                >
-                    <thead aria-label=${msg("Column actions")}>
-                        <tr class="pf-c-table__header-row">
-                            ${this.checkbox ? this.renderAllOnThisPageCheckbox() : nothing}
-                            ${this.expandable ? html`<td aria-hidden="true"></td>` : nothing}
-                            ${this.columns.map((column, idx) => {
-                                const [label, orderBy, ariaLabel] = column;
-                                const columnID = this.#columnIDs.get(column) ?? `column-${idx}`;
+            ${this.renderSearchPanel()}
+            <section class="ak-c-table__panel" part="table-panel">
+                ${this.renderToolbarContainer()}
+                <div part="table-container">
+                    <table
+                        part="table"
+                        aria-live="polite"
+                        aria-busy=${this.loading ? "true" : "false"}
+                        aria-label=${this.label
+                            ? msg(str`${this.label} table`)
+                            : msg("Table content")}
+                        aria-rowcount=${totalItemCount}
+                        class="pf-c-table pf-m-compact pf-m-grid-md pf-m-expandable"
+                    >
+                        <thead aria-label=${msg("Column actions")}>
+                            <tr class="pf-c-table__header-row">
+                                ${this.checkbox ? this.renderAllOnThisPageCheckbox() : nothing}
+                                ${this.expandable ? html`<td aria-hidden="true"></td>` : nothing}
+                                ${this.columns.map((column, idx) => {
+                                    const [label, orderBy, ariaLabel] = column;
+                                    const columnID = this.#columnIDs.get(column) ?? `column-${idx}`;
 
-                                return renderTableColumn({
-                                    label,
-                                    id: columnID,
-                                    ariaLabel,
-                                    orderBy,
-                                    table: this,
-                                    columnIndex: idx,
-                                });
-                            })}
-                            ${this.rowDelete && !this.hasRowActionsColumn()
-                                ? renderTableColumn({
-                                      label: msg("Actions"),
-                                      ariaLabel: msg("Row Actions"),
-                                      id: "row-actions",
-                                      orderBy: null,
-                                      table: this,
-                                      columnIndex: this.columns.length,
-                                  })
-                                : nothing}
-                        </tr>
-                    </thead>
-                    ${this.renderRows()}
-                </table>
-            </div>
-            ${guard([this.paginated, this.lastRefreshedAt], renderBottomPagination)}`;
+                                    return renderTableColumn({
+                                        label,
+                                        id: columnID,
+                                        ariaLabel,
+                                        orderBy,
+                                        table: this,
+                                        columnIndex: idx,
+                                    });
+                                })}
+                                ${this.rowDelete && !this.hasRowActionsColumn()
+                                    ? renderTableColumn({
+                                          label: msg("Actions"),
+                                          ariaLabel: msg("Row Actions"),
+                                          id: "row-actions",
+                                          orderBy: null,
+                                          table: this,
+                                          columnIndex: this.columns.length,
+                                      })
+                                    : nothing}
+                            </tr>
+                        </thead>
+                        ${this.renderRows()}
+                    </table>
+                </div>
+                ${guard([this.paginated, this.lastRefreshedAt], renderBottomPagination)}
+            </section>`;
     }
 
     protected override render(): SlottedTemplateResult {
