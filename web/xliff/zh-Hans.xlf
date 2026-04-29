@@ -11699,6 +11699,14 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>Current page, page <x id="0" equiv-text="${currentPage}"/></source>
   <target>当前页，第 <x id="0" equiv-text="${currentPage}"/> 页</target>
 </trans-unit>
+<trans-unit id="s3e735b79616bd656">
+  <source>Search by schedule ID, name, or related object...</source>
+  <target>按定时任务 ID、名称或关联对象搜索...</target>
+</trans-unit>
+<trans-unit id="s0badc06d15e782af">
+  <source>Search by task ID, name, queue, or status...</source>
+  <target>按任务 ID、名称、队列或状态搜索...</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -109,10 +109,10 @@ export class TablePagination extends AKElement {
             return nothing;
         }
 
-        const startIndex = this.pages?.startIndex || 1;
-        const endIndex = this.pages?.endIndex || 1;
-        const pageCount = this.pages?.count || 1;
-        const currentPage = this.pages?.current || 1;
+        const startIndex = this.pages?.startIndex ?? 0;
+        const endIndex = this.pages?.endIndex ?? 0;
+        const pageCount = this.pages?.count ?? 0;
+        const currentPage = this.pages?.current ?? 1;
 
         return html` <nav
             aria-label=${msg(str`${this.label || ""} table pagination`)}

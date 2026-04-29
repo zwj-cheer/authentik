@@ -335,8 +335,8 @@ td:has(ak-forms-delete) {
 }
 
 .ak-c-table__search-grid {
-    display: flex;
-    flex-flow: row wrap;
+    display: grid;
+    grid-template-columns: minmax(20rem, 1fr) auto auto;
     align-items: center;
     gap: 1rem 1.75rem;
     min-block-size: 2.5rem;
@@ -353,7 +353,6 @@ td:has(ak-forms-delete) {
     grid-template-columns: max-content minmax(16rem, 28rem);
     align-items: center;
     gap: 0.75rem;
-    flex: 1 1 30rem;
 }
 
 .ak-c-table__field-label {
@@ -368,8 +367,9 @@ td:has(ak-forms-delete) {
 
 .ak-c-table__filter-field {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: center;
+    justify-content: flex-end;
     gap: var(--pf-global--spacer--sm);
 }
 
@@ -380,19 +380,53 @@ td:has(ak-forms-delete) {
 }
 
 .ak-c-table__filter-field .pf-c-switch {
+    --pf-c-switch__label--FontSize: 1rem;
+    --pf-c-switch__label--LineHeight: 1.5;
+    --pf-c-switch__toggle--Width: 2.75rem;
+    --pf-c-switch__toggle--Height: 1.5rem;
+    --pf-c-switch__toggle-icon--FontSize: 0.75rem;
+
+    display: inline-flex;
+    align-items: center;
     min-block-size: 2.5rem;
-    padding-inline: 0.75rem;
-    border: 1px solid var(--ak-c-table--BorderColor);
-    border-radius: var(--pf-global--BorderRadius--sm, 4px);
-    background-color: var(--pf-global--BackgroundColor--100);
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .ak-c-table__search-actions {
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    margin-inline-start: auto;
     gap: var(--pf-global--spacer--sm);
+}
+
+@media (max-width: 960px) {
+    .ak-c-table__search-grid {
+        grid-template-columns: minmax(18rem, 1fr) auto;
+    }
+
+    .ak-c-table__search-field {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .ak-c-table__search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ak-c-table__search-field {
+        grid-template-columns: 1fr;
+    }
+
+    .ak-c-table__filter-field,
+    .ak-c-table__search-actions {
+        justify-content: flex-start;
+    }
+
+    .ak-c-table__filter-field {
+        flex-wrap: wrap;
+    }
 }
 
 .ak-c-table__search-actions .pf-c-button {

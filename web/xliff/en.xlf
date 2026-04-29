@@ -8959,6 +8959,12 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source><x id="0" equiv-text="${verboseName}"/> is not associated with any objects.</source>
   <note from="lit-localize">Zero: no objects use this entity.</note>
 </trans-unit>
+<trans-unit id="s3e735b79616bd656">
+  <source>Search by schedule ID, name, or related object...</source>
+</trans-unit>
+<trans-unit id="s0badc06d15e782af">
+  <source>Search by task ID, name, queue, or status...</source>
+</trans-unit>
 </body>
 </file>
 </xliff>

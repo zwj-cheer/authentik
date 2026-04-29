@@ -59,6 +59,7 @@ export class TaskList extends Table<Task> {
     includeOverview: boolean = false;
 
     protected override searchEnabled = true;
+    public override searchPlaceholder = msg("Search by task ID, name, queue, or status...");
 
     @property()
     order = "-mtime";

@@ -33,6 +33,7 @@ export class ScheduleList extends Table<Schedule> {
     clearOnRefresh = true;
 
     protected override searchEnabled = true;
+    public override searchPlaceholder = msg("Search by schedule ID, name, or related object...");
 
     @property()
     order = "next_run";
