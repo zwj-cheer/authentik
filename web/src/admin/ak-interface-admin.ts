@@ -9,6 +9,7 @@ import "#elements/commands/ak-command-palette-user-modal";
 import {
     createAdminSidebarEnterpriseEntries,
     createAdminSidebarEntries,
+    isCommandVisibleSidebarEntry,
     renderSidebarItems,
     SidebarEntry,
 } from "./navigation/sidebar.js";
@@ -161,7 +162,7 @@ export class AdminInterface extends WithCapabilitiesConfig(
                 group: msg("Users"),
             },
             ...this.entries.flatMap(([, label, , children]) => [
-                ...(children ?? []).map(
+                ...(children ?? []).filter(isCommandVisibleSidebarEntry).map(
                     ([path, childLabel]): PaletteCommandDefinitionInit => ({
                         namespace: PaletteCommandNamespace.Navigation,
                         label: childLabel,

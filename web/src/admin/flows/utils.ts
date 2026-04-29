@@ -2,64 +2,74 @@ import { Flow, FlowDesignationEnum, FlowLayoutEnum } from "@goauthentik/api";
 
 import { msg } from "@lit/localize";
 
-export function FlowNameToLabel(name: string): string {
-    switch (name) {
-        case "Welcome to authentik!":
+type FlowNameSource = Pick<Flow, "name" | "slug">;
+type FlowTitleSource = Pick<Flow, "title" | "slug">;
+
+export function FlowNameToLabel(flow: FlowNameSource): string {
+    switch (flow.slug) {
+        case "default-authentication-flow":
+        case "default-source-authentication":
             return msg("Welcome to authentik!");
-        case "Welcome to authentik! Please choose a username.":
+        case "default-source-enrollment":
             return msg("Welcome to authentik! Please choose a username.");
-        case "Authorize Application":
+        case "default-provider-authorization-explicit-consent":
+        case "default-provider-authorization-implicit-consent":
             return msg("Authorize Application");
-        case "Logged out":
+        case "default-invalidation-flow":
             return msg("Logged out");
-        case "Change password":
+        case "default-password-change":
             return msg("Change password");
-        case "User settings":
+        case "default-user-settings-flow":
             return msg("User settings");
-        case "Pre-authentication":
+        case "default-source-pre-authentication":
             return msg("Pre-authentication");
-        case "Default initial setup":
+        case "initial-setup":
             return msg("Default initial setup");
-        case "Default static OTP setup":
+        case "default-authenticator-static-setup":
             return msg("Default static OTP setup");
-        case "Default TOTP setup":
+        case "default-authenticator-totp-setup":
             return msg("Default TOTP setup");
-        case "Default WebAuthn setup":
+        case "default-authenticator-webauthn-setup":
             return msg("Default WebAuthn setup");
         default:
-            return name;
+            return flow.name;
     }
 }
 
-export function FlowTitleToLabel(title: string): string {
-    switch (title) {
-        case "Welcome to authentik!":
+export function FlowTitleToLabel(flow: FlowTitleSource): string {
+    switch (flow.slug) {
+        case "default-authentication-flow":
+        case "default-source-authentication":
+        case "initial-setup":
             return msg("Welcome to authentik!");
-        case "Welcome to authentik! Please choose a username.":
+        case "default-source-enrollment":
             return msg("Welcome to authentik! Please choose a username.");
-        case "Redirecting to %(app)s":
+        case "default-provider-authorization-explicit-consent":
+        case "default-provider-authorization-implicit-consent":
             return msg("Redirecting to %(app)s");
-        case "You have logged out of %(app)s.":
+        case "default-provider-invalidation-flow":
             return msg("You have logged out of %(app)s.");
-        case "Change password":
+        case "default-invalidation-flow":
+            return msg("Logged out");
+        case "default-password-change":
             return msg("Change password");
-        case "Update your info":
+        case "default-user-settings-flow":
             return msg("Update your info");
-        case "Pre-authentication":
+        case "default-source-pre-authentication":
             return msg("Pre-authentication");
-        case "Configure static OTP token":
+        case "default-authenticator-static-setup":
             return msg("Configure static OTP token");
-        case "Configure two-factor authentication":
+        case "default-authenticator-totp-setup":
             return msg("Configure two-factor authentication");
-        case "Configure WebAuthn":
+        case "default-authenticator-webauthn-setup":
             return msg("Configure WebAuthn");
         default:
-            return title;
+            return flow.title;
     }
 }
 
 export function RenderFlowOption(flow: Flow): string {
-    return `${flow.slug} (${FlowNameToLabel(flow.name)})`;
+    return `${flow.slug} (${FlowNameToLabel(flow)})`;
 }
 
 export function DesignationToLabel(designation: FlowDesignationEnum): string {

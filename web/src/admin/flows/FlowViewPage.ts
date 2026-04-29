@@ -74,7 +74,7 @@ export class FlowViewPage extends WithBrandConfig(AKElement) {
         if (!this.flow) {
             return nothing;
         }
-        const flowName = this.brandingMessage(FlowNameToLabel(this.flow.name));
+        const flowName = this.brandingMessage(FlowNameToLabel(this.flow));
 
         return html`<main part="main">
             <ak-tabs exportparts="container:tabs">
@@ -119,7 +119,9 @@ export class FlowViewPage extends WithBrandConfig(AKElement) {
                                     [
                                         msg("Execute flow"),
                                         html`<button
-                                                aria-label=${msg(str`Execute "${flowName}" normally`)}
+                                                aria-label=${msg(
+                                                    str`Execute "${flowName}" normally`,
+                                                )}
                                                 class="pf-c-button pf-m-block pf-m-primary"
                                                 @click=${() => {
                                                     const finalURL = `${
@@ -256,9 +258,9 @@ export class FlowViewPage extends WithBrandConfig(AKElement) {
         if (changed.has("flow")) {
             setPageDetails({
                 icon: "pf-icon pf-icon-process-automation",
-                header: this.flow ? this.brandingMessage(FlowNameToLabel(this.flow.name)) : undefined,
+                header: this.flow ? this.brandingMessage(FlowNameToLabel(this.flow)) : undefined,
                 description: this.flow
-                    ? this.brandingMessage(FlowTitleToLabel(this.flow.title))
+                    ? this.brandingMessage(FlowTitleToLabel(this.flow))
                     : undefined,
             });
         }

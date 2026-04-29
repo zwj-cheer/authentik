@@ -20,10 +20,7 @@ import { GroupResult } from "#common/utils";
 import { AKElement } from "#elements/Base";
 import { intersectionObserver } from "#elements/decorators/intersection-observer";
 import { type TransclusionChildElement, TransclusionChildSymbol } from "#elements/dialogs/shared";
-import {
-    DeleteBulkButton,
-    type DeleteBulkButtonOptions,
-} from "#elements/forms/DeleteBulkForm";
+import { DeleteBulkButton, type DeleteBulkButtonOptions } from "#elements/forms/DeleteBulkForm";
 import { WithSession } from "#elements/mixins/session";
 import { getURLParam, updateURLParams } from "#elements/router/RouteMatch";
 import Styles from "#elements/table/Table.css";
@@ -660,8 +657,9 @@ export abstract class Table<T extends object, D = T>
                     options,
                 ];
             } else {
-                cells[cells.length - 1] =
-                    html`<div class="ak-c-table__actions">${lastCell} ${deleteButton}</div>`;
+                cells[cells.length - 1] = html`<div class="ak-c-table__actions">
+                    ${lastCell} ${deleteButton}
+                </div>`;
             }
 
             return cells;

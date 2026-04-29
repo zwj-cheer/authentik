@@ -3534,7 +3534,7 @@ username they are attempting to login as, by one.</source>
 <trans-unit id="s8323a9af28e10502">
   <source>The policy passes when the reputation score is below the threshold, and
 doesn't pass when either or both of the selected options are equal or above the threshold.</source>
-  <target>当信誉分数低于阈值时策略通过，而当其中一个或两个选定选项
+  <target>当信誉评分低于阈值时策略通过，而当其中一个或两个选定选项
 大于等于阈值时策略不通过。</target>
 </trans-unit>
 <trans-unit id="s1828fbfc2c56379c">
@@ -4019,7 +4019,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s150cf10289852e4a">
   <source>Endpoint Devices are in preview.</source>
-  <target>端点设备功能目前处于预览状态。</target>
+  <target>终端设备功能目前处于预览状态。</target>
 </trans-unit>
 <trans-unit id="s672b3d1982f585fa">
   <source>Total devices</source>
@@ -4051,7 +4051,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="sf655f75d8e14d5fe">
   <source>Endpoint Device(s)</source>
-  <target>端点设备</target>
+  <target>终端设备</target>
 </trans-unit>
 <trans-unit id="sd667856c73082c35">
   <source>Device <x id="0" equiv-text="${this.device?.name}"/></source>
@@ -4818,7 +4818,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="sb1a4e9b288e2f005">
   <source>Federation and Social login</source>
-  <target>联结与社交登录</target>
+  <target>身份源与社交登录</target>
 </trans-unit>
 <trans-unit id="s6152026c364ad974">
   <source>Sources of identities, which can either be synced into authentik's database, or can be used by users to authenticate and enroll themselves.</source>
@@ -5298,7 +5298,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s62ddcbaaa91d120d">
   <source>Reputation scores</source>
-  <target>信誉分数</target>
+  <target>信誉评分</target>
 </trans-unit>
 <trans-unit id="sd080b2370aa82967">
   <source>Reputation for IP and user identifiers. Scores are decreased for each failed login and increased for each successful login.</source>
@@ -5644,7 +5644,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s23446284b56ca0cc">
   <source>Reputation score(s)</source>
-  <target>信誉分数</target>
+  <target>信誉评分</target>
 </trans-unit>
 <trans-unit id="sd2208cd1a767644b">
   <source>Disconnect</source>
@@ -6770,7 +6770,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s3330adb3f0922f7b">
   <source>User database + app passwords</source>
-  <target>用户数据库 + 应用程序密码</target>
+  <target>用户数据库 + 应用密码</target>
 </trans-unit>
 <trans-unit id="sc10db51c9bb77d5c">
   <source>User database + LDAP password</source>
@@ -7404,11 +7404,11 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s037bc6d25a03c3c8">
   <source>Successfully updated transport.</source>
-  <target>已成功更新传输。</target>
+  <target>已成功更新渠道。</target>
 </trans-unit>
 <trans-unit id="s1575a15cee001915">
   <source>Successfully created transport.</source>
-  <target>已成功创建传输。</target>
+  <target>已成功创建渠道。</target>
 </trans-unit>
 <trans-unit id="sca2879d96f58a39c">
   <source>Send once</source>
@@ -7452,7 +7452,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s819509c33a7534ac">
   <source>Notification Transports</source>
-  <target>通知传输</target>
+  <target>通知渠道</target>
 </trans-unit>
 <trans-unit id="s57072ffb92b6c9c8">
   <source>Define how notifications are sent to users, like Email or Webhook.</source>
@@ -7460,7 +7460,7 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="s624256f8a4bb4c89">
   <source>Notification transport(s)</source>
-  <target>通知传输</target>
+  <target>通知渠道</target>
 </trans-unit>
 <trans-unit id="s0a39e4f61ccafacb">
   <source>Successfully updated rule.</source>
@@ -7484,19 +7484,19 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="sffa171e11d4ae513">
   <source>Transports</source>
-  <target>传输</target>
+  <target>渠道</target>
 </trans-unit>
 <trans-unit id="s26733a6289ca6f1a">
   <source>Available Transports</source>
-  <target>可用传输</target>
+  <target>可用渠道</target>
 </trans-unit>
 <trans-unit id="sa65f772cfc5aa67e">
   <source>Selected Transports</source>
-  <target>已选传输</target>
+  <target>已选渠道</target>
 </trans-unit>
 <trans-unit id="s7b18721be331241e">
   <source>Select which transports should be used to notify the user. If none are selected, the notification will only be shown in the authentik UI.</source>
-  <target>选择应使用哪些传输方式来通知用户。如果未选择任何内容，则通知将仅显示在 authentik UI 中。</target>
+  <target>选择要通过哪些渠道通知用户。如果未选择任何渠道，通知将只显示在 authentik UI 中。</target>
 </trans-unit>
 <trans-unit id="scd0cfe87af6f2ff2">
   <source>Severity</source>
@@ -8240,7 +8240,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s0393ac07cf8a3097">
   <source>Endpoint Devices</source>
-  <target>端点设备</target>
+  <target>终端设备</target>
 </trans-unit>
 <trans-unit id="s4f1ad6b48a5df506">
   <source>Logs</source>
@@ -8256,11 +8256,11 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sc0829ee663ced008">
   <source>Directory</source>
-  <target>目录</target>
+  <target>身份目录</target>
 </trans-unit>
 <trans-unit id="sc6b4ebd37b7a91c7">
   <source>Tokens and App passwords</source>
-  <target>令牌和应用程序密码</target>
+  <target>令牌与应用密码</target>
 </trans-unit>
 <trans-unit id="sa81e2cdaf6921adc">
   <source>System</source>
@@ -9439,7 +9439,7 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sed1058bca1c065f7">
   <source>When enabled, notification will be sent to the user that triggered the event in addition to any users in the group above. The event user will always be the first user, to send a notification only to the event user enabled 'Send once' in the notification transport. If no group is selected and 'Send notification to event user' is disabled the rule is disabled. </source>
-  <target>启用时，通知不仅会发送给触发事件的用户，还会发送到组中的任何用户。事件用户将总是第一个用户，要只向事件用户发送通知，则需要在通知传输中启用“发送一次”。如果没有选择组，并且“向事件用户发送通知”没有启用，则此规则被禁用。</target>
+  <target>启用时，通知不仅会发送给触发事件的用户，还会发送给组中的任何用户。事件用户始终排在第一位；如果只想通知事件用户，请在通知渠道中启用“发送一次”。如果没有选择组，并且没有启用“向事件用户发送通知”，则此规则会被禁用。</target>
 </trans-unit>
 <trans-unit id="s9864bd5cd7bb4bd0">
   <source>Local connection</source>

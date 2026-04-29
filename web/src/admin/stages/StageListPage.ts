@@ -6,9 +6,9 @@ import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
 
 import { DEFAULT_CONFIG } from "#common/api/config";
 
-import { globalBrandingMessage } from "#elements/mixins/branding";
 import { IconEditButtonByTagName, modalInvoker, ModalInvokerButton } from "#elements/dialogs";
 import { IconPermissionButton } from "#elements/dialogs/components/IconPermissionButton";
+import { globalBrandingMessage } from "#elements/mixins/branding";
 import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
@@ -50,15 +50,15 @@ export class StageListPage extends TablePage<Stage> {
     protected override rowDelete = {
         objectLabel: msg("Stage(s)"),
         usedBy: (item: Stage) => {
-                return new StagesApi(DEFAULT_CONFIG).stagesAllUsedByList({
-                    stageUuid: item.pk,
-                });
-            },
+            return new StagesApi(DEFAULT_CONFIG).stagesAllUsedByList({
+                stageUuid: item.pk,
+            });
+        },
         delete: (item: Stage) => {
-                return new StagesApi(DEFAULT_CONFIG).stagesAllDestroy({
-                    stageUuid: item.pk,
-                });
-            },
+            return new StagesApi(DEFAULT_CONFIG).stagesAllDestroy({
+                stageUuid: item.pk,
+            });
+        },
     };
 
     protected renderStageActions(stage: Stage): SlottedTemplateResult {
@@ -83,7 +83,7 @@ export class StageListPage extends TablePage<Stage> {
             html`<ul class="pf-c-list">
                 ${item.flowSet?.map((flow) => {
                     const flowLabel = flow.name
-                        ? globalBrandingMessage(FlowNameToLabel(flow.name))
+                        ? globalBrandingMessage(FlowNameToLabel(flow))
                         : flow.slug;
                     return html`<li>
                         <a href="#/flow/flows/${flow.slug}" title=${flow.slug}>

@@ -64,20 +64,20 @@ export class FlowListPage extends WithBrandConfig(TablePage<Flow>) {
     protected override rowDelete = {
         objectLabel: msg("Flow(s)"),
         usedBy: (item: Flow) => {
-                return new FlowsApi(DEFAULT_CONFIG).flowsInstancesUsedByList({
-                    slug: item.slug,
-                });
-            },
+            return new FlowsApi(DEFAULT_CONFIG).flowsInstancesUsedByList({
+                slug: item.slug,
+            });
+        },
         delete: (item: Flow) => {
-                return new FlowsApi(DEFAULT_CONFIG).flowsInstancesDestroy({
-                    slug: item.slug,
-                });
-            },
+            return new FlowsApi(DEFAULT_CONFIG).flowsInstancesDestroy({
+                slug: item.slug,
+            });
+        },
     };
 
     row(item: Flow): SlottedTemplateResult[] {
-        const itemName = this.brandingMessage(FlowNameToLabel(item.name));
-        const itemTitle = this.brandingMessage(FlowTitleToLabel(item.title));
+        const itemName = this.brandingMessage(FlowNameToLabel(item));
+        const itemTitle = this.brandingMessage(FlowTitleToLabel(item));
 
         return [
             html`<a href="#/flow/flows/${item.slug}" class="pf-m-block">

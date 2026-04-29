@@ -1199,11 +1199,11 @@ msgstr "端点身份验证器 Google 设备信任连接器阶段"
 
 #: authentik/enterprise/stages/authenticator_endpoint_gdtc/models.py
 msgid "Endpoint Device"
-msgstr "端点设备"
+msgstr "终端设备"
 
 #: authentik/enterprise/stages/authenticator_endpoint_gdtc/models.py
 msgid "Endpoint Devices"
-msgstr "端点设备"
+msgstr "终端设备"
 
 #: authentik/enterprise/stages/authenticator_endpoint_gdtc/stage.py
 msgid "Verifying your browser..."
@@ -1305,11 +1305,11 @@ msgstr "事件用户"
 
 #: authentik/events/models.py
 msgid "Notification Transport"
-msgstr "通知传输"
+msgstr "通知渠道"
 
 #: authentik/events/models.py
 msgid "Notification Transports"
-msgstr "通知传输"
+msgstr "通知渠道"
 
 #: authentik/events/models.py
 msgid "Notice"
@@ -1335,7 +1335,7 @@ msgstr "通知"
 msgid ""
 "Select which transports should be used to notify the user. If none are "
 "selected, the notification will only be shown in the authentik UI."
-msgstr "选择应使用哪些传输方式来通知用户。如果未选择任何内容，则通知将仅显示在 authentik UI 中。"
+msgstr "选择要通过哪些渠道通知用户。如果未选择任何渠道，通知将只显示在 authentik UI 中。"
 
 #: authentik/events/models.py
 msgid "Controls which severity level the created notifications will have."
@@ -1896,11 +1896,11 @@ msgstr "信誉策略"
 
 #: authentik/policies/reputation/models.py
 msgid "Reputation Score"
-msgstr "信誉分数"
+msgstr "信誉评分"
 
 #: authentik/policies/reputation/models.py
 msgid "Reputation Scores"
-msgstr "信誉分数"
+msgstr "信誉评分"
 
 #: authentik/policies/templates/policies/buffer.html
 msgid "Waiting for authentication..."
@@ -4332,7 +4332,7 @@ msgstr "用户数据库 + 标准密码"
 
 #: authentik/stages/password/models.py
 msgid "User database + app passwords"
-msgstr "用户数据库 + 应用程序密码"
+msgstr "用户数据库 + 应用密码"
 
 #: authentik/stages/password/models.py
 msgid "User database + LDAP password"

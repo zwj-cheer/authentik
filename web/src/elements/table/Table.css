@@ -3,6 +3,39 @@
         var(--pf-global--palette--purple-100),
         transparent 80%
     );
+
+    /* Table surface tokens. */
+    --ak-c-table--Toolbar--PaddingBlock: var(--pf-global--spacer--md);
+    --ak-c-table--Toolbar--PaddingInline: var(--pf-global--spacer--lg);
+    --ak-c-table--Surface--BackgroundColor: var(--pf-global--BackgroundColor--100);
+    --ak-c-table--BorderColor: var(--pf-global--BorderColor--100);
+    --ak-c-table--BorderColor--subtle: color-mix(
+        in srgb,
+        var(--pf-global--BorderColor--100) 60%,
+        transparent
+    );
+    --ak-c-table--Header--BackgroundColor: color-mix(
+        in srgb,
+        var(--pf-global--BackgroundColor--100) 82%,
+        var(--pf-global--BackgroundColor--200)
+    );
+    --ak-c-table--Row--hover--BackgroundColor: color-mix(
+        in srgb,
+        var(--pf-global--primary-color--100) 6%,
+        transparent
+    );
+    --ak-c-table--Row--BorderColor: color-mix(
+        in srgb,
+        var(--pf-global--BorderColor--100) 70%,
+        transparent
+    );
+    --ak-c-table--Toolbar--BackgroundColor: color-mix(
+        in srgb,
+        var(--pf-global--BackgroundColor--100) 96%,
+        var(--pf-global--BackgroundColor--200)
+    );
+    --ak-c-table--SortIndicator--Color: var(--pf-global--Color--200);
+    --ak-c-table--SortIndicator--Color--active: var(--pf-global--primary-color--100);
 }
 
 :host([theme="dark"]) {
@@ -15,26 +48,88 @@
         var(--pf-global--palette--blue-100),
         transparent 90%
     );
+
+    --ak-c-table--BorderColor: var(--pf-global--BackgroundColor--400);
+    --ak-c-table--BorderColor--subtle: color-mix(
+        in srgb,
+        var(--pf-global--BackgroundColor--400) 70%,
+        transparent
+    );
+    --ak-c-table--Surface--BackgroundColor: var(--pf-global--BackgroundColor--100);
+    --ak-c-table--Header--BackgroundColor: color-mix(
+        in srgb,
+        var(--pf-global--BackgroundColor--100) 75%,
+        var(--pf-global--BackgroundColor--300)
+    );
+    --ak-c-table--Row--hover--BackgroundColor: color-mix(
+        in srgb,
+        var(--pf-global--primary-color--100) 14%,
+        transparent
+    );
+    --ak-c-table--Row--BorderColor: color-mix(
+        in srgb,
+        var(--pf-global--BackgroundColor--400) 70%,
+        transparent
+    );
+    --ak-c-table--Toolbar--BackgroundColor: color-mix(
+        in srgb,
+        var(--pf-global--BackgroundColor--100) 86%,
+        var(--pf-global--BackgroundColor--300)
+    );
 }
 
 .pf-c-table {
     --pf-global--primary-color--100: var(--pf-global--primary-color--300);
     --pf-c-table--m-compact__expandable-row-content--PaddingTop: var(--pf-global--spacer--sm);
     --pf-c-table--m-compact__expandable-row-content--PaddingBottom: var(--pf-global--spacer--sm);
+    --pf-c-table--cell--PaddingTop: 0.875rem;
+    --pf-c-table--cell--PaddingBottom: 0.875rem;
+    --pf-c-table--cell--PaddingLeft: var(--pf-global--spacer--md);
+    --pf-c-table--cell--PaddingRight: var(--pf-global--spacer--md);
 
     .presentational {
         --pf-c-table--cell--MinWidth: 0;
     }
 }
 
+/* ----- Search input ----- */
 ::part(search-form) {
     --pf-c-input-group--BackgroundColor: transparent;
 }
 
 ::part(search-input) {
-    background-color: transparent !important;
+    block-size: 2.375rem;
+    background-color: var(--pf-global--BackgroundColor--100) !important;
+    border: 1px solid var(--ak-c-table--BorderColor) !important;
+    border-radius: var(--pf-global--BorderRadius--sm, 4px);
+    padding-inline: 2.25rem 0.75rem;
+    /* Inline search icon keeps the existing search component untouched. */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%236a6e73' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><circle cx='7' cy='7' r='5'/><path d='m11 11 3 3'/></svg>");
+    background-repeat: no-repeat;
+    background-position: 0.75rem center;
+    background-size: 0.95rem 0.95rem;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
 }
 
+::part(search-input):hover {
+    border-color: color-mix(
+        in srgb,
+        var(--pf-global--primary-color--100) 50%,
+        var(--ak-c-table--BorderColor)
+    ) !important;
+}
+
+::part(search-input):focus,
+::part(search-input):focus-visible {
+    border-color: var(--pf-global--primary-color--100) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pf-global--primary-color--100) 18%, transparent) !important;
+    outline: none !important;
+}
+
+/* ----- Expandable rows ----- */
 .pf-c-table__expandable-row {
     background: color-mix(
         var(--pf-c-table--BackgroundColor),
@@ -58,10 +153,11 @@
     }
 }
 
+/* ----- Row action buttons ----- */
 .ak-c-table__actions {
     display: inline-flex;
     align-items: center;
-    gap: 0;
+    gap: 0.125rem;
     justify-content: start;
     white-space: nowrap;
 
@@ -76,18 +172,26 @@
         justify-content: center;
         flex: 0 0 auto;
         margin-inline-start: 0;
-        min-block-size: 1.75rem;
-        min-inline-size: 1.5rem;
-        padding-inline: 0.25rem;
+        min-block-size: 1.875rem;
+        min-inline-size: 1.875rem;
+        padding-inline: 0.375rem;
         border-radius: var(--pf-global--BorderRadius--sm, 4px);
+        color: var(--pf-global--Color--200);
         transition:
-            background-color 0.2s ease,
-            color 0.2s ease;
+            background-color 0.18s ease,
+            color 0.18s ease,
+            transform 0.18s ease;
     }
 
     button.pf-c-button:hover,
     button.pf-m-tertiary:hover {
-        background-color: var(--pf-global--BackgroundColor--200);
+        background-color: color-mix(in srgb, var(--pf-global--primary-color--100) 10%, transparent);
+        color: var(--pf-global--primary-color--100);
+    }
+
+    button.pf-c-button:active,
+    button.pf-m-tertiary:active {
+        transform: scale(0.96);
     }
 
     ak-forms-delete-bulk {
@@ -138,12 +242,45 @@ td ak-mdx::part(content) {
 td:has(ak-action-button),
 td:has(ak-forms-modal),
 td:has(ak-rbac-object-permission-modal) {
-    button[slot="trigger"]:has(i) {
+    text-align: end;
+    white-space: nowrap;
+
+    button[slot="trigger"]:has(i),
+    button.pf-c-button:has(i),
+    button.pf-m-plain:has(i),
+    button.pf-m-tertiary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-block-size: 1.875rem;
+        min-inline-size: 1.875rem;
         padding-inline: 0.5em !important;
+        border-radius: var(--pf-global--BorderRadius--sm, 4px);
+        color: var(--pf-global--Color--200);
+        background-color: transparent;
+        transition:
+            background-color 0.18s ease,
+            color 0.18s ease,
+            transform 0.18s ease;
+    }
+
+    button[slot="trigger"]:has(i):hover,
+    button.pf-c-button:has(i):hover,
+    button.pf-m-plain:has(i):hover,
+    button.pf-m-tertiary:hover {
+        background-color: color-mix(in srgb, var(--pf-global--primary-color--100) 12%, transparent);
+        color: var(--pf-global--primary-color--100);
+    }
+
+    button[slot="trigger"]:has(i):active,
+    button.pf-c-button:has(i):active,
+    button.pf-m-plain:has(i):active,
+    button.pf-m-tertiary:active {
+        transform: scale(0.96);
     }
 
     button.pf-m-tertiary {
-        margin-inline-start: 0.25em;
+        margin-inline-start: 0.125rem;
     }
 
     pf-tooltip {
@@ -157,36 +294,67 @@ td:has(ak-rbac-object-permission-modal) {
     }
 }
 
+/* Delete-style trigger uses danger color on hover */
+td:has(ak-forms-delete-bulk),
+td:has(ak-forms-delete) {
+    button[slot="trigger"]:has(i.fa-trash):hover,
+    button.pf-c-button:has(i.fa-trash):hover {
+        color: var(--pf-global--danger-color--100);
+        background-color: color-mix(in srgb, var(--pf-global--danger-color--100) 10%, transparent);
+    }
+}
+
 .pf-m-search-filter {
-    flex: 1 1 auto;
+    flex: 0 1 28rem;
     margin-inline: 0;
+    inline-size: 28rem;
+    max-inline-size: 100%;
+    min-inline-size: 22rem;
+}
+
+@container (width < 640px) {
+    .pf-m-search-filter {
+        flex-basis: 100%;
+        inline-size: 100%;
+        min-inline-size: 0;
+    }
 }
 
 .selected-chips::part(chip-group) {
     margin-block-end: var(--pf-global--spacer--sm);
 }
 
+/* ----- Toolbar (top) ----- */
 .pf-c-toolbar {
     display: flex;
     flex-flow: row wrap;
-    padding-inline: var(--pf-global--spacer--md);
-    gap: var(--pf-global--spacer--sm);
+    align-items: center;
+    padding-block: var(--ak-c-table--Toolbar--PaddingBlock);
+    padding-inline: var(--ak-c-table--Toolbar--PaddingInline);
+    gap: var(--pf-global--spacer--md);
+    border-block-end: 1px solid var(--ak-c-table--BorderColor--subtle);
+    background-color: var(--ak-c-table--Toolbar--BackgroundColor);
 }
 
-.pf-c-toolbar__content {
-    flex: 1 1 auto;
+.pf-c-toolbar > .pf-c-toolbar__content {
+    flex: 0 1 auto;
     flex-flow: row wrap;
     margin: 0;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
     gap: var(--pf-global--spacer--sm);
     padding-inline: 0;
+    width: auto;
+
     .pf-c-switch {
         --pf-c-switch--ColumnGap: var(--pf-c-toolbar__item--m-search-filter--spacer);
     }
 }
 
 .pf-c-toolbar__group {
+    flex: 0 1 auto;
     flex-flow: row wrap;
+    align-items: center;
     gap: var(--pf-global--spacer--sm);
 
     .pf-c-card__title .pf-icon {
@@ -195,11 +363,146 @@ td:has(ak-rbac-object-permission-modal) {
 }
 
 [part="toolbar-primary"] {
-    flex: 2 1 auto;
+    flex: 0 1 auto;
 }
 
+[part="toolbar-secondary"] {
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+}
+
+@container (width < 640px) {
+    .pf-c-toolbar {
+        padding-inline: var(--pf-global--spacer--md);
+    }
+
+    .pf-c-toolbar > .pf-c-toolbar__content,
+    [part="toolbar-secondary"] {
+        flex-basis: 100%;
+        inline-size: 100%;
+        margin-inline-start: 0;
+    }
+
+    [part="toolbar-secondary"] > .pf-c-toolbar__group {
+        justify-content: flex-end;
+        inline-size: 100%;
+    }
+}
+
+/* ----- Table base ----- */
 .pf-c-table {
     --pf-c-table--m-striped__tr--BackgroundColor: var(--pf-global--BackgroundColor--dark-300);
+    --pf-c-table--BorderColor: var(--ak-c-table--Row--BorderColor);
+    background-color: var(--ak-c-table--Surface--BackgroundColor);
+}
+
+[part="table-container"] {
+    overflow-x: auto;
+    background-color: var(--ak-c-table--Surface--BackgroundColor);
+    scrollbar-gutter: stable;
+}
+
+.pf-c-table > thead:first-of-type {
+    background-color: var(--ak-c-table--Header--BackgroundColor);
+}
+
+.pf-c-table > thead:first-of-type th,
+.pf-c-table > thead:first-of-type td {
+    border-block-end: 1px solid var(--ak-c-table--BorderColor);
+}
+
+.pf-c-table > thead:first-of-type .pf-c-table__text,
+.pf-c-table > thead:first-of-type th:not(.pf-c-table__sort) {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--pf-global--Color--200);
+}
+
+.pf-c-table > thead:not(:first-of-type) > tr > th[scope="colgroup"] {
+    background-color: color-mix(in srgb, var(--pf-global--BackgroundColor--200) 70%, transparent);
+    color: var(--pf-global--Color--100);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0;
+    text-transform: none;
+    padding-block: 0.625rem;
+    padding-inline-start: var(--pf-global--spacer--md);
+    border-block-start: 1px solid var(--ak-c-table--BorderColor);
+    border-block-end: 1px solid var(--ak-c-table--BorderColor);
+}
+
+:host([theme="dark"]) .pf-c-table > thead:not(:first-of-type) > tr > th[scope="colgroup"] {
+    background-color: color-mix(in srgb, var(--pf-global--BackgroundColor--300) 70%, transparent);
+}
+
+.pf-c-table > tbody + thead:not(:first-of-type) > tr > th[scope="colgroup"] {
+    border-block-start: none;
+}
+
+.pf-c-table__sort .pf-c-table__sort-indicator {
+    color: var(--ak-c-table--SortIndicator--Color);
+    opacity: 0.55;
+    transition:
+        color 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.pf-c-table__sort:hover .pf-c-table__sort-indicator,
+.pf-c-table__sort.pf-m-selected .pf-c-table__sort-indicator {
+    color: var(--ak-c-table--SortIndicator--Color--active);
+    opacity: 1;
+}
+
+.pf-c-table__sort .pf-c-table__sort-indicator i {
+    font-size: 0.75rem;
+}
+
+.pf-c-table__button {
+    transition: color 0.15s ease;
+}
+
+.pf-c-table__button:hover .pf-c-table__text {
+    color: var(--pf-global--primary-color--100);
+}
+
+.pf-c-table > tbody > tr {
+    transition: background-color 0.15s ease;
+}
+
+.pf-c-table > tbody > tr:not(.pf-c-table__expandable-row) > :is(td, th) {
+    border-block-end: 1px solid var(--ak-c-table--Row--BorderColor) !important;
+    vertical-align: middle;
+}
+
+.pf-c-table > tbody:last-of-type > tr:last-child:not(.pf-c-table__expandable-row) > :is(td, th) {
+    border-block-end: none !important;
+}
+
+.pf-c-table > tbody > tr:not(.pf-c-table__expandable-row):hover {
+    background-color: var(--ak-c-table--Row--hover--BackgroundColor);
+}
+
+/* ----- Toolbar buttons: clearer primary / secondary hierarchy ----- */
+.pf-c-toolbar .pf-c-button.pf-m-primary {
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--pf-global--primary-color--100) 30%, transparent);
+}
+
+.pf-c-toolbar .pf-c-button.pf-m-secondary {
+    --pf-c-button--m-secondary--BorderColor: var(--ak-c-table--BorderColor);
+    --pf-c-button--m-secondary--Color: var(--pf-global--Color--200);
+    background-color: transparent;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.pf-c-toolbar .pf-c-button.pf-m-secondary:hover {
+    --pf-c-button--m-secondary--hover--BorderColor: var(--pf-global--primary-color--100);
+    --pf-c-button--m-secondary--hover--Color: var(--pf-global--primary-color--100);
+    background-color: color-mix(in srgb, var(--pf-global--primary-color--100) 6%, transparent);
 }
 
 /**
@@ -215,20 +518,56 @@ time {
     text-transform: capitalize;
 }
 
-.pf-c-pagination {
-    ak-timestamp {
-        font-size: 0.75rem;
-        font-style: italic;
-        color: var(--pf-global--Color--200);
+/* ----- Bottom pagination and last-refreshed timestamp ----- */
+.pf-c-pagination.pf-m-bottom,
+[part="pagination-bottom"] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pf-global--spacer--md);
+    padding-block: var(--pf-global--spacer--sm);
+    padding-inline: var(--ak-c-table--Toolbar--PaddingInline);
+    border-block-start: 1px solid var(--ak-c-table--BorderColor--subtle);
+    background-color: var(--ak-c-table--Toolbar--BackgroundColor);
+}
 
-        &::part(label) {
-            display: inline-block;
-        }
+.pf-c-pagination ak-timestamp {
+    font-size: 0.75rem;
+    font-style: normal;
+    color: var(--pf-global--Color--200);
 
-        &::part(elapsed) {
-            display: inline-block;
-        }
+    &::part(label) {
+        display: inline-block;
+        margin-inline-end: 0.25rem;
+        opacity: 0.8;
     }
+
+    &::part(elapsed) {
+        display: inline-block;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+/* Pagination number readability */
+.pf-c-options-menu__toggle-text {
+    font-variant-numeric: tabular-nums;
+    color: var(--pf-global--Color--100);
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+/* Tighten the gap inside the pagination range "1 - 14 / 14" */
+.pf-c-options-menu__toggle.pf-m-text {
+    padding-inline: 0.25rem;
+}
+.pf-c-pagination .pf-c-button.pf-m-plain {
+    border-radius: var(--pf-global--BorderRadius--sm, 4px);
+    transition: background-color 0.15s ease;
+}
+
+.pf-c-pagination .pf-c-button.pf-m-plain:not(:disabled):hover {
+    background-color: color-mix(in srgb, var(--pf-global--primary-color--100) 10%, transparent);
+    color: var(--pf-global--primary-color--100);
 }
 
 /* Fix alignment issues with images in tables */
