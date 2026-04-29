@@ -17,7 +17,7 @@ import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { FlowForm } from "#admin/flows/FlowForm";
-import { DesignationToLabel } from "#admin/flows/utils";
+import { DesignationToLabel, FlowNameToLabel, FlowTitleToLabel } from "#admin/flows/utils";
 
 import { Flow, FlowsApi } from "@goauthentik/api";
 
@@ -76,8 +76,8 @@ export class FlowListPage extends WithBrandConfig(TablePage<Flow>) {
     };
 
     row(item: Flow): SlottedTemplateResult[] {
-        const itemName = this.brandingMessage(item.name);
-        const itemTitle = this.brandingMessage(item.title);
+        const itemName = this.brandingMessage(FlowNameToLabel(item.name));
+        const itemTitle = this.brandingMessage(FlowTitleToLabel(item.title));
 
         return [
             html`<a href="#/flow/flows/${item.slug}" class="pf-m-block">

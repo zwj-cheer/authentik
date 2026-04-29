@@ -18,7 +18,7 @@ import { setPageDetails } from "#components/ak-page-navbar";
 import renderDescriptionList from "#components/DescriptionList";
 
 import { FlowForm } from "#admin/flows/FlowForm";
-import { DesignationToLabel } from "#admin/flows/utils";
+import { DesignationToLabel, FlowNameToLabel, FlowTitleToLabel } from "#admin/flows/utils";
 
 import { Flow, FlowsApi, ModelEnum } from "@goauthentik/api";
 
@@ -74,7 +74,7 @@ export class FlowViewPage extends WithBrandConfig(AKElement) {
         if (!this.flow) {
             return nothing;
         }
-        const flowName = this.brandingMessage(this.flow.name);
+        const flowName = this.brandingMessage(FlowNameToLabel(this.flow.name));
 
         return html`<main part="main">
             <ak-tabs exportparts="container:tabs">
@@ -256,8 +256,10 @@ export class FlowViewPage extends WithBrandConfig(AKElement) {
         if (changed.has("flow")) {
             setPageDetails({
                 icon: "pf-icon pf-icon-process-automation",
-                header: this.flow ? this.brandingMessage(this.flow.name) : undefined,
-                description: this.flow ? this.brandingMessage(this.flow.title) : undefined,
+                header: this.flow ? this.brandingMessage(FlowNameToLabel(this.flow.name)) : undefined,
+                description: this.flow
+                    ? this.brandingMessage(FlowTitleToLabel(this.flow.title))
+                    : undefined,
             });
         }
     }

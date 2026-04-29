@@ -11,6 +11,7 @@ import { ModelForm } from "#elements/forms/ModelForm";
 import { RadioOption } from "#elements/forms/Radio";
 import { SlottedTemplateResult } from "#elements/types";
 
+import { displayStageName } from "#admin/stages/displayName";
 import { policyEngineModes } from "#admin/policies/PolicyEngineModes";
 
 import {
@@ -146,7 +147,7 @@ export class StageBindingForm extends ModelForm<FlowStageBinding, string> {
                         return groupBy(items, (stage) => stage.verboseNamePlural);
                     }}
                     .renderElement=${(stage: Stage): string => {
-                        return stage.name;
+                        return displayStageName(stage.name);
                     }}
                     .value=${(stage: Stage | null) => stage?.pk}
                     .selected=${(stage: Stage): boolean => {

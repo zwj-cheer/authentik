@@ -4,10 +4,57 @@ import { msg } from "@lit/localize";
 
 export function FlowNameToLabel(name: string): string {
     switch (name) {
+        case "Welcome to authentik!":
+            return msg("Welcome to authentik!");
+        case "Welcome to authentik! Please choose a username.":
+            return msg("Welcome to authentik! Please choose a username.");
         case "Authorize Application":
             return msg("Authorize Application");
+        case "Logged out":
+            return msg("Logged out");
+        case "Change password":
+            return msg("Change password");
+        case "User settings":
+            return msg("User settings");
+        case "Pre-authentication":
+            return msg("Pre-authentication");
+        case "Default initial setup":
+            return msg("Default initial setup");
+        case "Default static OTP setup":
+            return msg("Default static OTP setup");
+        case "Default TOTP setup":
+            return msg("Default TOTP setup");
+        case "Default WebAuthn setup":
+            return msg("Default WebAuthn setup");
         default:
             return name;
+    }
+}
+
+export function FlowTitleToLabel(title: string): string {
+    switch (title) {
+        case "Welcome to authentik!":
+            return msg("Welcome to authentik!");
+        case "Welcome to authentik! Please choose a username.":
+            return msg("Welcome to authentik! Please choose a username.");
+        case "Redirecting to %(app)s":
+            return msg("Redirecting to %(app)s");
+        case "You have logged out of %(app)s.":
+            return msg("You have logged out of %(app)s.");
+        case "Change password":
+            return msg("Change password");
+        case "Update your info":
+            return msg("Update your info");
+        case "Pre-authentication":
+            return msg("Pre-authentication");
+        case "Configure static OTP token":
+            return msg("Configure static OTP token");
+        case "Configure two-factor authentication":
+            return msg("Configure two-factor authentication");
+        case "Configure WebAuthn":
+            return msg("Configure WebAuthn");
+        default:
+            return title;
     }
 }
 

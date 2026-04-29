@@ -13,6 +13,7 @@ import { PaginatedResponse, TableColumn } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
 
+import { FlowNameToLabel } from "#admin/flows/utils";
 import { AKStageWizard } from "#admin/stages/ak-stage-wizard";
 import { DuoDeviceImportForm } from "#admin/stages/authenticator_duo/DuoDeviceImportForm";
 import { displayStageName } from "#admin/stages/displayName";
@@ -81,7 +82,9 @@ export class StageListPage extends TablePage<Stage> {
                 <small>${item.verboseName}</small>`,
             html`<ul class="pf-c-list">
                 ${item.flowSet?.map((flow) => {
-                    const flowLabel = flow.name ? globalBrandingMessage(flow.name) : flow.slug;
+                    const flowLabel = flow.name
+                        ? globalBrandingMessage(FlowNameToLabel(flow.name))
+                        : flow.slug;
                     return html`<li>
                         <a href="#/flow/flows/${flow.slug}" title=${flow.slug}>
                             <code>${flowLabel}</code>

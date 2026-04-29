@@ -15,6 +15,7 @@ import { SlottedTemplateResult } from "#elements/types";
 import { StrictUnsafe } from "#elements/utils/unsafe";
 
 import { StageBindingForm } from "#admin/flows/StageBindingForm";
+import { displayStageName } from "#admin/stages/displayName";
 import { AKStageWizard } from "#admin/stages/ak-stage-wizard";
 
 import { FlowsApi, FlowStageBinding, ModelEnum } from "@goauthentik/api";
@@ -43,7 +44,7 @@ export class BoundStagesList extends Table<FlowStageBinding> {
     }
 
     protected override rowLabel(item: FlowStageBinding): string {
-        return `#${item.order} ${item.stageObj?.name || ""}`;
+        return `#${item.order} ${item.stageObj?.name ? displayStageName(item.stageObj.name) : ""}`;
     }
 
     protected columns: TableColumn[] = [
@@ -57,7 +58,10 @@ export class BoundStagesList extends Table<FlowStageBinding> {
         objectLabel: msg("Stage binding(s)"),
         metadata: (item: FlowStageBinding) => {
                 return [
-                    { key: msg("Stage"), value: item.stageObj?.name || "" },
+                    {
+                        key: msg("Stage"),
+                        value: item.stageObj?.name ? displayStageName(item.stageObj.name) : "",
+                    },
                     { key: msg("Stage type"), value: item.stageObj?.verboseName || "" },
                 ];
             },
@@ -76,7 +80,7 @@ export class BoundStagesList extends Table<FlowStageBinding> {
     protected override row(item: FlowStageBinding): SlottedTemplateResult[] {
         return [
             html`<pre>${item.order}</pre>`,
-            item.stageObj?.name,
+            item.stageObj?.name ? displayStageName(item.stageObj.name) : "",
             item.stageObj?.verboseName,
             html`<div class="ak-c-table__actions">
                 <button
