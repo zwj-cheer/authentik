@@ -420,6 +420,13 @@ export class Form<T = Record<string, unknown>, D = T>
 
         const { submittingVerb, verboseName } = this.constructor as typeof Form;
 
+        if (!verboseName) {
+            return msg(str`${submittingVerb}...`, {
+                id: "form.submitting.no-entity",
+                desc: "The message shown while a form is being submitted, when no entity name is provided.",
+            });
+        }
+
         return msg(str`${submittingVerb} ${verboseName}...`, {
             id: "form.submitting",
             desc: "The message shown while a form is being submitted.",
@@ -621,6 +628,7 @@ export class Form<T = Record<string, unknown>, D = T>
     protected doSubmit = (event: SubmitEvent): void => {
         if (this.submitting) {
             this.logger.info("Skipping submit. Already submitting!");
+            return;
         }
 
         this.submitting = true;

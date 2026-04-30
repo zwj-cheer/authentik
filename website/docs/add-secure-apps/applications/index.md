@@ -30,7 +30,7 @@ title: Applications
 
     如需查看所有可用字段，请参阅 [User 对象的 API schema](https://api.goauthentik.io/reference/core-users-retrieve/)。
 
-    只有启动 URL 以 `http://`、`https://` 开头，或使用相对 URL 的应用程序，才会显示在用户的 **我的应用程序** 页面。也可以把 _启动 URL_ 设置为 `blank://blank`，用于隐藏不应显示在 **我的应用程序** 页面、但用户仍可访问的应用程序。
+    只有启动 URL 以 `http://`、`https://` 开头，或使用相对路径的应用程序，才会显示在用户的 **我的应用程序** 页面。若要让应用程序保持可访问但不显示在该页面，请使用 **从我的应用程序中隐藏** 选项（参见 [隐藏应用程序](./manage_apps.mdx#hide-applications)）。
 
 - _图标（URL）_：可选配置应用程序图标。可以从上传到 [文件](../../customize/files.md) 库的文件中选择，或输入绝对 URL。
 

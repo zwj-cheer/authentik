@@ -29,7 +29,7 @@ RUN npm run build && \
     npm run build:sfe
 
 # Stage: Build go proxy
-FROM --platform=${BUILDPLATFORM} docker.io/library/golang:1.26.2-trixie@sha256:982ae929f9a74083a242c6e25d19d7d9ed78c6e97fab639a119e90707ba819e2 AS go-builder
+FROM --platform=${BUILDPLATFORM} docker.io/library/golang:1.26.2-trixie@sha256:4a7137ea573f79c86ae451ff05817ed762ef5597fcf732259e97abeb3108d873 AS go-builder
 
 ARG TARGETOS
 ARG TARGETARCH
@@ -147,8 +147,11 @@ RUN --mount=type=bind,target=rust-toolchain.toml,src=rust-toolchain.toml \
     --mount=type=bind,target=Cargo.toml,src=Cargo.toml \
     --mount=type=bind,target=Cargo.lock,src=Cargo.lock \
     --mount=type=bind,target=.cargo/,src=.cargo/ \
+    --mount=type=bind,target=build.rs,src=build.rs \
     --mount=type=bind,target=src/,src=src/ \
-    --mount=type=bind,target=packages/,src=packages/ \
+    --mount=type=bind,target=packages/ak-axum,src=packages/ak-axum \
+    --mount=type=bind,target=packages/ak-common,src=packages/ak-common \
+    --mount=type=bind,target=packages/client-rust,src=packages/client-rust \
     --mount=type=bind,target=authentik/lib/default.yml,src=authentik/lib/default.yml \
     # Required otherwise workspace discovery fails
     --mount=type=bind,target=website/scripts/docsmg/,src=website/scripts/docsmg/ \
@@ -191,7 +194,10 @@ COPY --from=rust-toolchain /root/.cargo /root/.cargo
 ENV UV_NO_BINARY_PACKAGE="cryptography lxml python-kadmin-rs xmlsec"
 RUN --mount=type=bind,target=pyproject.toml,src=pyproject.toml \
     --mount=type=bind,target=uv.lock,src=uv.lock \
-    --mount=type=bind,target=packages,src=packages \
+    --mount=type=bind,target=packages/ak-guardian,src=packages/ak-guardian \
+    --mount=type=bind,target=packages/django-channels-postgres,src=packages/django-channels-postgres \
+    --mount=type=bind,target=packages/django-dramatiq-postgres,src=packages/django-dramatiq-postgres \
+    --mount=type=bind,target=packages/django-postgres-cache,src=packages/django-postgres-cache \
     --mount=type=bind,target=rust-toolchain.toml,src=rust-toolchain.toml \
     --mount=type=cache,id=uv-python-deps-$TARGETARCH$TARGETVARIANT,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev

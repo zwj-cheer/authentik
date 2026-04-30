@@ -198,6 +198,7 @@ dependencies = [
  "metrics-exporter-prometheus",
  "nix 0.31.2",
  "pyo3",
+ "pyo3-build-config",
  "sqlx",
  "tokio",
  "tracing",
@@ -216,6 +217,7 @@ dependencies = [
  "eyre",
  "forwarded-header-value",
  "futures",
+ "pin-project-lite",
  "tokio",
  "tokio-rustls",
  "tower",
@@ -1505,9 +1507,9 @@ dependencies = [
 
 [[package]]
 name = "hyper-unix-socket"
-version = "0.3.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c255628da188a9d9ee218bae99da33a4b684ed63abe140a94d0f6e4b5af9a090"
+checksum = "88978f1d73da0eb87d86555fcc40cbdd87bc86eb6525710b89db8c9278ec6a59"
 dependencies = [
  "bytes",
  "hyper",
@@ -2998,9 +3000,9 @@ dependencies = [
 
 [[package]]
 name = "rustls"
-version = "0.23.39"
+version = "0.23.40"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7c2c118cb077cca2822033836dfb1b975355dfb784b5e8da48f7b6c5db74e60e"
+checksum = "ef86cd5876211988985292b91c96a8f2d298df24e75989a43a3c73f2d4d8168b"
 dependencies = [
  "aws-lc-rs",
  "log",
