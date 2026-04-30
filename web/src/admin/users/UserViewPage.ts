@@ -37,7 +37,6 @@ import { listen } from "#elements/decorators/listen";
 import { showAPIErrorMessage } from "#elements/messages/MessageContainer";
 import { WithBrandConfig } from "#elements/mixins/branding";
 import { WithCapabilitiesConfig } from "#elements/mixins/capabilities";
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { WithLocale } from "#elements/mixins/locale";
 import { WithSession } from "#elements/mixins/session";
 import { Timestamp } from "#elements/table/shared";
@@ -69,8 +68,8 @@ import PFDisplay from "@patternfly/patternfly/utilities/Display/display.css";
 import PFSizing from "@patternfly/patternfly/utilities/Sizing/sizing.css";
 
 @customElement("ak-user-view")
-export class UserViewPage extends WithLicenseSummary(
-    WithLocale(WithBrandConfig(WithCapabilitiesConfig(WithSession(AKElement)))),
+export class UserViewPage extends WithLocale(
+    WithBrandConfig(WithCapabilitiesConfig(WithSession(AKElement))),
 ) {
     #api = new CoreApi(DEFAULT_CONFIG);
 

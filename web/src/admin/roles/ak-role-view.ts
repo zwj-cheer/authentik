@@ -1,7 +1,6 @@
 import "#admin/groups/RelatedGroupList";
 import "#admin/groups/RelatedUserList";
 import "#admin/rbac/ak-rbac-object-permission-page";
-import "#admin/lifecycle/ObjectLifecyclePage";
 import "#admin/events/ObjectChangelog";
 import "#admin/events/UserEvents";
 import "#elements/Tabs";
@@ -11,14 +10,13 @@ import { EVENT_REFRESH } from "#common/constants";
 
 import { AKElement } from "#elements/Base";
 import { modalInvoker } from "#elements/dialogs";
-import { WithLicenseSummary } from "#elements/mixins/license";
 
 import { setPageDetails } from "#components/ak-page-navbar";
 import { renderDescriptionList } from "#components/DescriptionList";
 
 import { RoleForm } from "#admin/roles/ak-role-form";
 
-import { ContentTypeEnum, ModelEnum, RbacApi, Role } from "@goauthentik/api";
+import { ModelEnum, RbacApi, Role } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
 import { css, html, nothing, PropertyValues } from "lit";
@@ -33,7 +31,7 @@ import PFGrid from "@patternfly/patternfly/layouts/Grid/grid.css";
 import PFDisplay from "@patternfly/patternfly/utilities/Display/display.css";
 
 @customElement("ak-role-view")
-export class RoleViewPage extends WithLicenseSummary(AKElement) {
+export class RoleViewPage extends AKElement {
     @property({ type: String })
     set roleId(id: string) {
         new RbacApi(DEFAULT_CONFIG)
@@ -146,17 +144,6 @@ export class RoleViewPage extends WithLicenseSummary(AKElement) {
                     model=${ModelEnum.AuthentikRbacRole}
                     objectPk=${this.targetRole.pk}
                 ></ak-rbac-object-permission-page>
-                ${this.hasEnterpriseLicense
-                    ? html`<ak-object-lifecycle-page
-                          role="tabpanel"
-                          tabindex="0"
-                          slot="page-lifecycle"
-                          id="page-lifecycle"
-                          aria-label="${msg("Lifecycle")}"
-                          model=${ContentTypeEnum.AuthentikRbacRole}
-                          object-pk=${this.targetRole.pk}
-                      ></ak-object-lifecycle-page>`
-                    : nothing}
             </ak-tabs>
         </main>`;
     }

@@ -34,7 +34,7 @@ export interface CapabilitiesMixin {
  * And then if you need to check on a capability:
  *
  * ```ts
- * if (this.can(CapabilitiesEnum.IsEnterprise)) { ... }
+ * if (this.can(CapabilitiesEnum.CanDebug)) { ... }
  * ```
  *
  *

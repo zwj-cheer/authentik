@@ -117,14 +117,14 @@ export class UserWriteStageForm extends BaseStageForm<UserWriteStage> {
                                     value: UserTypeEnum.Internal,
                                     default: true,
                                     description: html`${msg(
-                                        "Internal users might be users such as company employees, which will get access to the full Enterprise feature set.",
+                                        "Internal users might be users such as company employees.",
                                     )}`,
                                 },
                                 {
                                     label: msg("External"),
                                     value: UserTypeEnum.External,
                                     description: html`${msg(
-                                        "External users might be external consultants or B2C customers. These users don't get access to enterprise features.",
+                                        "External users might be external consultants or B2C customers.",
                                     )}`,
                                 },
                                 {

@@ -31,15 +31,13 @@ const DEFAULT_USER_TYPES: TypeCreate[] = [
         component: "ak-user-form",
         modelName: UserTypeEnum.Internal,
         name: msg("Internal User"),
-        description: msg("Company employees with access to the full enterprise feature set."),
+        description: msg("Company employees managed by this instance."),
     },
     {
         component: "ak-user-form",
         modelName: UserTypeEnum.External,
         name: msg("External User"),
-        description: msg(
-            "External consultants or B2C customers without access to enterprise features.",
-        ),
+        description: msg("External consultants or B2C customers."),
     },
     {
         component: "ak-user-service-account-form",

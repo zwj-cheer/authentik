@@ -1,6 +1,4 @@
-import "#admin/events/EventMap";
 import "#admin/events/EventVolumeChart";
-import "#admin/reports/ExportButton";
 import "#components/ak-event-info";
 import "#elements/Tabs";
 import "@patternfly/elements/pf-tooltip/pf-tooltip.js";
@@ -9,14 +7,13 @@ import { DEFAULT_CONFIG } from "#common/api/config";
 import { EventWithContext } from "#common/events";
 import { actionToLabel } from "#common/labels";
 
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { PaginatedResponse, TableColumn, Timestamp } from "#elements/table/Table";
 import { TablePage } from "#elements/table/TablePage";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { EventGeo, renderEventUser } from "#admin/events/utils";
 
-import { Event, EventsApi, EventsEventsExportCreateRequest } from "@goauthentik/api";
+import { Event, EventsApi } from "@goauthentik/api";
 
 import { msg } from "@lit/localize";
 import { css, CSSResult, html, TemplateResult } from "lit";
@@ -25,7 +22,7 @@ import { customElement, property } from "lit/decorators.js";
 import PFGrid from "@patternfly/patternfly/layouts/Grid/grid.css";
 
 @customElement("ak-event-list")
-export class EventListPage extends WithLicenseSummary(TablePage<Event>) {
+export class EventListPage extends TablePage<Event> {
     expandable = true;
     supportsQL = true;
 
@@ -66,29 +63,6 @@ export class EventListPage extends WithLicenseSummary(TablePage<Event>) {
     }
 
     renderSectionBefore(): TemplateResult {
-        if (this.hasEnterpriseLicense) {
-            return html`<div
-                class="pf-l-grid pf-m-gutter pf-c-page__main-section pf-m-no-padding-bottom"
-            >
-                <ak-events-volume-chart
-                    class="pf-l-grid__item pf-m-12-col pf-m-4-col-on-xl pf-m-4-col-on-2xl "
-                    .query=${{
-                        page: this.page,
-                        search: this.search,
-                    }}
-                    with-map
-                ></ak-events-volume-chart>
-                <ak-events-map
-                    class="pf-l-grid__item pf-m-12-col pf-m-8-col-on-xl pf-m-8-col-on-2xl "
-                    .events=${this.data}
-                    @select-event=${(ev: CustomEvent<{ eventId: string }>) => {
-                        this.search = `event_uuid = "${ev.detail.eventId}"`;
-                        this.page = 1;
-                        this.fetch();
-                    }}
-                ></ak-events-map>
-            </div>`;
-        }
         return html`<div class="pf-c-page__main-section pf-m-no-padding-bottom">
             <ak-events-volume-chart
                 .query=${{
@@ -120,15 +94,6 @@ export class EventListPage extends WithLicenseSummary(TablePage<Event>) {
         return html`<ak-event-info .event=${item as EventWithContext}></ak-event-info>`;
     }
 
-    protected renderToolbar(): TemplateResult {
-        return html`${super.renderToolbar()}
-            <ak-reports-export-button
-                .createExport=${(params: EventsEventsExportCreateRequest) => {
-                    return new EventsApi(DEFAULT_CONFIG).eventsEventsExportCreate(params);
-                }}
-                .exportParams=${() => this.defaultEndpointConfig()}
-            ></ak-reports-export-button>`;
-    }
 }
 
 declare global {

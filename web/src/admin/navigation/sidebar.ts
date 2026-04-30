@@ -20,16 +20,8 @@ export type SidebarEntry = [
     children?: SidebarEntry[],
 ];
 
-export function isEnterpriseSidebarEntry([, , attributes]: SidebarEntry): boolean {
-    if (Array.isArray(attributes)) {
-        return false;
-    }
-
-    return !!attributes?.enterprise;
-}
-
 export function isCommandVisibleSidebarEntry(entry: SidebarEntry): boolean {
-    return !isEnterpriseSidebarEntry(entry);
+    return !!entry;
 }
 
 /**
@@ -86,10 +78,7 @@ export const createAdminSidebarEntries = (): readonly SidebarEntry[] => [
     [null, msg("Events"), { icon: "fas fa-bell" }, [
         ["/events/log", msg("Logs"), [`^/events/log/(?<id>${UUID_REGEX})$`]],
         ["/events/rules", msg("Notification Rules")],
-        ["/events/transports", msg("Notification Transports")],
-        ["/events/lifecycle-rules", msg("Lifecycle Rules"), {enterprise:true}],
-        ["/events/lifecycle-reviews", msg("Reviews"), {enterprise:true}],
-        ["/events/exports", msg("Data Exports"), {enterprise:true}]]
+        ["/events/transports", msg("Notification Transports")]]
     ],
     [null, msg("Customization"), { icon: "fas fa-sliders-h" }, [
         ["/policy/policies", msg("Policies")],
@@ -119,10 +108,3 @@ export const createAdminSidebarEntries = (): readonly SidebarEntry[] => [
         ["/admin/settings", msg("Settings")]]
     ],
 ];
-
-// prettier-ignore
-export const createAdminSidebarEnterpriseEntries = (): readonly SidebarEntry[] => [
-    [null, msg("Enterprise"), { icon: "fas fa-building" }, [
-        ["/enterprise/licenses", msg("Licenses"), null]
-    ],
-]]

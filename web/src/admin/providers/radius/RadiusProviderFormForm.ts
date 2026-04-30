@@ -1,6 +1,5 @@
 import "#elements/ak-dual-select/ak-dual-select-dynamic-selected-provider";
 import "#components/ak-switch-input";
-import "#admin/common/ak-crypto-certificate-search";
 import "#admin/common/ak-flow-search/ak-branded-flow-search";
 import "#admin/common/ak-flow-search/ak-flow-search";
 import "#components/ak-hidden-text-input";
@@ -8,13 +7,10 @@ import "#components/ak-text-input";
 import "#elements/forms/FormGroup";
 import "#elements/forms/HorizontalFormElement";
 import "#elements/forms/SearchSelect/index";
-import "#elements/LicenseNotice";
 
 import { propertyMappingsProvider, propertyMappingsSelector } from "./RadiusProviderFormHelpers.js";
 
 import { ascii_letters, digits, randomString } from "#common/utils";
-
-import { ifPresent } from "#elements/utils/attributes";
 
 import {
     CurrentBrand,
@@ -108,17 +104,6 @@ export function renderForm({ provider, errors, brand }: RADIUSProviderFormProps)
                     help=${clientNetworksHelp}
                     input-hint="code"
                 ></ak-text-input>
-                <ak-form-element-horizontal label=${msg("Certificate")} name="certificate">
-                    <ak-crypto-certificate-search
-                        certificate=${ifPresent(provider?.certificate)}
-                    ></ak-crypto-certificate-search>
-                    <p class="pf-c-form__helper-text">
-                        ${msg(
-                            "Certificate used for EAP-TLS. Requires Mutual TLS Stage in authentication flow.",
-                        )}
-                    </p>
-                    <ak-license-notice></ak-license-notice>
-                </ak-form-element-horizontal>
                 <ak-form-element-horizontal
                     label=${msg("Property mappings")}
                     name="propertyMappings"

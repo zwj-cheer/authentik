@@ -1,12 +1,7 @@
 import "#elements/sidebar/Sidebar";
 import "#elements/sidebar/SidebarItem";
 
-import {
-    createAdminSidebarEntries,
-    isEnterpriseSidebarEntry,
-    renderSidebarItems,
-    SidebarEntry,
-} from "#admin/navigation/sidebar";
+import { createAdminSidebarEntries, renderSidebarItems } from "#admin/navigation/sidebar";
 
 import { AKElement } from "#elements/Base";
 import { Sidebar } from "#elements/sidebar/Sidebar";
@@ -32,25 +27,12 @@ export default metadata;
 
 type StoryTheme = "light" | "dark";
 
-function withoutEnterpriseEntries(entries: readonly SidebarEntry[]): SidebarEntry[] {
-    return entries
-        .filter((entry) => !isEnterpriseSidebarEntry(entry))
-        .map(
-            ([path, label, attributes, children]): SidebarEntry => [
-                path,
-                label,
-                attributes,
-                children ? withoutEnterpriseEntries(children) : undefined,
-            ],
-        );
-}
-
 @customElement("story-sidebar-frame")
 class StorySidebarFrame extends LitElement {
     @property({ attribute: "theme-mode" })
     public themeMode: StoryTheme = "light";
 
-    #entries = withoutEnterpriseEntries(createAdminSidebarEntries());
+    #entries = createAdminSidebarEntries();
 
     #syncTheme(): void {
         this.renderRoot

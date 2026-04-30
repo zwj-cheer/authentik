@@ -83,20 +83,8 @@
 <trans-unit id="s3e99ea082ca5ade9">
   <source>Failed to fetch</source>
 </trans-unit>
-<trans-unit id="s0b2ad58c3deaa8dd">
-  <source>FIPS Status</source>
-</trans-unit>
 <trans-unit id="s091d3d07b5b3076f">
   <source>OK</source>
-</trans-unit>
-<trans-unit id="s35f47dbd321aaf15">
-  <source>FIPS compliance: passing</source>
-</trans-unit>
-<trans-unit id="sc94578030c702562">
-  <source>Unverified</source>
-</trans-unit>
-<trans-unit id="s16749cce7c4c1589">
-  <source>FIPS compliance: unverified</source>
 </trans-unit>
 <trans-unit id="sa50a6326530d8a0d">
   <source>Show less</source>
@@ -381,7 +369,7 @@
   <source><x id="0" equiv-text="${this.label || &quot;&quot;}"/> table pagination</source>
 </trans-unit>
 <trans-unit id="s04c5a637328c9b67">
-  <source><x id="0" equiv-text="${startIndex}"/> - <x id="1" equiv-text="${endIndex}"/> of <x id="2" equiv-text="${pageCount}"/></source>
+  <source><x id="0" equiv-text="${pages.startIndex}"/> - <x id="1" equiv-text="${pages.endIndex}"/> of <x id="2" equiv-text="${pages.count}"/></source>
 </trans-unit>
 <trans-unit id="s6a89bb10338369b4">
   <source>Go to previous page</source>
@@ -1064,12 +1052,6 @@
 <trans-unit id="s6b1ed7507f26cb4a">
   <source>Failure result</source>
 </trans-unit>
-<trans-unit id="sfdfa5bb4ddd99d70">
-  <source>Enterprise only</source>
-</trans-unit>
-<trans-unit id="s5eba8fa19126f70a">
-  <source>Learn more about the enterprise license.</source>
-</trans-unit>
 <trans-unit id="s7181a5504472e856">
   <source>Apply changes</source>
 </trans-unit>
@@ -1619,9 +1601,6 @@
 <trans-unit id="s9e9316a6b0c16231">
   <source>Client Networks</source>
 </trans-unit>
-<trans-unit id="sd5746b2550ac4852">
-  <source>Certificate used for EAP-TLS. Requires Mutual TLS Stage in authentication flow.</source>
-</trans-unit>
 <trans-unit id="s2c8c6f89089b31d4">
   <source>Configure Radius Provider</source>
 </trans-unit>
@@ -1787,18 +1766,6 @@
 <trans-unit id="seb250c3885733522">
   <source>Token to authenticate with.</source>
 </trans-unit>
-<trans-unit id="scdafec223d3840e9">
-  <source>OAuth Source</source>
-</trans-unit>
-<trans-unit id="s2111b3384e12349c">
-  <source>Specify OAuth source used for authentication.</source>
-</trans-unit>
-<trans-unit id="s1876401267e31dd0">
-  <source>OAuth Parameters</source>
-</trans-unit>
-<trans-unit id="sc5ca1b55a5391535">
-  <source>Additional OAuth parameters, such as grant_type.</source>
-</trans-unit>
 <trans-unit id="sb21f33b039c86322">
   <source>SCIM base url, usually ends in /v2.</source>
 </trans-unit>
@@ -1810,12 +1777,6 @@
 </trans-unit>
 <trans-unit id="s24d7ac2fc280ca5e">
   <source>Authenticate SCIM requests using a static token.</source>
-</trans-unit>
-<trans-unit id="s0e1641692e0dac94">
-  <source>OAuth</source>
-</trans-unit>
-<trans-unit id="s1c34cb0a4cccc041">
-  <source>Authenticate SCIM requests using OAuth.</source>
 </trans-unit>
 <trans-unit id="s3483d693c72e412e">
   <source>Compatibility Mode</source>
@@ -2667,12 +2628,6 @@ doesn't pass when either or both of the selected options are equal or above the 
 </trans-unit>
 <trans-unit id="sec5cdfa358f9dbf7">
   <source>Warning: Adding the user to the selected group(s) will give them superuser permissions.</source>
-</trans-unit>
-<trans-unit id="sb3087c7347bed341">
-  <source>Company employees with access to the full enterprise feature set.</source>
-</trans-unit>
-<trans-unit id="sc7266f960c466de6">
-  <source>External consultants or B2C customers without access to enterprise features.</source>
 </trans-unit>
 <trans-unit id="sf4ad4d9f8a5c868b">
   <source>Machine-to-machine authentication or other automations.</source>
@@ -4146,7 +4101,7 @@ doesn't pass when either or both of the selected options are equal or above the 
   <source>User Search</source>
 </trans-unit>
 <trans-unit id="s3616cc78631f5893">
-  <source>Warning: You're about to delete the user you're logged in as (<x id="0" equiv-text="${shouldShowWarning.username}"/>). Proceed at your own risk.</source>
+  <source>Warning: You're about to delete the user you're logged in as (<x id="0" equiv-text="${item.username}"/>). Proceed at your own risk.</source>
 </trans-unit>
 <trans-unit id="s7c6c86d9a97ed706">
   <source>Show deactivated users</source>
@@ -5244,12 +5199,6 @@ doesn't pass when either or both of the selected options are equal or above the 
 <trans-unit id="s9193ef1a39a6c872">
   <source>Mark newly created users as inactive.</source>
 </trans-unit>
-<trans-unit id="scef2eb6a2bfe3110">
-  <source>Internal users might be users such as company employees, which will get access to the full Enterprise feature set.</source>
-</trans-unit>
-<trans-unit id="sf66389b04fcc219c">
-  <source>External users might be external consultants or B2C customers. These users don't get access to enterprise features.</source>
-</trans-unit>
 <trans-unit id="s77e8668a27dbc402">
   <source>Service accounts should be used for machine-to-machine authentication or other automations.</source>
 </trans-unit>
@@ -5431,13 +5380,13 @@ doesn't pass when either or both of the selected options are equal or above the 
   <source>Flow(s)</source>
 </trans-unit>
 <trans-unit id="s5d90aeadfcb34286">
-  <source>Execute "<x id="0" equiv-text="${item.name}"/>"</source>
+  <source>Execute "<x id="0" equiv-text="${itemName}"/>"</source>
 </trans-unit>
 <trans-unit id="sc4fdeccf14be5378">
   <source>Execute</source>
 </trans-unit>
 <trans-unit id="saa25eac2952d918d">
-  <source>Export "<x id="0" equiv-text="${item.name}"/>"</source>
+  <source>Export "<x id="0" equiv-text="${itemName}"/>"</source>
 </trans-unit>
 <trans-unit id="s293aa6a6446fb153">
   <source>Export</source>
@@ -5486,19 +5435,19 @@ doesn't pass when either or both of the selected options are equal or above the 
   <source>Execute flow</source>
 </trans-unit>
 <trans-unit id="s61e5043203e94d0a">
-  <source>Execute "<x id="0" equiv-text="${this.flow.name}"/>" normally</source>
+  <source>Execute "<x id="0" equiv-text="${flowName}"/>" normally</source>
 </trans-unit>
 <trans-unit id="s9ff3121d30f88d52">
   <source>Normal</source>
 </trans-unit>
 <trans-unit id="s02eb960c270a837e">
-  <source>Execute "<x id="0" equiv-text="${this.flow.name}"/>" as current user</source>
+  <source>Execute "<x id="0" equiv-text="${flowName}"/>" as current user</source>
 </trans-unit>
 <trans-unit id="saf579a36a54c92e1">
   <source>Current user</source>
 </trans-unit>
 <trans-unit id="sd149e44e50455923">
-  <source>Execute "<x id="0" equiv-text="${this.flow.name}"/>" with inspector</source>
+  <source>Execute "<x id="0" equiv-text="${flowName}"/>" with inspector</source>
 </trans-unit>
 <trans-unit id="s45c530a48bcf74ad">
   <source>Use inspector</source>
@@ -6017,98 +5966,8 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="sb8f855b49234b81b">
   <source>Apply</source>
 </trans-unit>
-<trans-unit id="s0e427111d750cc02">
-  <source>Successfully updated license.</source>
-</trans-unit>
-<trans-unit id="s06ae64e621f302eb">
-  <source>Successfully created license.</source>
-</trans-unit>
-<trans-unit id="s2905c425adae99bd">
-  <source>Install ID</source>
-</trans-unit>
-<trans-unit id="sb18ec434a8a3aafb">
-  <source>License key</source>
-</trans-unit>
-<trans-unit id="sd923f95605fed7b2">
-  <source>Expired</source>
-</trans-unit>
-<trans-unit id="s86959994f28077dc">
-  <source>Expiring soon</source>
-</trans-unit>
-<trans-unit id="sc60a5fba70bf5a53">
-  <source>Unlicensed</source>
-</trans-unit>
-<trans-unit id="s4f9880ce82953741">
-  <source>Read Only</source>
-</trans-unit>
-<trans-unit id="s4220dda46d622211">
-  <source>Valid</source>
-</trans-unit>
-<trans-unit id="sdc94711a2eb66a45">
-  <source>Current license status</source>
-</trans-unit>
-<trans-unit id="se10fb73c1f1039c5">
-  <source>Overall license status</source>
-</trans-unit>
-<trans-unit id="sc4804358f202968c">
-  <source>Internal user usage</source>
-</trans-unit>
-<trans-unit id="s087d6f07b52b30ec">
-  <source><x id="0" equiv-text="${internalUserPercentage &lt; Infinity ? internalUserPercentage : &quot;∞&quot;}"/>%</source>
-</trans-unit>
-<trans-unit id="sae72e1569d34fb02">
-  <source>External user usage</source>
-</trans-unit>
-<trans-unit id="s2e109263b73c12d5">
-  <source>Licenses</source>
-</trans-unit>
-<trans-unit id="s9ce7cc01fb9b5b53">
-  <source>Manage enterprise licenses</source>
-</trans-unit>
-<trans-unit id="sf9ebf11ac2645820">
-  <source>No licenses found.</source>
-</trans-unit>
-<trans-unit id="sd49099e9522635f4">
-  <source>License(s)</source>
-</trans-unit>
-<trans-unit id="sf58825457d61c429">
-  <source>Forecast internal users</source>
-</trans-unit>
-<trans-unit id="sde9a3f41977ec1f8">
-  <source>Estimated user count one year from now based on <x id="0" equiv-text="${internalUsers}"/> current internal users and <x id="1" equiv-text="${forecastedInternalUsers}"/> forecasted internal users.</source>
-</trans-unit>
-<trans-unit id="s531571491deb239a">
-  <source>Approximately</source>
-</trans-unit>
-<trans-unit id="s4557b6b9da258643">
-  <source>Forecast external users</source>
-</trans-unit>
-<trans-unit id="sf52479d6daa0a4a8">
-  <source>Estimated user count one year from now based on <x id="0" equiv-text="${externalUsers}"/> current external users and <x id="1" equiv-text="${forecastedExternalUsers}"/> forecasted external users.</source>
-</trans-unit>
-<trans-unit id="sd22bd01bdf28c548">
-  <source>Cumulative license expiry</source>
-</trans-unit>
-<trans-unit id="sc62e587718608e85">
-  <source>No expiry</source>
-</trans-unit>
-<trans-unit id="s0dd031b58ed4017c">
-  <source>Internal: <x id="0" equiv-text="${item.internalUsers}"/></source>
-</trans-unit>
-<trans-unit id="s57b07e524f8f5c2a">
-  <source>External: <x id="0" equiv-text="${item.externalUsers}"/></source>
-</trans-unit>
-<trans-unit id="s8c4bc6e515949112">
-  <source>Your Install ID</source>
-</trans-unit>
-<trans-unit id="sb2cbd06f8e25b47e">
-  <source>Go to Customer Portal</source>
-</trans-unit>
 <trans-unit id="s31f1afc1bfe1cb3a">
   <source>Learn more</source>
-</trans-unit>
-<trans-unit id="s6196153c4b0c1ea0">
-  <source>Install</source>
 </trans-unit>
 <trans-unit id="s1cdeecda0baf365e">
   <source>Release</source>
@@ -6133,9 +5992,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s3fbe63b7fcfe3e91">
   <source>OpenSSL</source>
-</trans-unit>
-<trans-unit id="s7be2df39f727faa2">
-  <source>Enterprise</source>
 </trans-unit>
 <trans-unit id="sd51d6a39208696cc">
   <source>Collapse <x id="0" equiv-text="${this.label}"/></source>
@@ -6176,27 +6032,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="s6b79e73ca77148a0">
   <source>Outpost Integrations</source>
 </trans-unit>
-<trans-unit id="s7df5b92a3f93544f">
-  <source>Warning: The current user count has exceeded the configured licenses.</source>
-</trans-unit>
-<trans-unit id="s9f4d6296b906d591">
-  <source>Warning: One or more license(s) have expired.</source>
-</trans-unit>
-<trans-unit id="s3b016caea59af3ef">
-  <source>Warning: One or more license(s) will expire within the next 2 weeks.</source>
-</trans-unit>
-<trans-unit id="sd8a5f7269b7ac7a3">
-  <source>Caution: This authentik instance has entered read-only mode due to expired/exceeded licenses.</source>
-</trans-unit>
-<trans-unit id="s0141f42936495787">
-  <source>Click here for more info.</source>
-</trans-unit>
-<trans-unit id="se8c58e65674b6847">
-  <source>This authentik instance uses a Trial license.</source>
-</trans-unit>
-<trans-unit id="s6ee52309e586eb18">
-  <source>This authentik instance uses a Non-production license.</source>
-</trans-unit>
 <trans-unit id="s1381314790b50b1f">
   <source>A newer version (<x id="0" equiv-text="${this.version.versionCurrent}"/>) of the UI is available.</source>
 </trans-unit>
@@ -6213,7 +6048,7 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>Close API drawer</source>
 </trans-unit>
 <trans-unit id="sfa991acd65f738bf">
-  <source>View details for <x id="0" equiv-text="${label}"/></source>
+  <source>View details for <x id="0" equiv-text="${displayName}"/></source>
 </trans-unit>
 <trans-unit id="s5bb4026da28b7914">
   <source>Mark as read</source>
@@ -6256,9 +6091,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sa4be93eb7f4e51e3">
   <source>Site links</source>
-</trans-unit>
-<trans-unit id="s6fe64b4625517333">
-  <source>Powered by authentik</source>
 </trans-unit>
 <trans-unit id="sd766cdc29b25ff95">
   <source>Authenticating with Apple...</source>
@@ -6795,9 +6627,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="saad01178f02a6a23">
   <source>file</source>
 </trans-unit>
-<trans-unit id="s69f800801812a5f0">
-  <source>files</source>
-</trans-unit>
 <trans-unit id="s96668830629e0dfc">
   <source>Upload</source>
 </trans-unit>
@@ -6878,9 +6707,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sc47f8ab6162bb2bb">
   <source>Outpost configuration</source>
-</trans-unit>
-<trans-unit id="s11a2ac9f2bd811d8">
-  <source>Delete Object Permission</source>
 </trans-unit>
 <trans-unit id="s78aa910bcb26034d">
   <source>Global and object permission</source>
@@ -6981,36 +6807,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="s696386b762cd516c">
   <source>When enabled, other flow tabs in a session will refresh upon a successful authentication.</source>
 </trans-unit>
-<trans-unit id="s1af2337b6d11d4c6">
-  <source>Data export ready</source>
-</trans-unit>
-<trans-unit id="sd0fcaa6952729a9a">
-  <source>Data Exports</source>
-</trans-unit>
-<trans-unit id="s1d1d961d6f3550e5">
-  <source>Manage past data exports.</source>
-</trans-unit>
-<trans-unit id="s8cddef7d8dac7f87">
-  <source>Data type</source>
-</trans-unit>
-<trans-unit id="s3783e647280eb968">
-  <source>Requested by</source>
-</trans-unit>
-<trans-unit id="s2d119c0d85bde088">
-  <source>Creation date</source>
-</trans-unit>
-<trans-unit id="s5033dab8c17f05f2">
-  <source>Completed</source>
-</trans-unit>
-<trans-unit id="s21c76a0f6cae7920">
-  <source>Row actions</source>
-</trans-unit>
-<trans-unit id="s97aa774d38013957">
-  <source>Data export(s)</source>
-</trans-unit>
-<trans-unit id="s694b2e2c53d2d85d">
-  <source>Query parameters</source>
-</trans-unit>
 <trans-unit id="s145aca905bbc68a4">
   <source>SAML metadata XML file to import provider settings from.</source>
 </trans-unit>
@@ -7080,11 +6876,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="s7642bf28cf8f476c">
   <source>Select a device access group to be added to upon enrollment.</source>
 </trans-unit>
-<trans-unit id="h30bbf18fbf87fa57">
-  <source>To create a data export, navigate to
-                            <x id="0" equiv-text="&lt;a href=&quot;#/identity/users&quot;&gt;"/>Directory &gt; Users<x id="1" equiv-text="&lt;/a&gt;"/> or to
-                            <x id="2" equiv-text="&lt;a href=&quot;#/events/log&quot;&gt;"/>Events &gt; Logs<x id="3" equiv-text="&lt;/a&gt;"/>.</source>
-</trans-unit>
 <trans-unit id="s54af3ec70642782c">
   <source>Choose the object permissions that you want the selected role to have on this object. These object permissions are in addition to any global permissions already within the role.</source>
 </trans-unit>
@@ -7102,27 +6893,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s284f44964466ef38">
   <source>The start for group ID numbers, this number is added to a number generated from the groups' ID to make sure that the numbers aren't too low for POSIX groups. Default is 4000 to prevent collisions with local groups.</source>
-</trans-unit>
-<trans-unit id="s01f8cd92a0204da2">
-  <source>Data exports are not available as storage for reports is not configured.</source>
-</trans-unit>
-<trans-unit id="s7afef158aada7389">
-  <source><x id="0" equiv-text="${this.brand.brandingTitle}"/> will collect all objects with the specified parameters:</source>
-</trans-unit>
-<trans-unit id="sa8d2689c8fdfea22">
-  <source>Successfully requested data export</source>
-</trans-unit>
-<trans-unit id="s7e2ef0e26e7f5e6f">
-  <source>Failed to export data</source>
-</trans-unit>
-<trans-unit id="sd69873a0783f8e39">
-  <source>Export data</source>
-</trans-unit>
-<trans-unit id="sbb99d4ec27fbb263">
-  <source>Finished</source>
-</trans-unit>
-<trans-unit id="s3ec4da71c1a62754">
-  <source>Queued</source>
 </trans-unit>
 <trans-unit id="sd32298bb7d36024d">
   <source>Configured file backend does not support file management.</source>
@@ -7291,12 +7061,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="sd0de938d9c37ad5f">
   <source>Use a Passkey or security key to prove your identity.</source>
 </trans-unit>
-<trans-unit id="s856c15d3387d1ac7">
-  <source>Include additional data in Audit logs</source>
-</trans-unit>
-<trans-unit id="sf432a1157155369f">
-  <source>When enabled, additional data about objects added/removed is saved in the audit log. May reduce performance in certain requests.</source>
-</trans-unit>
 <trans-unit id="s6173e24ed3ba956e">
   <source>Successfully updated Fleet connector.</source>
 </trans-unit>
@@ -7326,9 +7090,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="sfec0c302ab140e30">
   <source>Software</source>
-</trans-unit>
-<trans-unit id="sf4cea728c240ee6b">
-  <source>Paste your license key...</source>
 </trans-unit>
 <trans-unit id="s5f404525692ee652">
   <source>You can select from popular providers with preset configurations or choose a custom setup to specify your own endpoints and keys.</source>
@@ -7362,12 +7123,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="captcha.providers.recaptcha.api-key-source">
   <source>reCAPTCHA admin console</source>
-</trans-unit>
-<trans-unit id="captcha.providers.recaptcha-enterprise">
-  <source>Google reCAPTCHA Enterprise</source>
-</trans-unit>
-<trans-unit id="captcha.providers.recaptcha-enterprise.api-key-source">
-  <source>Google Cloud Console</source>
 </trans-unit>
 <trans-unit id="captcha.providers.hcaptcha">
   <source>hCaptcha</source>
@@ -7548,15 +7303,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="s92e22f9319fdb85d">
   <source>Configuration warning</source>
 </trans-unit>
-<trans-unit id="s304ca1e922bd3278">
-  <source>Lifecycle Rules</source>
-</trans-unit>
-<trans-unit id="scd223a9aac742fcf">
-  <source>Lifecycle</source>
-</trans-unit>
-<trans-unit id="sa9ebf2b039449d6c">
-  <source>Object Lifecycle Management is in preview.</source>
-</trans-unit>
 <trans-unit id="s2b858c5186f8f2fd">
   <source>Select a group...</source>
 </trans-unit>
@@ -7569,147 +7315,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="s69e44328a5b45aa2">
   <source>Rule Name</source>
 </trans-unit>
-<trans-unit id="se319064a2f20deba">
-  <source>Type a name for this lifecycle rule...</source>
-</trans-unit>
-<trans-unit id="sb46d3613edb66558">
-  <source>Interval</source>
-</trans-unit>
-<trans-unit id="s19feda58eae87c66">
-  <source>The interval between opening new reviews for matching objects.</source>
-</trans-unit>
-<trans-unit id="s760c656016171d08">
-  <source>Grace period</source>
-</trans-unit>
-<trans-unit id="s48a53c24fbbc8444">
-  <source>The duration of time before an open review is considered overdue.</source>
-</trans-unit>
-<trans-unit id="s1b5d2f91633b74d6">
-  <source>Reviewer groups</source>
-</trans-unit>
-<trans-unit id="s94c5d9fea467cdbb">
-  <source>Min reviewers</source>
-</trans-unit>
-<trans-unit id="s693370c05900a1c6">
-  <source>Number of users from the selected reviewer groups that must approve the review.</source>
-</trans-unit>
-<trans-unit id="s20c950d20c8aec84">
-  <source>Min reviewers is per-group</source>
-</trans-unit>
-<trans-unit id="s74906f78877111cb">
-  <source>Reviewers</source>
-</trans-unit>
-<trans-unit id="sb42871a38d8b61ee">
-  <source>Object type</source>
-</trans-unit>
-<trans-unit id="sd530d226f68ec351">
-  <source>When set, the rule will apply to the selected individual object. Otherwise, the rule applies to all objects of the selected type.</source>
-</trans-unit>
-<trans-unit id="sea85769d2d8f3ea8">
-  <source>Available Users</source>
-</trans-unit>
-<trans-unit id="s6251a3b1bbd7b124">
-  <source>Selected Users</source>
-</trans-unit>
-<trans-unit id="s3899116cda378dcb">
-  <source>A review will require approval from each of the users selected here in addition to group members as per above settings.</source>
-</trans-unit>
-<trans-unit id="s56511df6b44ad5cc">
-  <source>Notification transports</source>
-</trans-unit>
-<trans-unit id="s6273aa020677fe75">
-  <source>Select which transports should be used to notify the user.</source>
-</trans-unit>
-<trans-unit id="s78e31a199ca08cd9">
-  <source>Object Lifecycle Rules</source>
-</trans-unit>
-<trans-unit id="s24cc4e5aa6446401">
-  <source>Schedule periodic reviews for objects in authentik.</source>
-</trans-unit>
-<trans-unit id="s468f705986fff045">
-  <source>Lifecycle rule(s)</source>
-</trans-unit>
-<trans-unit id="s9279704dfc98cdf9">
-  <source>No reviews yet.</source>
-</trans-unit>
-<trans-unit id="s08400d94769ba771">
-  <source>Reviewed on</source>
-</trans-unit>
-<trans-unit id="sb89da38bc0c0b3fa">
-  <source>Reviewer</source>
-</trans-unit>
-<trans-unit id="s6686fcc6d2c8f0bd">
-  <source>Note</source>
-</trans-unit>
-<trans-unit id="s5754eb43287dd6e5">
-  <source>No review iteration found for this object.</source>
-</trans-unit>
-<trans-unit id="s68ea8ed25680242f">
-  <source>At least <x id="0" equiv-text="${minReviewers}"/> user from this group: <x id="1" equiv-text="${groupList}"/>.</source>
-</trans-unit>
-<trans-unit id="sd9e03fcf99724085">
-  <source>At least <x id="0" equiv-text="${minReviewers}"/> user from these groups: <x id="1" equiv-text="${groupList}"/>.</source>
-</trans-unit>
-<trans-unit id="sbbaa87f8826a0756">
-  <source>At least <x id="0" equiv-text="${minReviewers}"/> users from this group: <x id="1" equiv-text="${groupList}"/>.</source>
-</trans-unit>
-<trans-unit id="s79ef398b6e3e2c44">
-  <source>At least <x id="0" equiv-text="${minReviewers}"/> users from these groups: <x id="1" equiv-text="${groupList}"/>.</source>
-</trans-unit>
-<trans-unit id="s33d20c1a2e0bf773">
-  <source>Review opened on</source>
-</trans-unit>
-<trans-unit id="s5e053bb69bf930b7">
-  <source>Grace period till</source>
-</trans-unit>
-<trans-unit id="s310b639f39d731b0">
-  <source>Next review date</source>
-</trans-unit>
-<trans-unit id="s3daaf5e7f16e2c52">
-  <source>Latest review for this object</source>
-</trans-unit>
-<trans-unit id="s3be348f8aeeb6a64">
-  <source>Review state</source>
-</trans-unit>
-<trans-unit id="s30c9ff051aa083b0">
-  <source>Required reviewers</source>
-</trans-unit>
-<trans-unit id="s7f3437809d931336">
-  <source>Reviews</source>
-</trans-unit>
-<trans-unit id="sc33f0df01dc32300">
-  <source>Review Notes</source>
-</trans-unit>
-<trans-unit id="s86316abdd9054708">
-  <source>Type optional notes to include in this review...</source>
-</trans-unit>
-<trans-unit id="s2430fb91fa928ae0">
-  <source>Open Reviews</source>
-</trans-unit>
-<trans-unit id="s35d1f3a355ed1084">
-  <source>See all currently open reviews.</source>
-</trans-unit>
-<trans-unit id="s71230441c759c9b1">
-  <source>Only show reviews where I am a reviewer</source>
-</trans-unit>
-<trans-unit id="sce6a3502c71baa60">
-  <source>Opened</source>
-</trans-unit>
-<trans-unit id="sea8d30456c79058a">
-  <source>Grace period ends</source>
-</trans-unit>
-<trans-unit id="se6203ef69ff63548">
-  <source>Pending review</source>
-</trans-unit>
-<trans-unit id="sb89d8d8bc0c08e98">
-  <source>Reviewed</source>
-</trans-unit>
-<trans-unit id="sc68080ce046320cb">
-  <source>Overdue</source>
-</trans-unit>
-<trans-unit id="sa30c4d3b566b6b1a">
-  <source>Canceled</source>
-</trans-unit>
 <trans-unit id="s804ab712b1add3d3">
   <source>An unknown error occurred while submitting the form.</source>
 </trans-unit>
@@ -7721,23 +7326,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="saa088a2d0f90d5a9">
   <source>Posting logout response to SAML provider: <x id="0" equiv-text="${providerName}"/></source>
-</trans-unit>
-<trans-unit id="h903c2b1c21bb9fc7">
-  <source>If checked, approving a review will require at least that many users from
-                        <x id="0" equiv-text="&lt;em&gt;"/>each<x id="1" equiv-text="&lt;/em&gt;"/> of the selected groups. When disabled, the value is a total
-                        across all groups.</source>
-</trans-unit>
-<trans-unit id="s776d93092ad9ce90">
-  <source>Review initiated</source>
-</trans-unit>
-<trans-unit id="sad46bcad1a343b51">
-  <source>Review overdue</source>
-</trans-unit>
-<trans-unit id="s59d168d966cecbaf">
-  <source>Review attested</source>
-</trans-unit>
-<trans-unit id="s5158b7f014cecefc">
-  <source>Review completed</source>
 </trans-unit>
 <trans-unit id="s9a2a2fda9cfa1ddc">
   <source>Copy Link</source>
@@ -7936,9 +7524,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s5d2f015311362871">
   <source>New Service Account...</source>
-</trans-unit>
-<trans-unit id="s001ec7d4c24a3bdb">
-  <source>Start Export</source>
 </trans-unit>
 <trans-unit id="sb6f2cee2b9e63d7c">
   <source>Assign Additional Roles</source>
@@ -8327,15 +7912,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 <trans-unit id="s672828ee2d469660">
   <source>Search devices by name, OS, or group...</source>
 </trans-unit>
-<trans-unit id="s6206abae11837d59">
-  <source>Enterprise License</source>
-</trans-unit>
-<trans-unit id="s14d2e2c7c26dae5e">
-  <source>Enterprise Licenses</source>
-</trans-unit>
-<trans-unit id="s80966d6e3357ecac">
-  <source>Search for a license by name...</source>
-</trans-unit>
 <trans-unit id="sa1c74b747fb31ef4">
   <source>Notification Rule</source>
 </trans-unit>
@@ -8386,15 +7962,6 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s7890253cbc3a0f11">
   <source>Select one or more users to assign...</source>
-</trans-unit>
-<trans-unit id="sd436da52569717db">
-  <source>Lifecycle Rule</source>
-</trans-unit>
-<trans-unit id="s6e89acb429653073">
-  <source>Search for a lifecycle rule by name or target...</source>
-</trans-unit>
-<trans-unit id="sb5ff45c4476cd097">
-  <source>Search tasks...</source>
 </trans-unit>
 <trans-unit id="sfc53e352afbca881">
   <source>Review</source>
@@ -8664,7 +8231,7 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>e.g. my-slug</source>
 </trans-unit>
 <trans-unit id="form.create-submit">
-  <source>Create <x id="0" equiv-text="${verboseName}"/></source>
+  <source>Create <x id="0" equiv-text="${noun}"/></source>
 </trans-unit>
 <trans-unit id="form.create-submit-no-entity">
   <source>Create</source>
@@ -8964,6 +8531,201 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s0badc06d15e782af">
   <source>Search by task ID, name, queue, or status...</source>
+</trans-unit>
+<trans-unit id="sdb2bf46270cfda6c">
+  <source>Breadcrumb</source>
+</trans-unit>
+<trans-unit id="s579a5368230cd3fa">
+  <source>Welcome to authentik!</source>
+</trans-unit>
+<trans-unit id="s846172d0876cc2a8">
+  <source>Welcome to authentik! Please choose a username.</source>
+</trans-unit>
+<trans-unit id="s99ada7cfffc5d29e">
+  <source>Authorize Application</source>
+</trans-unit>
+<trans-unit id="sbd602ee1e1cb1ea3">
+  <source>Logged out</source>
+</trans-unit>
+<trans-unit id="sdb540b480bc9172d">
+  <source>Pre-authentication</source>
+</trans-unit>
+<trans-unit id="s5a62028b905e345f">
+  <source>Default initial setup</source>
+</trans-unit>
+<trans-unit id="s9bdc942b13d6612c">
+  <source>Default static OTP setup</source>
+</trans-unit>
+<trans-unit id="s942b997882a9c12a">
+  <source>Default TOTP setup</source>
+</trans-unit>
+<trans-unit id="s84d7c70afc7dbf51">
+  <source>Default WebAuthn setup</source>
+</trans-unit>
+<trans-unit id="s9763b15cf0c9dba8">
+  <source>Redirecting to %(app)s</source>
+</trans-unit>
+<trans-unit id="sd73bb9edc0d9df55">
+  <source>You have logged out of %(app)s.</source>
+</trans-unit>
+<trans-unit id="s5ee230825fcdb3d5">
+  <source>Update your info</source>
+</trans-unit>
+<trans-unit id="s8817b94abc599e9b">
+  <source>Configure static OTP token</source>
+</trans-unit>
+<trans-unit id="sff45c20bc6ba76dd">
+  <source>Configure two-factor authentication</source>
+</trans-unit>
+<trans-unit id="s77149c42b6d94e03">
+  <source>Configure WebAuthn</source>
+</trans-unit>
+<trans-unit id="outpost.form.headline.edit">
+  <source>Edit access node</source>
+</trans-unit>
+<trans-unit id="outpost.form.headline.create">
+  <source>Create access node</source>
+</trans-unit>
+<trans-unit id="outpost.embedded.name">
+  <source>authentik built-in access node</source>
+</trans-unit>
+<trans-unit id="sbaeca564db29e3d2">
+  <source>Default authentication identification stage</source>
+</trans-unit>
+<trans-unit id="sfb6c400fbcb420ed">
+  <source>Default authentication password stage</source>
+</trans-unit>
+<trans-unit id="sb1bea0d9176ee999">
+  <source>Default authentication MFA validation stage</source>
+</trans-unit>
+<trans-unit id="s8fbf58cbc231ab25">
+  <source>Default authentication login stage</source>
+</trans-unit>
+<trans-unit id="sce5eb5931bcbdd34">
+  <source>Default static authenticator setup stage</source>
+</trans-unit>
+<trans-unit id="sf8f604c15f73b6ef">
+  <source>Default TOTP authenticator setup stage</source>
+</trans-unit>
+<trans-unit id="s625f0c46f3abba90">
+  <source>Default WebAuthn authenticator setup stage</source>
+</trans-unit>
+<trans-unit id="s696df46ffe2115a6">
+  <source>Default invalidation logout stage</source>
+</trans-unit>
+<trans-unit id="s0325b063f7ee7393">
+  <source>Default password change prompt stage</source>
+</trans-unit>
+<trans-unit id="s5d8758c8114225f8">
+  <source>Default password change write stage</source>
+</trans-unit>
+<trans-unit id="s08a187962f63abf2">
+  <source>Default provider authorization consent stage</source>
+</trans-unit>
+<trans-unit id="s42162a912758ff2c">
+  <source>Default source authentication SSO check stage</source>
+</trans-unit>
+<trans-unit id="s648d9a95fcdf8d5e">
+  <source>Default source authentication login stage</source>
+</trans-unit>
+<trans-unit id="s5970c1d9f35e3ca5">
+  <source>Default source enrollment username check stage</source>
+</trans-unit>
+<trans-unit id="s1846aa4e60664cb0">
+  <source>Default source enrollment SSO check stage</source>
+</trans-unit>
+<trans-unit id="sef23cb08fd83e0c2">
+  <source>Default source enrollment login stage</source>
+</trans-unit>
+<trans-unit id="s0f784cca30d4b013">
+  <source>Default source enrollment prompt stage</source>
+</trans-unit>
+<trans-unit id="s45869d1d0c17b778">
+  <source>Default source enrollment write stage</source>
+</trans-unit>
+<trans-unit id="s3e42811c11a12d1a">
+  <source>Default user settings prompt stage</source>
+</trans-unit>
+<trans-unit id="s56f79eef8058c307">
+  <source>Default user settings write stage</source>
+</trans-unit>
+<trans-unit id="s585f2c940b3cd5c1">
+  <source>Default initial setup prompt stage</source>
+</trans-unit>
+<trans-unit id="s57801352b6bd5a9f">
+  <source>Default source enrollment username field</source>
+</trans-unit>
+<trans-unit id="s6bac44f3f1cda05a">
+  <source>Default user settings username field</source>
+</trans-unit>
+<trans-unit id="seb6dd74c5bb691c9">
+  <source>Default user settings name field</source>
+</trans-unit>
+<trans-unit id="sd6f5ae1a5536a69a">
+  <source>Default user settings email field</source>
+</trans-unit>
+<trans-unit id="s978d9f7fecb40aa1">
+  <source>Default authentik user settings locale field</source>
+</trans-unit>
+<trans-unit id="s9cbf9a9995ddd10e">
+  <source>Default password change password field</source>
+</trans-unit>
+<trans-unit id="secb8df62b20fc251">
+  <source>Default password change password repeat field</source>
+</trans-unit>
+<trans-unit id="s9a18b89c0c02c0c4">
+  <source>Default initial setup header field</source>
+</trans-unit>
+<trans-unit id="sc446cffa0c0bcbaf">
+  <source>Default initial setup email field</source>
+</trans-unit>
+<trans-unit id="s26b94f2a57fc051c">
+  <source>Default initial setup password field</source>
+</trans-unit>
+<trans-unit id="se9d0e131079754ff">
+  <source>Default initial setup password repeat field</source>
+</trans-unit>
+<trans-unit id="s5386dae4609f411c">
+  <source>Allow Show Password</source>
+</trans-unit>
+<trans-unit id="s49e763aed00877a8">
+  <source>Main</source>
+</trans-unit>
+<trans-unit id="sb0e27ff0ee16bbf6">
+  <source>Search and filter</source>
+</trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+</trans-unit>
+<trans-unit id="s337a1e9022a8d19f">
+  <source>Table</source>
+</trans-unit>
+<trans-unit id="s6e49c910704149ad">
+  <source><x id="0" equiv-text="${startIndex}"/>-<x id="1" equiv-text="${endIndex}"/> of <x id="2" equiv-text="${pageCount}"/></source>
+</trans-unit>
+<trans-unit id="s5697808ce744d508">
+  <source>Current page, page <x id="0" equiv-text="${currentPage}"/></source>
+</trans-unit>
+<trans-unit id="login.identifier.username">
+  <source>Username</source>
+</trans-unit>
+<trans-unit id="login.identifier.email">
+  <source>Email</source>
+</trans-unit>
+<trans-unit id="login.identifier.upn">
+  <source>UPN</source>
+</trans-unit>
+<trans-unit id="sb817dd93e0cc3e87">
+  <source>Internal users might be users such as company employees.</source>
+</trans-unit>
+<trans-unit id="sab28f4e65a678a3a">
+  <source>External users might be external consultants or B2C customers.</source>
+</trans-unit>
+<trans-unit id="sfc06bb9e09a266a0">
+  <source>Company employees managed by this instance.</source>
+</trans-unit>
+<trans-unit id="s8597552c7fccbc29">
+  <source>External consultants or B2C customers.</source>
 </trans-unit>
 </body>
 </file>

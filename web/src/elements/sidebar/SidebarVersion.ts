@@ -3,12 +3,9 @@ import { DefaultBrand } from "#common/ui/config";
 
 import { AKElement } from "#elements/Base";
 import { globalBrandingMessage } from "#elements/mixins/branding";
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { WithVersion } from "#elements/mixins/version";
 
 import { AboutModal } from "#admin/ak-about-modal";
-
-import { LicenseSummaryStatusEnum } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
 import { css, CSSResult, html, nothing } from "lit";
@@ -19,7 +16,7 @@ import PFButton from "@patternfly/patternfly/components/Button/button.css";
 import PFNav from "@patternfly/patternfly/components/Nav/nav.css";
 
 @customElement("ak-sidebar-version")
-export class SidebarVersion extends WithLicenseSummary(WithVersion(AKElement)) {
+export class SidebarVersion extends WithVersion(AKElement) {
     static styles: CSSResult[] = [
         PFNav,
         PFAvatar,
@@ -44,14 +41,10 @@ export class SidebarVersion extends WithLicenseSummary(WithVersion(AKElement)) {
     ];
 
     render() {
-        if (!this.version || !this.licenseSummary) {
+        if (!this.version) {
             return nothing;
         }
         let product = globalAK().brand.brandingTitle || DefaultBrand.brandingTitle;
-        if (this.licenseSummary.status !== LicenseSummaryStatusEnum.Unlicensed) {
-            product += ` ${msg("Enterprise")}`;
-        }
-
         return html`
             <footer aria-label=${globalBrandingMessage(msg("authentik information"))}>
                 <button

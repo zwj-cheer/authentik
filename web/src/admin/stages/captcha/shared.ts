@@ -5,7 +5,6 @@ import { msg } from "@lit/localize";
 export const CaptchaProviderKeys = [
     "recaptcha_v2",
     "recaptcha_v3",
-    "recaptcha_enterprise",
     "hcaptcha",
     "turnstile",
     "custom",
@@ -60,22 +59,6 @@ export const CAPTCHA_PROVIDERS = {
                 id: "captcha.providers.recaptcha.api-key-source",
             }),
         keyURL: "https://www.google.com/recaptcha/admin",
-    },
-    recaptcha_enterprise: {
-        formatDisplayName: () =>
-            msg("Google reCAPTCHA Enterprise", {
-                id: "captcha.providers.recaptcha-enterprise",
-            }),
-        jsUrl: "https://www.recaptcha.net/recaptcha/enterprise.js",
-        apiUrl: "https://www.recaptcha.net/recaptcha/api/siteverify",
-        interactive: false,
-        supportsScore: true,
-        score: { min: 0.5, max: 1.0 },
-        formatAPISource: () =>
-            msg("Google Cloud Console", {
-                id: "captcha.providers.recaptcha-enterprise.api-key-source",
-            }),
-        keyURL: "https://cloud.google.com/recaptcha-enterprise",
     },
     hcaptcha: {
         formatDisplayName: () =>

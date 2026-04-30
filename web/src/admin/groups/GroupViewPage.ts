@@ -2,7 +2,6 @@ import "#admin/groups/RelatedUserList";
 import "#admin/rbac/ak-rbac-object-permission-page";
 import "#admin/roles/ak-related-role-table";
 import "#components/ak-object-attributes-card";
-import "#admin/lifecycle/ObjectLifecyclePage";
 import "#components/ak-status-label";
 import "#admin/events/ObjectChangelog";
 import "#elements/CodeMirror";
@@ -16,7 +15,6 @@ import { EVENT_REFRESH } from "#common/constants";
 
 import { AKElement } from "#elements/Base";
 import { modalInvoker } from "#elements/dialogs";
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { SlottedTemplateResult } from "#elements/types";
 
 import { setPageDetails } from "#components/ak-page-navbar";
@@ -24,7 +22,7 @@ import renderDescriptionList from "#components/DescriptionList";
 
 import { GroupForm } from "#admin/groups/ak-group-form";
 
-import { ContentTypeEnum, CoreApi, Group, ModelEnum } from "@goauthentik/api";
+import { CoreApi, Group, ModelEnum } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
 import { CSSResult, html, nothing, PropertyValues, TemplateResult } from "lit";
@@ -41,7 +39,7 @@ import PFDisplay from "@patternfly/patternfly/utilities/Display/display.css";
 import PFSizing from "@patternfly/patternfly/utilities/Sizing/sizing.css";
 
 @customElement("ak-group-view")
-export class GroupViewPage extends WithLicenseSummary(AKElement) {
+export class GroupViewPage extends AKElement {
     @property({ type: String })
     set groupId(id: string) {
         new CoreApi(DEFAULT_CONFIG)
@@ -228,17 +226,6 @@ export class GroupViewPage extends WithLicenseSummary(AKElement) {
                     model=${ModelEnum.AuthentikCoreGroup}
                     objectPk=${this.group.pk}
                 ></ak-rbac-object-permission-page>
-                ${this.hasEnterpriseLicense
-                    ? html`<ak-object-lifecycle-page
-                          role="tabpanel"
-                          tabindex="0"
-                          slot="page-lifecycle"
-                          id="page-lifecycle"
-                          aria-label="${msg("Lifecycle")}"
-                          model=${ContentTypeEnum.AuthentikCoreGroup}
-                          object-pk=${this.group.pk}
-                      ></ak-object-lifecycle-page>`
-                    : nothing}
             </ak-tabs>
         </main>`;
     }

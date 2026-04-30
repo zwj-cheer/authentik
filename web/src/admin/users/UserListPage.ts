@@ -1,4 +1,3 @@
-import "#admin/reports/ExportButton";
 import "#admin/users/UserActiveForm";
 import "#admin/users/ak-user-wizard";
 import "#admin/users/UserBulkRevokeSessionsForm";
@@ -34,7 +33,7 @@ import { ToggleUserActivationButton } from "#admin/users/UserActiveForm";
 import { UserForm } from "#admin/users/UserForm";
 import { UserImpersonateForm } from "#admin/users/UserImpersonateForm";
 
-import { CoreApi, CoreUsersExportCreateRequest, User, UserPath } from "@goauthentik/api";
+import { CoreApi, User, UserPath } from "@goauthentik/api";
 
 import { msg, str } from "@lit/localize";
 import { css, CSSResult, html, nothing, TemplateResult } from "lit";
@@ -328,18 +327,6 @@ export class UserListPage extends WithBrandConfig(
         </dl>`;
     }
 
-    protected buildExportParams = async () => {
-        return {
-            ...(await this.defaultEndpointConfig()),
-            pathStartswith: this.activePath,
-            isActive: this.hideDeactivated ? true : undefined,
-        };
-    };
-
-    protected createExport = (params: CoreUsersExportCreateRequest) => {
-        return this.#api.coreUsersExportCreate(params);
-    };
-
     protected renderObjectCreate(): SlottedTemplateResult {
         const { activePath } = this;
 
@@ -355,10 +342,6 @@ export class UserListPage extends WithBrandConfig(
                 >
                     ${msg("New User")}
                 </button> `,
-                html`<ak-reports-export-button
-                    .createExport=${this.createExport}
-                    .exportParams=${this.buildExportParams}
-                ></ak-reports-export-button> `,
             ];
         });
     }

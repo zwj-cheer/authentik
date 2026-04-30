@@ -1,5 +1,4 @@
 import "#admin/stages/register";
-import "#elements/LicenseNotice";
 import "#elements/wizard/FormWizardPage";
 import "#elements/wizard/TypeCreateWizardPage";
 import "#elements/wizard/Wizard";

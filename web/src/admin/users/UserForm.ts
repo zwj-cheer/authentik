@@ -28,16 +28,12 @@ const UserTypeOptions: readonly RadioOption<UserTypeEnum>[] = [
         label: msg("Internal"),
         value: UserTypeEnum.Internal,
         default: true,
-        description: html`${msg(
-            "Company employees with access to the full enterprise feature set.",
-        )}`,
+        description: html`${msg("Company employees managed by this instance.")}`,
     },
     {
         label: msg("External"),
         value: UserTypeEnum.External,
-        description: html`${msg(
-            "External consultants or B2C customers without access to enterprise features.",
-        )}`,
+        description: html`${msg("External consultants or B2C customers.")}`,
     },
     {
         label: msg("Service account"),

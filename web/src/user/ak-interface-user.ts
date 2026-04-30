@@ -1,5 +1,4 @@
 import "#components/ak-nav-buttons";
-import "#elements/banner/EnterpriseStatusBanner";
 import "#elements/notifications/APIDrawer";
 import "#elements/notifications/NotificationDrawer";
 import "#elements/router/RouterOutlet";
@@ -131,8 +130,7 @@ class UserInterface extends WithBrandConfig(WithSession(AuthenticatedInterface))
 
         const backgroundStyles = this.uiConfig.theme.background;
 
-        return html`<ak-enterprise-status interface="user"></ak-enterprise-status>
-            <div part="page" class="pf-c-page">
+        return html`<div part="page" class="pf-c-page">
                 <div part="background-wrapper" style=${ifPresent(backgroundStyles)}>
                     ${!backgroundStyles
                         ? html`<div part="background-default-slant"></div>`
@@ -140,7 +138,7 @@ class UserInterface extends WithBrandConfig(WithSession(AuthenticatedInterface))
                 </div>
                 <header
                     role="banner"
-                    aria-label="Main"
+                    aria-label=${msg("Main")}
                     part="page__header"
                     class="pf-c-page__header"
                 >

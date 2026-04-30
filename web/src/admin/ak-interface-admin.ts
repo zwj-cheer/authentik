@@ -1,4 +1,3 @@
-import "#elements/banner/EnterpriseStatusBanner";
 import "#elements/banner/VersionBanner";
 import "#elements/notifications/APIDrawer";
 import "#elements/notifications/NotificationDrawer";
@@ -9,11 +8,9 @@ import "#elements/commands/ak-command-palette";
 import "#elements/commands/ak-command-palette-user-modal";
 
 import {
-    createAdminSidebarEnterpriseEntries,
     createAdminSidebarEntries,
     findSidebarBreadcrumbs,
     isCommandVisibleSidebarEntry,
-    isEnterpriseSidebarEntry,
     renderSidebarItems,
     SidebarBreadcrumb,
     SidebarEntry,
@@ -50,8 +47,6 @@ import { setPageDetails } from "#components/ak-page-navbar";
 
 import Styles from "#admin/ak-interface-admin.css";
 import { ROUTES } from "#admin/Routes";
-
-import { CapabilitiesEnum } from "@goauthentik/api";
 
 import { LOCALE_STATUS_EVENT, LocaleStatusEventDetail, msg } from "@lit/localize";
 import { CSSResult, html, nothing, PropertyValues, TemplateResult } from "lit";
@@ -156,10 +151,7 @@ export class AdminInterface extends WithCapabilitiesConfig(
     #refreshCommandsFrameID = -1;
 
     #isCommandVisibleSidebarEntry = (entry: SidebarEntry) => {
-        return (
-            isCommandVisibleSidebarEntry(entry) ||
-            (isEnterpriseSidebarEntry(entry) && this.can(CapabilitiesEnum.IsEnterprise))
-        );
+        return isCommandVisibleSidebarEntry(entry);
     };
 
     #refreshCommands = () => {
@@ -292,14 +284,10 @@ export class AdminInterface extends WithCapabilitiesConfig(
 
                     ${this.renderCommandPaletteButton()}
                     <ak-version-banner></ak-version-banner>
-                    <ak-enterprise-status interface="admin"></ak-enterprise-status>
                 </ak-page-navbar>
 
                 <ak-sidebar ?hidden=${!this.sidebarOpen} class="${classMap(sidebarClasses)}"
                     >${renderSidebarItems(this.entries)}
-                    ${this.can(CapabilitiesEnum.IsEnterprise)
-                        ? renderSidebarItems(createAdminSidebarEnterpriseEntries())
-                        : nothing}
                 </ak-sidebar>
 
                 <div class="pf-c-page__drawer">
@@ -349,10 +337,7 @@ export class AdminInterface extends WithCapabilitiesConfig(
     }
 
     protected renderBreadcrumbs(): SlottedTemplateResult {
-        const breadcrumbs = findSidebarBreadcrumbs(this.activeRoute, [
-            ...this.entries,
-            ...createAdminSidebarEnterpriseEntries(),
-        ]);
+        const breadcrumbs = findSidebarBreadcrumbs(this.activeRoute, this.entries);
 
         if (breadcrumbs.length === 0) {
             return nothing;

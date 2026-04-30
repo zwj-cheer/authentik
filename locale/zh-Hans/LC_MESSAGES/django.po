@@ -341,11 +341,11 @@ msgstr "禁用超级用户状态"
 
 #: authentik/core/models.py
 msgid "Group Parentage Node"
-msgstr ""
+msgstr "组层级节点"
 
 #: authentik/core/models.py
 msgid "Group Parentage Nodes"
-msgstr ""
+msgstr "组层级节点"
 
 #: authentik/core/models.py
 msgid "User's display name."
@@ -797,7 +797,7 @@ msgstr "端点阶段"
 
 #: authentik/endpoints/tasks.py
 msgid "Sync endpoints."
-msgstr ""
+msgstr "同步端点。"
 
 #: authentik/enterprise/api.py
 msgid "Enterprise is required to create/update this object."
@@ -805,7 +805,7 @@ msgstr "创建/更新此对象需要企业版。"
 
 #: authentik/enterprise/api.py
 msgid "Enterprise is required to use this endpoint."
-msgstr "企业要求使用这个端点。"
+msgstr "使用此端点需要企业版。"
 
 #: authentik/enterprise/endpoints/connectors/fleet/models.py
 #: authentik/events/models.py
@@ -816,83 +816,83 @@ msgstr "配置要发送的额外标头。映射应该返回键值对字典。"
 
 #: authentik/enterprise/endpoints/connectors/fleet/models.py
 msgid "Fleet Connector"
-msgstr ""
+msgstr "Fleet 连接器"
 
 #: authentik/enterprise/endpoints/connectors/fleet/models.py
 msgid "Fleet Connectors"
-msgstr ""
+msgstr "Fleet 连接器"
 
 #: authentik/enterprise/lifecycle/api/reviews.py
 msgid "You are not allowed to submit a review for this object."
-msgstr ""
+msgstr "您无权提交此对象的审查。"
 
 #: authentik/enterprise/lifecycle/api/rules.py
 msgid "Object does not exist"
-msgstr ""
+msgstr "对象不存在"
 
 #: authentik/enterprise/lifecycle/api/rules.py
 msgid "Either a reviewer group or a reviewer must be set."
-msgstr ""
+msgstr "必须设置审查者组或审查者。"
 
 #: authentik/enterprise/lifecycle/api/rules.py
 msgid "Grace period must be shorter than the interval."
-msgstr ""
+msgstr "宽限期必须短于间隔。"
 
 #: authentik/enterprise/lifecycle/api/rules.py
 msgid "Only one type-wide rule for each object type is allowed."
-msgstr ""
+msgstr "每种对象类型只能有一条类型范围规则。"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid ""
 "Select which transports should be used to notify the reviewers. If none are "
 "selected, the notification will only be shown in the authentik UI."
-msgstr ""
+msgstr "选择用于通知审查者的递送方式。如果未选择任何方式，通知将只显示在 authentik UI 中。"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid "Reviewed"
-msgstr ""
+msgstr "已审查"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid "Pending"
-msgstr ""
+msgstr "待处理"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid "Overdue"
-msgstr ""
+msgstr "已逾期"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid "Canceled"
-msgstr ""
+msgstr "已取消"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid "Go to {self._get_model_name()}"
-msgstr ""
+msgstr "前往 {self._get_model_name()}"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid "Access review is due for {self.content_type.name} {str(self.object)}"
-msgstr ""
+msgstr "{self.content_type.name} {str(self.object)} 的访问审查已到期"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid ""
 "Access review is overdue for {self.content_type.name} {str(self.object)}"
-msgstr ""
+msgstr "{self.content_type.name} {str(self.object)} 的访问审查已逾期"
 
 #: authentik/enterprise/lifecycle/models.py
 msgid ""
 "Access review completed for {self.content_type.name} {str(self.object)}"
-msgstr ""
+msgstr "{self.content_type.name} {str(self.object)} 的访问审查已完成"
 
 #: authentik/enterprise/lifecycle/tasks.py
 msgid "Dispatch tasks to validate lifecycle rules."
-msgstr ""
+msgstr "调度任务以验证生命周期规则。"
 
 #: authentik/enterprise/lifecycle/tasks.py
 msgid "Apply lifecycle rule."
-msgstr ""
+msgstr "应用生命周期规则。"
 
 #: authentik/enterprise/lifecycle/tasks.py
 msgid "Send lifecycle rule notification."
-msgstr ""
+msgstr "发送生命周期规则通知。"
 
 #: authentik/enterprise/models.py
 msgid "License"
@@ -1155,11 +1155,11 @@ msgstr "发送一个 SSF 事件。"
 
 #: authentik/enterprise/providers/ws_federation/models.py
 msgid "WS-Federation Provider"
-msgstr ""
+msgstr "WS-Federation 提供程序"
 
 #: authentik/enterprise/providers/ws_federation/models.py
 msgid "WS-Federation Providers"
-msgstr ""
+msgstr "WS-Federation 提供程序"
 
 #: authentik/enterprise/providers/ws_federation/views.py
 #: authentik/providers/oauth2/views/authorize.py
@@ -1554,7 +1554,7 @@ msgstr "无效的 next URL"
 
 #: authentik/lib/sync/incoming/models.py
 msgid "When to trigger sync for outgoing providers"
-msgstr ""
+msgstr "何时触发出站提供程序同步"
 
 #: authentik/lib/sync/outgoing/models.py
 msgid "Controls the number of objects synced in a single task"
@@ -2142,7 +2142,7 @@ msgstr "注销方法"
 msgid ""
 "Backchannel logs out with server to server calls. Frontchannel uses iframes "
 "in your browser"
-msgstr ""
+msgstr "后通道通过服务器到服务器调用注销。前通道使用浏览器中的 iframe。"
 
 #: authentik/providers/oauth2/models.py
 msgid "Include claims in id_token"
@@ -2276,6 +2276,10 @@ msgstr "处理通过信号发送的反向通道注销通知"
 #: authentik/providers/oauth2/views/device_init.py
 msgid "Invalid code"
 msgstr "无效代码"
+
+#: authentik/providers/oauth2/views/end_session.py
+msgid "Logout successful"
+msgstr "退出成功"
 
 #: authentik/providers/oauth2/views/userinfo.py
 msgid "GitHub Compatibility: Access your User Information"
@@ -2532,6 +2536,9 @@ msgid ""
 "sends logout requests directly from the server without user interaction "
 "(requires POST SLS binding)."
 msgstr ""
+"用于注销的方法。前通道 iframe 会在隐藏 iframe 中同时加载所有注销 URL。"
+"原生前通道使用当前浏览器标签页发送 POST 请求并重定向到提供程序。后通道直接从服务器发送注销请求，"
+"无需用户交互（需要 POST SLS 绑定）。"
 
 #: authentik/providers/saml/models.py
 msgid "NameID Property Mapping"

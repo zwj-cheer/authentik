@@ -6,14 +6,12 @@ import { globalAK } from "#common/global";
 import { asInvoker } from "#elements/dialogs";
 import { AKModal } from "#elements/dialogs/ak-modal";
 import { globalBrandingMessage, WithBrandConfig } from "#elements/mixins/branding";
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { SlottedTemplateResult } from "#elements/types";
 import { DefaultFlowBackground, ThemedImage } from "#elements/utils/images";
 
 import {
     AdminApi,
     CapabilitiesEnum,
-    LicenseSummaryStatusEnum,
     SystemInfo,
     Version,
 } from "@goauthentik/api";
@@ -35,7 +33,7 @@ function renderEntry([label, content = null]: AboutEntry): SlottedTemplateResult
 }
 
 @customElement("ak-about-modal")
-export class AboutModal extends WithLicenseSummary(WithBrandConfig(AKModal)) {
+export class AboutModal extends WithBrandConfig(AKModal) {
     public override formatARIALabel = () => globalBrandingMessage(msg("About authentik"));
 
     public static hostStyles = [
@@ -180,10 +178,6 @@ export class AboutModal extends WithLicenseSummary(WithBrandConfig(AKModal)) {
 
     protected override render() {
         let product = this.brandingTitle;
-
-        if (this.licenseSummary?.status !== LicenseSummaryStatusEnum.Unlicensed) {
-            product += ` ${msg("Enterprise")}`;
-        }
 
         return html`<div
             ${ref(this.scrollContainerRef)}

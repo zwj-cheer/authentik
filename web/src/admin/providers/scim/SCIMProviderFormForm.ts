@@ -6,8 +6,6 @@ import "#elements/forms/FormGroup";
 import "#elements/forms/HorizontalFormElement";
 import "#elements/forms/Radio";
 import "#elements/forms/SearchSelect/index";
-import "#elements/CodeMirror";
-import "#elements/LicenseNotice";
 import "#components/ak-number-input";
 import "#elements/utils/TimeDeltaHelp";
 import "#components/ak-text-input";
@@ -19,21 +17,14 @@ import {
     propertyMappingsSelector,
 } from "./SCIMProviderFormHelpers.js";
 
-import { DEFAULT_CONFIG } from "#common/api/config";
-
 import { globalBrandingMessage } from "#elements/mixins/branding";
 
 import {
     CompatibilityModeEnum,
-    OAuthSource,
     SCIMAuthenticationModeEnum,
     SCIMProvider,
-    SourcesApi,
-    SourcesOauthListRequest,
     ValidationError,
 } from "@goauthentik/api";
-
-import YAML from "yaml";
 
 import { msg } from "@lit/localize";
 import { html } from "lit";
@@ -51,51 +42,11 @@ export function renderAuthToken(provider?: Partial<SCIMProvider>, errors: Valida
     ></ak-hidden-text-input>`;
 }
 
-export function renderAuthOAuth(provider?: Partial<SCIMProvider>, _errors: ValidationError = {}) {
-    return html`<ak-form-element-horizontal label=${msg("OAuth Source")} name="authOauth">
-            <ak-search-select
-                .fetchObjects=${async (query?: string): Promise<OAuthSource[]> => {
-                    const args: SourcesOauthListRequest = {
-                        ordering: "name",
-                    };
-                    if (query !== undefined) {
-                        args.search = query;
-                    }
-                    const sources = await new SourcesApi(DEFAULT_CONFIG).sourcesOauthList(args);
-                    return sources.results;
-                }}
-                .renderElement=${(source: OAuthSource): string => {
-                    return source.name;
-                }}
-                .value=${(source: OAuthSource | undefined): string | undefined => {
-                    return source ? source.pk : undefined;
-                }}
-                .selected=${(source: OAuthSource): boolean => {
-                    return source.pk === provider?.authOauth;
-                }}
-                blankable
-            >
-            </ak-search-select>
-            <p class="pf-c-form__helper-text">
-                ${msg("Specify OAuth source used for authentication.")}
-            </p>
-        </ak-form-element-horizontal>
-        <ak-form-element-horizontal label=${msg("OAuth Parameters")} name="authOauthParams">
-            <ak-codemirror mode="yaml" value="${YAML.stringify(provider?.authOauthParams ?? {})}">
-            </ak-codemirror>
-            <p class="pf-c-form__helper-text">
-                ${msg("Additional OAuth parameters, such as grant_type.")}
-            </p>
-        </ak-form-element-horizontal> `;
-}
-
 export function renderAuth(provider?: Partial<SCIMProvider>, errors: ValidationError = {}) {
     switch (provider?.authMode) {
         default:
         case SCIMAuthenticationModeEnum.Token:
             return renderAuthToken(provider, errors);
-        case SCIMAuthenticationModeEnum.Oauth:
-            return renderAuthOAuth(provider, errors);
     }
 }
 
@@ -160,13 +111,6 @@ export function renderForm({ provider, errors, update }: SCIMProviderFormProps) 
                                 description: html`${msg(
                                     "Authenticate SCIM requests using a static token.",
                                 )}`,
-                            },
-                            {
-                                label: msg("OAuth"),
-                                value: SCIMAuthenticationModeEnum.Oauth,
-                                default: true,
-                                description: html`${msg("Authenticate SCIM requests using OAuth.")}
-                                    <ak-license-notice></ak-license-notice>`,
                             },
                         ]}
                     ></ak-radio>

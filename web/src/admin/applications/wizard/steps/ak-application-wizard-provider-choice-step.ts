@@ -5,7 +5,6 @@ import "#elements/wizard/TypeCreateWizardPage";
 
 import { applicationWizardProvidersContext } from "../ContextIdentity.js";
 
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { SlottedTemplateResult } from "#elements/types";
 import { TypeCreateWizardPageLayouts } from "#elements/wizard/TypeCreateWizardPage";
 
@@ -26,7 +25,7 @@ import { customElement, state } from "lit/decorators.js";
  * @prop wizard - The current state of the application wizard, shared across all steps.
  */
 @customElement("ak-application-wizard-provider-choice-step")
-export class ApplicationWizardProviderChoiceStep extends WithLicenseSummary(ApplicationWizardStep) {
+export class ApplicationWizardProviderChoiceStep extends ApplicationWizardStep {
     label = msg("Choose a Provider");
 
     @state()

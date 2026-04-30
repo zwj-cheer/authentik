@@ -125,7 +125,9 @@ export class ApplicationListPage extends WithBrandConfig(TablePage<Application>)
                 <div>${item.name}</div>
                 ${item.metaPublisher ? html`<small>${item.metaPublisher}</small>` : nothing}
             </a>`,
-            item.group ? html`${item.group}` : html`<span aria-label="None">${msg("-")}</span>`,
+            item.group
+                ? html`${item.group}`
+                : html`<span aria-label=${msg("None")}>${msg("-")}</span>`,
             item.provider
                 ? html`<a href="#/core/providers/${item.providerObj?.pk}">
                       ${item.providerObj?.name}

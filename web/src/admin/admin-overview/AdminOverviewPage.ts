@@ -1,6 +1,5 @@
 import "#admin/admin-overview/TopApplicationsTable";
 import "#admin/admin-overview/cards/AdminStatusCard";
-import "#admin/admin-overview/cards/FipsStatusCard";
 import "#admin/admin-overview/cards/RecentEventsCard";
 import "#admin/admin-overview/cards/SystemStatusCard";
 import "#admin/admin-overview/cards/VersionStatusCard";
@@ -15,14 +14,13 @@ import { formatUserDisplayName } from "#common/users";
 
 import { AKElement } from "#elements/Base";
 import type { QuickAction } from "#elements/cards/QuickActionsCard";
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { WithSession } from "#elements/mixins/session";
 import { paramURL } from "#elements/router/RouterOutlet";
 
 import { setPageDetails } from "#components/ak-page-navbar";
 
 import { msg, str } from "@lit/localize";
-import { css, CSSResult, html, nothing, PropertyValues, TemplateResult } from "lit";
+import { css, CSSResult, html, PropertyValues, TemplateResult } from "lit";
 import { customElement } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 
@@ -31,7 +29,7 @@ import PFDivider from "@patternfly/patternfly/components/Divider/divider.css";
 import PFPage from "@patternfly/patternfly/components/Page/page.css";
 import PFGrid from "@patternfly/patternfly/layouts/Grid/grid.css";
 
-const AdminOverviewBase = WithLicenseSummary(WithSession(AKElement));
+const AdminOverviewBase = WithSession(AKElement);
 
 @customElement("ak-admin-overview")
 export class AdminOverviewPage extends AdminOverviewBase {
@@ -134,15 +132,12 @@ export class AdminOverviewPage extends AdminOverviewBase {
     }
 
     renderCards() {
-        const isEnterprise = this.hasEnterpriseLicense;
         const classes = {
             "card-container": true,
             "pf-l-grid__item": true,
             "pf-m-6-col": true,
-            "pf-m-4-col-on-md": !isEnterprise,
-            "pf-m-4-col-on-xl": !isEnterprise,
-            "pf-m-3-col-on-md": isEnterprise,
-            "pf-m-3-col-on-xl": isEnterprise,
+            "pf-m-4-col-on-md": true,
+            "pf-m-4-col-on-xl": true,
         };
 
         return html`<div class=${classMap(classes)}>
@@ -153,12 +148,7 @@ export class AdminOverviewPage extends AdminOverviewBase {
             </div>
             <div class=${classMap(classes)}>
                 <ak-admin-status-card-workers> </ak-admin-status-card-workers>
-            </div>
-            ${isEnterprise
-                ? html` <div class=${classMap(classes)}>
-                      <ak-admin-fips-status-system> </ak-admin-fips-status-system>
-                  </div>`
-                : nothing} `;
+            </div>`;
     }
 
     updated(changed: PropertyValues<this>) {

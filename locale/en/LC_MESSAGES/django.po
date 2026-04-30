@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#: authentik/core/api/object_types.py
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-23 00:25+0000\n"
+"POT-Creation-Date: 2026-04-30 01:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +17,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: authentik/admin/files/api.py
-#, python-brace-format
-msgid "File size ({file.size}B) exceeds maximum allowed "
-msgstr ""
 
 #: authentik/admin/files/validation.py
 msgid "File name cannot be empty"
@@ -48,16 +44,6 @@ msgstr ""
 
 #: authentik/admin/files/validation.py
 msgid "Paths cannot start with '.'"
-msgstr ""
-
-#: authentik/admin/files/validation.py
-#, python-brace-format
-msgid "File name too long (max {MAX_FILE_NAME_LENGTH} characters)"
-msgstr ""
-
-#: authentik/admin/files/validation.py
-#, python-brace-format
-msgid "Path component too long (max {MAX_PATH_COMPONENT_LENGTH} characters)"
 msgstr ""
 
 #: authentik/admin/models.py
@@ -570,11 +556,6 @@ msgstr ""
 msgid "Flow links"
 msgstr ""
 
-#: authentik/core/templates/login/base_full.html
-#: authentik/flows/templates/if/flow-sfe.html
-msgid "Powered by authentik"
-msgstr ""
-
 #: authentik/core/views/apps.py
 #: authentik/enterprise/providers/ws_federation/views.py
 #: authentik/providers/oauth2/views/authorize.py
@@ -886,23 +867,6 @@ msgstr ""
 msgid "Canceled"
 msgstr ""
 
-#: authentik/enterprise/lifecycle/models.py
-msgid "Go to {self._get_model_name()}"
-msgstr ""
-
-#: authentik/enterprise/lifecycle/models.py
-msgid "Access review is due for {self.content_type.name} {str(self.object)}"
-msgstr ""
-
-#: authentik/enterprise/lifecycle/models.py
-msgid ""
-"Access review is overdue for {self.content_type.name} {str(self.object)}"
-msgstr ""
-
-#: authentik/enterprise/lifecycle/models.py
-msgid "Access review completed for {self.content_type.name} {str(self.object)}"
-msgstr ""
-
 #: authentik/enterprise/lifecycle/tasks.py
 msgid "Dispatch tasks to validate lifecycle rules."
 msgstr ""
@@ -1202,11 +1166,6 @@ msgstr ""
 
 #: authentik/enterprise/reports/models.py
 msgid "Data Exports"
-msgstr ""
-
-#: authentik/enterprise/reports/models.py
-#, python-brace-format
-msgid "{model_verbose_name} export generated successfully"
 msgstr ""
 
 #: authentik/enterprise/reports/models.py
@@ -2176,8 +2135,8 @@ msgstr ""
 
 #: authentik/providers/oauth2/models.py
 msgid ""
-"Tokens not valid on or after current time + this value (Format: hours=1;"
-"minutes=2;seconds=3)."
+"Tokens not valid on or after current time + this value (Format: "
+"hours=1;minutes=2;seconds=3)."
 msgstr ""
 
 #: authentik/providers/oauth2/models.py
@@ -2282,6 +2241,10 @@ msgstr ""
 
 #: authentik/providers/oauth2/views/device_init.py
 msgid "Invalid code"
+msgstr ""
+
+#: authentik/providers/oauth2/views/end_session.py
+msgid "Logout successful"
 msgstr ""
 
 #: authentik/providers/oauth2/views/userinfo.py
@@ -2544,20 +2507,20 @@ msgstr ""
 
 #: authentik/providers/saml/models.py
 msgid ""
-"Assertion valid not before current time + this value (Format: hours=-1;"
-"minutes=-2;seconds=-3)."
+"Assertion valid not before current time + this value (Format: "
+"hours=-1;minutes=-2;seconds=-3)."
 msgstr ""
 
 #: authentik/providers/saml/models.py
 msgid ""
-"Assertion not valid on or after current time + this value (Format: hours=1;"
-"minutes=2;seconds=3)."
+"Assertion not valid on or after current time + this value (Format: "
+"hours=1;minutes=2;seconds=3)."
 msgstr ""
 
 #: authentik/providers/saml/models.py
 msgid ""
-"Session not valid on or after current time + this value (Format: hours=1;"
-"minutes=2;seconds=3)."
+"Session not valid on or after current time + this value (Format: "
+"hours=1;minutes=2;seconds=3)."
 msgstr ""
 
 #: authentik/providers/saml/models.py authentik/sources/saml/models.py
@@ -4526,8 +4489,8 @@ msgstr ""
 #: authentik/stages/user_login/models.py
 msgid ""
 "When set to a non-zero value, authentik will save a cookie with a longer "
-"expiry,to remember the device the user is logging in from. (Format: hours=-1;"
-"minutes=-2;seconds=-3)"
+"expiry,to remember the device the user is logging in from. (Format: "
+"hours=-1;minutes=-2;seconds=-3)"
 msgstr ""
 
 #: authentik/stages/user_login/models.py
@@ -4647,8 +4610,8 @@ msgstr ""
 
 #: authentik/tenants/models.py
 msgid ""
-"Events will be deleted after this duration.(Format: weeks=3;days=2;hours=3,"
-"seconds=2)."
+"Events will be deleted after this duration.(Format: "
+"weeks=3;days=2;hours=3,seconds=2)."
 msgstr ""
 
 #: authentik/tenants/models.py

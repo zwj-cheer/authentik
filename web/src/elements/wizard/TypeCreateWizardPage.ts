@@ -1,7 +1,6 @@
 import "#elements/Alert";
 import "#elements/forms/FormGroup";
 
-import { WithLicenseSummary } from "#elements/mixins/license";
 import { SlottedTemplateResult } from "#elements/types";
 import { ifPresent } from "#elements/utils/attributes";
 import { WizardPage } from "#elements/wizard/WizardPage";
@@ -27,7 +26,7 @@ export enum TypeCreateWizardPageLayouts {
 }
 
 @customElement("ak-wizard-page-type-create")
-export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
+export class TypeCreateWizardPage extends WizardPage {
     //#region Properties
 
     @property({ attribute: false, useDefault: true })
@@ -102,7 +101,7 @@ export class TypeCreateWizardPage extends WithLicenseSummary(WizardPage) {
     protected get visibleTypes(): TypeCreate[] | null {
         if (!this.types) return null;
 
-        return this.types.filter((type) => !type.requiresEnterprise || this.hasEnterpriseLicense);
+        return this.types.filter((type) => !type.requiresEnterprise);
     }
 
     #selectDispatch = (type: TypeCreate) => {

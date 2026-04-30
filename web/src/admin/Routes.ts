@@ -151,18 +151,6 @@ export const ROUTES: Route[] = [
         await import("#admin/events/RuleListPage");
         return html`<ak-event-rule-list></ak-event-rule-list>`;
     }),
-    new Route(new RegExp("^/events/exports"), async () => {
-        await import("./events/DataExportListPage");
-        return html`<ak-data-export-list></ak-data-export-list>`;
-    }),
-    new Route(new RegExp("^/events/lifecycle-rules$"), async () => {
-        await import("#admin/lifecycle/LifecycleRuleListPage");
-        return html`<ak-lifecycle-rule-list></ak-lifecycle-rule-list>`;
-    }),
-    new Route(new RegExp("^/events/lifecycle-reviews"), async () => {
-        await import("#admin/lifecycle/ReviewListPage");
-        return html`<ak-review-list></ak-review-list>`;
-    }),
     new Route(new RegExp("^/outpost/outposts$"), async () => {
         await import("#admin/outposts/OutpostListPage");
         return html`<ak-outpost-list></ak-outpost-list>`;
@@ -194,9 +182,5 @@ export const ROUTES: Route[] = [
     new Route(new RegExp("^/debug$"), async () => {
         await import("#admin/ak-admin-debug-page");
         return html`<ak-admin-debug-page></ak-admin-debug-page>`;
-    }),
-    new Route(new RegExp("^/enterprise/licenses$"), async () => {
-        await import("#admin/enterprise/EnterpriseLicenseListPage");
-        return html`<ak-enterprise-license-list></ak-enterprise-license-list>`;
     }),
 ];

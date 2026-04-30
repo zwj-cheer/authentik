@@ -4,7 +4,6 @@ import "#admin/applications/ApplicationForm";
 import "#admin/applications/entitlements/ApplicationEntitlementPage";
 import "#admin/policies/BoundPoliciesList";
 import "#admin/rbac/ak-rbac-object-permission-page";
-import "#admin/lifecycle/ObjectLifecyclePage";
 import "#admin/events/ObjectChangelog";
 import "#elements/AppIcon";
 import "#elements/EmptyState";
@@ -17,7 +16,6 @@ import { APIError, parseAPIResponseError, pluckErrorDetail } from "#common/error
 
 import { AKElement } from "#elements/Base";
 import { modalInvoker } from "#elements/dialogs";
-import { WithLicenseSummary } from "#elements/mixins/license";
 
 import { setPageDetails } from "#components/ak-page-navbar";
 import renderDescriptionList from "#components/DescriptionList";
@@ -27,7 +25,6 @@ import { ApplicationForm } from "#admin/applications/ApplicationForm";
 
 import {
     Application,
-    ContentTypeEnum,
     CoreApi,
     EventActions,
     EventsApi,
@@ -51,7 +48,7 @@ import PFFlex from "@patternfly/patternfly/layouts/Flex/flex.css";
 import PFGrid from "@patternfly/patternfly/layouts/Grid/grid.css";
 
 @customElement("ak-application-view")
-export class ApplicationViewPage extends WithLicenseSummary(AKElement) {
+export class ApplicationViewPage extends AKElement {
     static styles: CSSResult[] = [
         PFList,
         PFBanner,
@@ -404,17 +401,6 @@ export class ApplicationViewPage extends WithLicenseSummary(AKElement) {
                     model=${ModelEnum.AuthentikCoreApplication}
                     objectPk=${this.application.pk}
                 ></ak-rbac-object-permission-page>
-                ${this.hasEnterpriseLicense
-                    ? html`<ak-object-lifecycle-page
-                          role="tabpanel"
-                          tabindex="0"
-                          slot="page-lifecycle"
-                          id="page-lifecycle"
-                          aria-label=${msg("Lifecycle")}
-                          model=${ContentTypeEnum.AuthentikCoreApplication}
-                          object-pk=${this.application.pk}
-                      ></ak-object-lifecycle-page>`
-                    : nothing}
             </ak-tabs>
         </main>`;
     }
