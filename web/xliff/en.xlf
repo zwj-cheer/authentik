@@ -8740,7 +8740,7 @@ Bindings to groups/users are checked against the user of the event.</source>
   <source>Client credentials</source>
 </trans-unit>
 <trans-unit id="sf6625f1c093feb17">
-  <source>Device-code</source>
+  <source>Device code</source>
 </trans-unit>
 <trans-unit id="sccb6f4a3d1fb9434">
   <source>Grant Types</source>

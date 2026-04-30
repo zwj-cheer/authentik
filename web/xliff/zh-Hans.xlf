@@ -11659,45 +11659,59 @@ Bindings to groups/users are checked against the user of the event.</source>
 </trans-unit>
 <trans-unit id="s78a13f8f08d3a317">
   <source>Authorization Code</source>
+  <target>授权码</target>
 </trans-unit>
 <trans-unit id="s9765a1c7821ec626">
   <source>Implicit</source>
+  <target>隐式</target>
 </trans-unit>
 <trans-unit id="s6032372e5812d743">
   <source>Hybrid</source>
+  <target>混合</target>
 </trans-unit>
 <trans-unit id="s4c21579d264ff019">
   <source>Refresh token</source>
+  <target>刷新令牌</target>
 </trans-unit>
 <trans-unit id="sec04243bf971ba5c">
   <source>Client credentials</source>
+  <target>客户端凭据</target>
 </trans-unit>
 <trans-unit id="sf6625f1c093feb17">
-  <source>Device-code</source>
+  <source>Device code</source>
+  <target>设备代码</target>
 </trans-unit>
 <trans-unit id="sccb6f4a3d1fb9434">
   <source>Grant Types</source>
+  <target>授权类型</target>
 </trans-unit>
 <trans-unit id="s89c63fb4a8cb6d2b">
   <source>Grant types this provider may use.</source>
+  <target>此提供程序可使用的授权类型。</target>
 </trans-unit>
 <trans-unit id="s86a9472dc09ecf48">
   <source>vCenter</source>
+  <target>vCenter</target>
 </trans-unit>
 <trans-unit id="s71724d2ff6637203">
   <source>Altered behavior for usage with VMware vCenter.</source>
+  <target>调整行为以适配 VMware vCenter。</target>
 </trans-unit>
 <trans-unit id="s9eda7101f63a8652">
   <source>Hide from My applications</source>
+  <target>从“我的应用程序”中隐藏</target>
 </trans-unit>
 <trans-unit id="s30f30e9c42594a33">
   <source>If checked, this application will not be shown on the user's My applications page.</source>
+  <target>启用后，此应用程序不会显示在用户的“我的应用程序”页面中。</target>
 </trans-unit>
 <trans-unit id="s2ea2e39e4b470249">
   <source>EntityID/Issuer override</source>
+  <target>EntityID/颁发者覆盖</target>
 </trans-unit>
 <trans-unit id="sf7aba95a8c43b7b1">
   <source>Sets a custom EntityID/Issuer to override the authentik generated default.</source>
+  <target>设置自定义 EntityID/颁发者，以覆盖 authentik 生成的默认值。</target>
 </trans-unit>
 </body>
 </file>

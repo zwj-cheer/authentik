@@ -141,7 +141,10 @@ const grantTypes = [
     [GrantTypesEnum.RefreshToken, msg("Refresh token")],
     [GrantTypesEnum.ClientCredentials, msg("Client credentials")],
     [GrantTypesEnum.Password, msg("Password")],
-    [GrantTypesEnum.UrnIetfParamsOauthGrantTypeDeviceCode, msg("Device-code")],
+    [
+        GrantTypesEnum.UrnIetfParamsOauthGrantTypeDeviceCode,
+        msg("Device code", { id: "sf6625f1c093feb17" }),
+    ],
 ];
 
 const defaultGrantTypes = [
